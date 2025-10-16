@@ -1,5 +1,12 @@
-# Environment variables
+# Environment variables - NEVER COMMIT!
 .env
+.env.local
+
+# Trading data and logs - Keep private!
+trading_data/
+*.csv
+*.pkl
+*.joblib
 
 # Python
 __pycache__/
@@ -27,7 +34,3 @@ Thumbs.db
 # ChromeDriver
 chromedriver.exe
 chromedriver
-
-.env
-.env
-.env

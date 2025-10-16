@@ -18,6 +18,8 @@ import sys
 from dotenv import load_dotenv
 import threading
 from collections import deque
+import csv
+from pathlib import Path
 
 # Load environment variables from .env file
 load_dotenv()
@@ -98,6 +100,9 @@ class AutoTradingSystem:
         # Browser
         self.driver = None
 
+        # Data logging setup
+        self.setup_data_logging()
+
         # Initialize connection
         self.reconnect_hyperliquid()
     
@@ -134,7 +139,144 @@ class AutoTradingSystem:
         print(f"   {self.take_profit_account_pct}% account profit (+{self.take_profit_price_pct:.2f}% price move)")
         if self.take_profit_account_pct_2:
             print(f"   Secondary: {self.take_profit_account_pct_2}% account (+{self.take_profit_price_pct_2:.2f}% price move)")
-    
+
+    def setup_data_logging(self):
+        """Setup data logging directories and files"""
+        # Create data directory
+        self.data_dir = Path("trading_data")
+        self.data_dir.mkdir(exist_ok=True)
+
+        # Create timestamped session directory
+        session_timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        self.session_dir = self.data_dir / f"session_{session_timestamp}"
+        self.session_dir.mkdir(exist_ok=True)
+
+        # File paths
+        self.ema_data_file = self.session_dir / "ema_data.csv"
+        self.trading_data_file = self.session_dir / "trading_data.csv"
+
+        # Initialize EMA data CSV with headers
+        with open(self.ema_data_file, 'w', newline='') as f:
+            writer = csv.writer(f)
+            # Will write headers dynamically based on EMAs found
+            writer.writerow(['timestamp', 'price', 'ribbon_state'])  # Base headers, EMA columns added dynamically
+
+        # Initialize trading data CSV with headers
+        with open(self.trading_data_file, 'w', newline='') as f:
+            writer = csv.writer(f)
+            writer.writerow([
+                'timestamp', 'check_number', 'price', 'ribbon_state',
+                'green_count', 'red_count', 'yellow_count', 'gray_count',
+                'dark_green_count', 'dark_red_count',
+                'position_side', 'position_size', 'position_entry', 'position_pnl',
+                'account_value', 'margin_used', 'unrealized_pnl',
+                'last_signal', 'last_warning', 'profit_secured'
+            ])
+
+        print(f"📁 Data logging initialized: {self.session_dir}")
+
+    def log_ema_data(self, indicators, current_price, state):
+        """Log EMA values and colors to CSV"""
+        try:
+            timestamp = datetime.now().isoformat()
+            mma_indicators = {k: v for k, v in indicators.items() if k.startswith('MMA')}
+
+            # Sort EMAs by number
+            def get_num(key):
+                m = re.search(r'\d+', key)
+                return int(m.group()) if m else 0
+
+            sorted_mma = sorted(mma_indicators.items(), key=lambda x: get_num(x[0]))
+
+            # Prepare row data
+            row = [timestamp, current_price, state]
+
+            # Add each EMA's value and color
+            for name, data in sorted_mma:
+                ema_num = get_num(name)
+                row.extend([
+                    data.get('value', 'N/A'),
+                    data.get('color', 'unknown'),
+                    data.get('intensity', 'normal')
+                ])
+
+            # Write to CSV
+            with open(self.ema_data_file, 'a', newline='') as f:
+                writer = csv.writer(f)
+                writer.writerow(row)
+
+            # Update headers if this is the first data row
+            with open(self.ema_data_file, 'r') as f:
+                lines = f.readlines()
+                if len(lines) == 2:  # Header + 1 data row
+                    # Update header with EMA columns
+                    header = ['timestamp', 'price', 'ribbon_state']
+                    for name, _ in sorted_mma:
+                        ema_num = get_num(name)
+                        header.extend([f'MMA{ema_num}_value', f'MMA{ema_num}_color', f'MMA{ema_num}_intensity'])
+
+                    # Rewrite file with proper header
+                    with open(self.ema_data_file, 'r') as f:
+                        all_rows = list(csv.reader(f))
+
+                    with open(self.ema_data_file, 'w', newline='') as f:
+                        writer = csv.writer(f)
+                        writer.writerow(header)
+                        for row in all_rows[1:]:  # Skip old header
+                            writer.writerow(row)
+
+        except Exception as e:
+            print(f"⚠️  Error logging EMA data: {e}")
+
+    def log_trading_data(self, check_num, current_price, state, ema_groups):
+        """Log general trading data to CSV"""
+        try:
+            timestamp = datetime.now().isoformat()
+
+            # Get position and account info
+            pos = self.get_position()
+            account = self.get_account_info()
+
+            # Extract EMA counts
+            green_count = len(ema_groups.get('green', []))
+            red_count = len(ema_groups.get('red', []))
+            yellow_count = len(ema_groups.get('yellow', []))
+            gray_count = len(ema_groups.get('gray', []))
+            dark_green_count = len(ema_groups.get('dark_green', []))
+            dark_red_count = len(ema_groups.get('dark_red', []))
+
+            # Prepare row
+            row = [
+                timestamp,
+                check_num,
+                current_price if current_price else 'N/A',
+                state,
+                green_count,
+                red_count,
+                yellow_count,
+                gray_count,
+                dark_green_count,
+                dark_red_count,
+                pos['side'] if pos else 'none',
+                pos['size'] if pos else 0,
+                pos['entry_price'] if pos else 0,
+                pos['unrealized_pnl'] if pos else 0,
+                account['account_value'] if account else 0,
+                account['margin_used'] if account else 0,
+                account['unrealized_pnl'] if account else 0,
+                self.last_signal if self.last_signal else '',
+                self.last_warning if self.last_warning else '',
+                self.profit_secured
+            ]
+
+            # Write to CSV
+            with open(self.trading_data_file, 'a', newline='') as f:
+                writer = csv.writer(f)
+                writer.writerow(row)
+
+        except Exception as e:
+            print(f"⚠️  Error logging trading data: {e}")
+
     def setup_browser(self):
         """Open Chrome for monitoring"""
         chrome_options = Options()
@@ -886,6 +1028,7 @@ class AutoTradingSystem:
         print("\n" + "─"*80)
         auto_status = "🤖 AUTO-TRADING: ACTIVE ✅" if self.auto_trade else "⚠️  AUTO-TRADING: DISABLED"
         print(f"{auto_status} | Network: {'TESTNET' if self.use_testnet else 'MAINNET'}")
+        print(f"📁 Data Logging: {self.session_dir.name}")
         print("Press 'M' + Enter for menu | Ctrl+C to stop")
         print("─"*80)
     
@@ -1188,6 +1331,10 @@ class AutoTradingSystem:
 
                 # Add to state history for temporal analysis
                 self.add_state_snapshot(state, ema_groups, current_price)
+
+                # Log data to CSV files (every 10 seconds)
+                self.log_ema_data(indicators, current_price, state)
+                self.log_trading_data(check_num, current_price, state, ema_groups)
 
                 # Check for signals and warnings (now with historical context)
                 signal, action, warning = self.check_signals(state, ema_groups, current_price)

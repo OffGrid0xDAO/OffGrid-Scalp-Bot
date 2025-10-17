@@ -1091,7 +1091,19 @@ class AutoTradingSystem:
     def get_current_price(self):
         """Get current price from TradingView price wrapper"""
         try:
-            # Method 1: TradingView price wrapper
+            # Method 1: Read price from legend (MMA values) — use last MMA as close proxy
+            try:
+                last_mma = self.driver.find_elements(By.XPATH, "//span[contains(text(),'MMA')]/following::*[self::div or self::span][1]")
+                if last_mma:
+                    txt = last_mma[-1].text.replace(',', '').strip()
+                    if re.match(r'^\d+\.?\d*$', txt):
+                        p = float(txt)
+                        if 100 < p < 1000000:
+                            return p
+            except Exception:
+                pass
+
+            # Method 2: TradingView price wrapper
             price_wrapper = self.driver.find_elements(By.CSS_SELECTOR, 'div[class*="priceWrapper"]')
             
             for wrapper in price_wrapper:
@@ -1106,7 +1118,7 @@ class AutoTradingSystem:
                 except:
                     continue
             
-            # Method 2: Specific class
+            # Method 3: Specific class
             try:
                 price_elem = self.driver.find_element(By.CLASS_NAME, 'priceWrapper-qWcO4bp9')
                 text = price_elem.text.replace(',', '').strip()
@@ -1118,7 +1130,7 @@ class AutoTradingSystem:
             except:
                 pass
             
-            # Method 3: Fallback to Hyperliquid
+            # Method 4: Fallback to Hyperliquid
             all_mids = self.info.all_mids()
             price = float(all_mids.get(self.symbol, 0))
             if price > 0:

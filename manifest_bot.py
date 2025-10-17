@@ -20,6 +20,16 @@ import threading
 from collections import deque
 import csv
 from pathlib import Path
+from tv_auto_login import TradingViewLogin
+from tv_indicator_setup import TradingViewIndicatorSetup
+
+# Auto-install ChromeDriver
+try:
+    import chromedriver_autoinstaller
+    chromedriver_autoinstaller.install()
+except ImportError:
+    print("⚠️  chromedriver-autoinstaller not found. Install it with: pip install chromedriver-autoinstaller")
+    print("⚠️  Or manually install ChromeDriver from: https://chromedriver.chromium.org/downloads")
 
 # Load environment variables from .env file
 load_dotenv()
@@ -139,7 +149,7 @@ class AutoTradingSystem:
         print(f"   {self.take_profit_account_pct}% account profit (+{self.take_profit_price_pct:.2f}% price move)")
         if self.take_profit_account_pct_2:
             print(f"   Secondary: {self.take_profit_account_pct_2}% account (+{self.take_profit_price_pct_2:.2f}% price move)")
-
+    
     def setup_data_logging(self):
         """Setup data logging directories and files"""
         # Create data directory
@@ -279,12 +289,89 @@ class AutoTradingSystem:
 
     def setup_browser(self):
         """Open Chrome for monitoring"""
-        chrome_options = Options()
-        chrome_options.add_argument('--no-sandbox')
-        chrome_options.add_experimental_option('excludeSwitches', ['enable-automation'])
+        # Use persistent Chrome profile to save login session
+        import time
+        base_profile_dir = Path("chrome_profile")
+        base_profile_dir.mkdir(exist_ok=True)
+
+        # Try to start Chrome with automatic cleanup and stable flags
+        max_retries = 3
+        for attempt in range(max_retries):
+            try:
+                print(f"🚀 Starting Chrome browser (attempt {attempt + 1}/{max_retries})...")
+
+                # Build options fresh each attempt and vary profile dir if needed
+                chrome_options = Options()
+                chrome_options.add_argument('--no-sandbox')
+                chrome_options.add_experimental_option('excludeSwitches', ['enable-automation'])
+                chrome_options.add_experimental_option('useAutomationExtension', False)
+
+                # Choose effective profile directory
+                if attempt == 0:
+                    effective_profile = base_profile_dir
+                else:
+                    effective_profile = base_profile_dir / f"run_{int(time.time())}_{attempt}"
+                    effective_profile.mkdir(parents=True, exist_ok=True)
+
+                chrome_options.add_argument(f"--user-data-dir={effective_profile.absolute()}")
+                chrome_options.add_argument("--profile-directory=TradingBot")
+
+                # Additional options to prevent crashes
+                chrome_options.add_argument("--disable-dev-shm-usage")
+                chrome_options.add_argument("--disable-gpu")
+                chrome_options.add_argument("--no-first-run")
+                chrome_options.add_argument("--disable-default-apps")
+                chrome_options.add_argument("--disable-extensions")
+                chrome_options.add_argument("--no-default-browser-check")
+                chrome_options.add_argument("--remote-debugging-port=0")
+                chrome_options.add_argument("--start-maximized")
+
+                self.driver = webdriver.Chrome(options=chrome_options)
+                break
+            except Exception as e:
+                err_text = str(e)
+                if "user data directory is already in use" in err_text:
+                    print(f"   ⚠️  Chrome profile in use (attempt {attempt + 1})")
+                    if attempt < max_retries - 1:
+                        print("   🔄 Auto-cleaning Chrome processes...")
+                        try:
+                            # Kill all Chrome processes automatically
+                            import subprocess
+                            subprocess.run(['taskkill', '/f', '/im', 'chrome.exe'], capture_output=True, text=True)
+                            print("   ✅ Killed Chrome processes")
+
+                            # Wait a moment for file locks to release
+                            time.sleep(5)
+                        except Exception as cleanup_error:
+                            print(f"   ⚠️  Auto-cleanup failed: {cleanup_error}")
+
+                        print("   🔄 Retrying with a fresh profile in 3 seconds...")
+                        time.sleep(3)
+                        continue
+                    else:
+                        print("\n❌ Chrome profile conflict after auto-cleanup!")
+                        print("   🔧 Manual fix needed:")
+                        print("   1. Close all Chrome windows manually")
+                        print("   2. Delete chrome_profile folder: rmdir /s chrome_profile")
+                        print("   3. Run the bot again")
+                        raise Exception("Chrome profile directory is still in use after auto-cleanup")
+                elif "DevToolsActivePort file doesn't exist" in err_text or "Chrome failed to start" in err_text:
+                    print("   ⚠️  Chrome crashed on startup")
+                    if attempt < max_retries - 1:
+                        print("   🔄 Retrying with adjusted profile in 3 seconds...")
+                        time.sleep(3)
+                        continue
+                    else:
+                        raise
+                else:
+                    raise
         
-        self.driver = webdriver.Chrome(options=chrome_options)
-        self.driver.maximize_window()
+        # Try to maximize window, but don't fail if already maximized
+        try:
+            self.driver.maximize_window()
+        except Exception:
+            # Window might already be maximized, that's okay
+            pass
         
         clear_screen()
         print("="*80)
@@ -293,14 +380,164 @@ class AutoTradingSystem:
         print(f"\n💼 Wallet: {self.wallet_address[:10]}...{self.wallet_address[-8:]}")
         print(f"🤖 Auto-Trading: {'ENABLED ✅' if self.auto_trade else 'DISABLED ❌'}")
         print("\n" + "="*80)
-        print("\nTradingView Setup:")
-        print("  1. Log in to TradingView")
-        print("  2. Open your chart with Annii's Ribbon")
-        print("  3. Make sure ALL EMAs are visible")
-        print("  4. Press ENTER to start")
-        print("="*80 + "\n")
         
-        self.driver.get('https://www.tradingview.com/')
+        # Check for auto-login credentials
+        tv_username = os.getenv('TRADINGVIEW_USERNAME')
+        tv_password = os.getenv('TRADINGVIEW_PASSWORD')
+        tv_chart_url = os.getenv('TRADINGVIEW_CHART_URL') or 'https://www.tradingview.com/chart/8om7a56p/?symbol=CRYPTO%3AETHUSD&interval=5'
+        
+        login_handler = TradingViewLogin(self.driver)
+        
+        # SKIP LOGIN: open chart directly and proceed to indicator setup
+        try:
+            print("\n🔓 Skipping TradingView login – opening chart directly...")
+            self.driver.get(tv_chart_url)
+            time.sleep(3)
+        except Exception:
+            pass
+
+        print("\n📊 Waiting for indicators to load...")
+        indicator_setup = TradingViewIndicatorSetup(self.driver)
+        if indicator_setup.setup_ribbon_indicator():
+            print("   ✅ Indicator setup completed!")
+            if indicator_setup.wait_for_indicators(timeout=15):
+                print("   ✅ Chart ready! Starting bot in 3 seconds...")
+                time.sleep(3)
+            else:
+                print("\n⚠️  Indicators not detected automatically")
+                print("   🔍 Please verify indicators are visible in values panel")
+                print("   📊 Values should look like: MMA 8: 3896.50")
+                print("="*80 + "\n")
+                input("👉 Press ENTER when ready: ")
+        else:
+            print("\n⚠️  Automatic setup failed - manual setup needed")
+            print("   🔍 Please click 'Indicators' → Search 'RIBBON FOR SCALPING' → Add to chart")
+            print("   📊 Make sure ALL EMAs show in values panel (left side)")
+            print("="*80 + "\n")
+            input("👉 Press ENTER when ready: ")
+
+        return
+
+        # Check if we have auto-login credentials
+        if tv_username and tv_password:
+            # AUTO-LOGIN PATH
+            print("\n🔐 Auto-login enabled!")
+            
+            # First check if already logged in from previous session
+            print("🔍 Checking for saved login session...")
+            # Always navigate to preferred chart URL (env or default fallback)
+            self.driver.get(tv_chart_url)
+            time.sleep(3)
+            
+            already_logged_in = login_handler.check_if_logged_in()
+            
+            if already_logged_in:
+                print("   ✅ Already logged in from previous session!")
+                print("   💾 Using saved cookies - no login needed!")
+                success = True
+            else:
+                # Not logged in, use auto-login
+                print("   ❌ No saved session found")
+                print(f"   📧 Username: {tv_username}")
+                if tv_chart_url:
+                    print(f"   📊 Chart: {tv_chart_url}")
+                print("\n⏳ Logging in automatically...")
+                
+                success = login_handler.login(tv_username, tv_password, tv_chart_url)
+                
+                if success:
+                    print("\n✅ Auto-login successful!")
+                    print("   💾 Session saved for next time!")
+                else:
+                    print("\n❌ Auto-login failed - falling back to manual login")
+            
+            # Check for indicators
+            if success:
+                print("\n📊 Waiting for indicators to load...")
+                # Try automatic indicator setup
+                indicator_setup = TradingViewIndicatorSetup(self.driver)
+                if indicator_setup.setup_ribbon_indicator():
+                    print("   ✅ Indicator setup completed!")
+                    if indicator_setup.wait_for_indicators(timeout=15):
+                        print("   ✅ Chart ready! Starting bot in 3 seconds...")
+                        time.sleep(3)
+                    else:
+                        print("\n⚠️  Indicators not detected automatically")
+                        print("   🔍 Please verify indicators are visible in values panel")
+                        print("   📊 Values should look like: MMA 8: 3896.50")
+                        print("="*80 + "\n")
+                        input("👉 Press ENTER when ready: ")
+                else:
+                    print("\n⚠️  Automatic setup failed - manual setup needed")
+                    print("   🔍 Please click 'Indicators' → Search 'RIBBON FOR SCALPING' → Add to chart")
+                    print("   📊 Make sure ALL EMAs show in values panel (left side)")
+                    print("="*80 + "\n")
+                    input("👉 Press ENTER when ready: ")
+            else:
+                # Auto-login failed, need manual
+                print("\n⚠️  MANUAL LOGIN REQUIRED:")
+                print("  1. 🔐 Log in to TradingView in the browser window")
+                print("  2. 📊 Open your chart with Annii's Ribbon")
+                print("  3. 🔍 Click 'Indicators' → Find 'Annii's Ribbon' → Click it")
+                print("  4. 👁️  Verify ALL EMAs show in values panel (left side)")
+                print("  5. Press ENTER when ready")
+                print("="*80 + "\n")
+                input("👉 Press ENTER when ready: ")
+        
+        else:
+            # MANUAL LOGIN PATH (no credentials)
+            print("\n📋 TradingView Setup (Manual Login):")
+            print("  💾 Your session will be saved for next time!")
+            
+            # Check for saved session first
+            print("\n🔍 Checking for saved login session...")
+            if tv_chart_url:
+                self.driver.get(tv_chart_url)
+            else:
+                self.driver.get('https://www.tradingview.com/chart/')
+            time.sleep(3)
+            
+            already_logged_in = login_handler.check_if_logged_in()
+            
+            if already_logged_in:
+                print("   ✅ Already logged in from previous session!")
+                print("   💾 Using saved cookies!")
+                # Try automatic indicator setup
+                indicator_setup = TradingViewIndicatorSetup(self.driver)
+                if indicator_setup.setup_ribbon_indicator():
+                    print("   ✅ Indicator setup completed!")
+                    if indicator_setup.wait_for_indicators(timeout=15):
+                        print("   ✅ Chart ready! Starting bot in 3 seconds...")
+                        time.sleep(3)
+                    else:
+                        print("\n⚠️  Indicators not detected automatically")
+                        print("   🔍 Please verify indicators are visible in values panel")
+                        print("   📊 Values should look like: MMA 8: 3896.50")
+                        print("="*80 + "\n")
+                        input("👉 Press ENTER when ready: ")
+                else:
+                    print("\n⚠️  Automatic setup failed - manual setup needed")
+                    print("   🔍 Please click 'Indicators' → Search 'RIBBON FOR SCALPING' → Add to chart")
+                    print("   📊 Make sure ALL EMAs show in values panel (left side)")
+                    print("="*80 + "\n")
+                    input("👉 Press ENTER when ready: ")
+            else:
+                print("   ❌ No saved session found")
+                print("\n🌐 Browser opened to TradingView")
+                print("\n⚠️  PLEASE COMPLETE THESE STEPS:")
+                print("  1. 🍪 Accept cookies (if banner appears)")
+                print("  2. 🔐 LOG IN to TradingView in the browser")
+                print("  3. 📊 Navigate to your ETHUSD chart")
+                print("  4. 🔍 Click 'Indicators' button (top toolbar)")
+                print("  5. 📋 Search 'RIBBON FOR SCALPING' and click first result")
+                print("  6. 👁️  Make sure ALL EMAs show in values panel (left side)")
+                print("  7. 📊 Values should look like: MMA 8: 3896.50, MMA 13: 3895.20")
+            
+            print("\n💡 TIP: Add credentials to .env for automatic login next time:")
+            print("   TRADINGVIEW_USERNAME=your_email@example.com")
+            print("   TRADINGVIEW_PASSWORD=your_password")
+            print("="*80 + "\n")
+            
         input("👉 Press ENTER when ready: ")
     
     # Hyperliquid functions
@@ -403,19 +640,32 @@ class AutoTradingSystem:
     def read_indicators(self):
         """Read indicators from TradingView"""
         try:
-            value_items = self.driver.find_elements(By.CSS_SELECTOR, 'div.valueItem-l31H9iuA')
+            # Robust selector: TradingView sets a semantic attribute for legend titles
+            value_items = self.driver.find_elements(By.CSS_SELECTOR, "div[data-test-id-value-title]")
             
             indicators = {}
             
             for item in value_items:
                 try:
-                    title = item.get_attribute('data-test-id-value-title')
-                    if not title:
+                    title = item.get_attribute('data-test-id-value-title') or ''
+                    # Only process EMAs from the ribbon (titles contain 'MMA')
+                    if 'MMA' not in title.upper():
                         continue
                     
-                    value_elem = item.find_element(By.CSS_SELECTOR, 'div.valueValue-l31H9iuA')
-                    style = value_elem.get_attribute('style')
-                    value = value_elem.text.replace(',', '')
+                    # Find corresponding numeric value element in the same legend row
+                    value_elem = None
+                    try:
+                        value_elem = item.find_element(By.XPATH, "following-sibling::*[contains(@class,'valueValue')]")
+                    except Exception:
+                        try:
+                            parent_row = item.find_element(By.XPATH, "./ancestor::div[contains(@class,'valueItem') or contains(@class,'legend')][1]")
+                            value_elem = parent_row.find_element(By.XPATH, ".//div[contains(@class,'valueValue')]")
+                        except Exception:
+                            # Generic fallback: any span/div with number next to item
+                            value_elem = item.find_element(By.XPATH, "following::*[self::div or self::span][contains(text(),'0') or contains(text(),'1') or contains(text(),'2') or contains(text(),'3') or contains(text(),'4') or contains(text(),'5') or contains(text(),'6') or contains(text(),'7') or contains(text(),'8') or contains(text(),'9')][1]")
+                    
+                    style = value_elem.get_attribute('style') if value_elem else ''
+                    value = value_elem.text.replace(',', '') if value_elem else ''
                     
                     try:
                         price = float(value)
@@ -908,9 +1158,13 @@ class AutoTradingSystem:
 
         # Current state
         print("\n" + "─"*80)
-        state_emoji = "🟢" if state == 'all_green' else "🔴" if state == 'all_red' else "⚪"
-        print(f"💰 PRICE: ${current_price:.2f}" if current_price else "💰 PRICE: N/A", end="  |  ")
-        print(f"{state_emoji} STATE: {state.upper().replace('_', ' ')}")
+        if state:
+            state_emoji = "🟢" if state == 'all_green' else "🔴" if state == 'all_red' else "⚪"
+            print(f"💰 PRICE: ${current_price:.2f}" if current_price else "💰 PRICE: N/A", end="  |  ")
+            print(f"{state_emoji} STATE: {state.upper().replace('_', ' ')}")
+        else:
+            print(f"💰 PRICE: ${current_price:.2f}" if current_price else "💰 PRICE: N/A", end="  |  ")
+            print("⚪ STATE: NO INDICATORS FOUND")
 
         # Show dark EMAs count (for aggressive mode)
         if self.scalping_mode == 'aggressive_5m' and (dark_green_emas or dark_red_emas):
@@ -1003,7 +1257,12 @@ class AutoTradingSystem:
         
         # Summary
         total = len(mma_indicators)
-        print(f"\n📊 {total} EMAs | 🟢 {len(green_emas)} | 🔴 {len(red_emas)} | 🟡 {len(yellow_emas)} | ⚪ {len(gray_emas)}")
+        if total == 0:
+            print(f"\n❌ NO INDICATORS FOUND!")
+            print("   🔍 Please click 'Indicators' → 'Annii's Ribbon' to show EMA values")
+            print("   📊 The bot needs to see MMA values like: MMA 8: 3896.50")
+        else:
+            print(f"\n📊 {total} EMAs | 🟢 {len(green_emas)} | 🔴 {len(red_emas)} | 🟡 {len(yellow_emas)} | ⚪ {len(gray_emas)}")
         
         # Warning message
         if self.last_warning:
@@ -1395,8 +1654,79 @@ def main():
     print("║" + " "*20 + "AUTO-TRADING SYSTEM SETUP" + " "*33 + "║")
     print("╚" + "="*78 + "╝")
     
-    # Get config
-    print("\n📋 Configuration:")
+    # Default settings option
+    print("\n⚙️  CONFIGURATION OPTIONS")
+    print("─"*40)
+    print("🚀 Use default settings? (Recommended for beginners)")
+    print("   • Conservative mode (15min)")
+    print("   • 10% position size")
+    print("   • 35% take profit")
+    print("   • 15% stop loss")
+    print("   • Auto-login enabled")
+    
+    use_defaults = input("\n👉 Use defaults? (Y/n) [default: Y]: ").strip().lower()
+    
+    if not use_defaults or use_defaults in ['y', 'yes', '']:
+        # Use all defaults - skip all configuration
+        print("\n✅ Using default settings!")
+        print("   🎯 Mode: Conservative (15min)")
+        print("   💰 Position: 10%")
+        print("   📈 Take Profit: 35%")
+        print("   📉 Stop Loss: 15%")
+        print("   🔐 Auto-login: Enabled")
+        
+        # Set default values
+        scalping_mode = "conservative_15m"
+        position_size = 0.10
+        take_profit_pct = 35.0
+        stop_loss_pct = 15.0
+        leverage = 25
+        profit_trigger = 0.3
+        secure_profit = 0.08
+        auto_login = True
+        
+        # Load private key (still needed)
+        private_key = os.getenv('HYPERLIQUID_PRIVATE_KEY')
+        if private_key:
+            print(f"\n🔑 Private Key: Loaded from .env file ✅")
+        else:
+            print("\n💡 TIP: Create a .env file with HYPERLIQUID_PRIVATE_KEY to skip this step")
+            private_key = input("\n🔑 Hyperliquid Private Key: ").strip()
+        
+        # Testnet setting
+        default_testnet = os.getenv('USE_TESTNET', 'true').lower() == 'true'
+        use_testnet = default_testnet
+        print(f"\n🌐 Using {'Testnet' if use_testnet else 'Mainnet'}")
+        
+        # Skip all other configuration
+        print("\n" + "="*80)
+        print("📊 TRADING CONFIGURATION SUMMARY:")
+        print("="*80)
+        print(f"🎯 Mode: {scalping_mode.replace('_', ' ').title()}")
+        print(f"💰 Position Size: {position_size*100:.0f}%")
+        print(f"📈 Take Profit: {take_profit_pct:.0f}%")
+        print(f"📉 Stop Loss: {stop_loss_pct:.0f}%")
+        print(f"⚡ Leverage: {leverage}x")
+        print(f"🛡️  Profit Protection: {profit_trigger*leverage:.1f}% → {secure_profit*leverage:.1f}%")
+        print(f"🌐 Network: {'Testnet' if use_testnet else 'Mainnet'}")
+        print("="*80)
+        
+        # Start the bot with defaults
+        system = AutoTradingSystem(
+            private_key=private_key,
+            use_testnet=use_testnet,
+            scalping_mode=scalping_mode,
+            position_size_pct=position_size,
+            take_profit_pct=take_profit_pct,
+            leverage=leverage,
+            profit_trigger=profit_trigger,
+            secure_profit=secure_profit
+        )
+        system.monitor()
+        return
+    
+    # Get config (custom settings)
+    print("\n📋 Custom Configuration:")
     print("─"*80)
     
     # Try to load private key from .env
@@ -1411,10 +1741,10 @@ def main():
     
     # Load other settings from .env or use defaults/prompts
     default_testnet = os.getenv('USE_TESTNET', 'true').lower() == 'true'
-    use_testnet_input = input(f"🌐 Use Testnet? (yes/no, default: {'yes' if default_testnet else 'no'}): ").strip().lower()
+    use_testnet_input = input(f"🌐 Use Testnet? (yes/no, default: {'yes' if default_testnet else 'no'}) [Press Enter for yes]: ").strip().lower()
     
     if use_testnet_input:
-        use_testnet = use_testnet_input != 'no'
+        use_testnet = use_testnet_input not in ['no', 'n']
     else:
         use_testnet = default_testnet
     
@@ -1428,10 +1758,10 @@ def main():
             return
     
     default_auto_trade = os.getenv('AUTO_TRADE', 'true').lower() == 'true'
-    auto_trade_input = input(f"\n🤖 Enable Auto-Trading? (yes/no, default: {'yes' if default_auto_trade else 'no'}): ").strip().lower()
+    auto_trade_input = input(f"\n🤖 Enable Auto-Trading? (yes/no, default: {'yes' if default_auto_trade else 'no'}) [Press Enter for yes]: ").strip().lower()
     
     if auto_trade_input:
-        auto_trade = auto_trade_input in ['yes', 'y']
+        auto_trade = auto_trade_input not in ['no', 'n']
     else:
         auto_trade = default_auto_trade
     
@@ -1551,8 +1881,8 @@ def main():
         print(f"  Protection: +0.12% trigger → +0.05% secure")
     print("="*80)
     
-    confirm = input("\n✅ Start bot with these settings? (yes/no): ").strip().lower()
-    if confirm not in ['yes', 'y']:
+    confirm = input("\n✅ Start bot with these settings? (yes/no) [Press Enter for yes]: ").strip().lower()
+    if confirm in ['no', 'n']:
         print("\n✓ Cancelled")
         return
     

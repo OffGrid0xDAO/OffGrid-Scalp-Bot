@@ -116,35 +116,40 @@ class DualTimeframeBot:
         self.reconnect_hyperliquid()
 
     def setup_data_logging(self):
-        """Setup CSV logging for both timeframes"""
+        """Setup CSV logging for both timeframes - continuous files"""
         self.data_dir = Path("trading_data")
         self.data_dir.mkdir(exist_ok=True)
 
-        session_timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-        self.session_dir = self.data_dir / f"dual_session_{session_timestamp}"
-        self.session_dir.mkdir(exist_ok=True)
+        # Use continuous files (not per-session)
+        # This allows historical data to accumulate across sessions
+        self.ema_data_5min_file = self.data_dir / "ema_data_5min.csv"
+        self.ema_data_15min_file = self.data_dir / "ema_data_15min.csv"
+        self.trading_decisions_file = self.data_dir / "claude_decisions.csv"
 
-        # CSV files for each timeframe
-        self.ema_data_5min_file = self.session_dir / "ema_data_5min.csv"
-        self.ema_data_15min_file = self.session_dir / "ema_data_15min.csv"
-        self.trading_decisions_file = self.session_dir / "claude_decisions.csv"
-
-        # Initialize CSV headers
+        # Initialize CSV headers ONLY if files don't exist
         for file_path in [self.ema_data_5min_file, self.ema_data_15min_file]:
-            with open(file_path, 'w', newline='') as f:
-                writer = csv.writer(f)
-                writer.writerow(['timestamp', 'price', 'ribbon_state'])
+            if not file_path.exists():
+                with open(file_path, 'w', newline='') as f:
+                    writer = csv.writer(f)
+                    writer.writerow(['timestamp', 'price', 'ribbon_state'])
+                print(f"📝 Created new data file: {file_path.name}")
+            else:
+                print(f"📂 Using existing data file: {file_path.name}")
 
         # Trading decisions CSV
-        with open(self.trading_decisions_file, 'w', newline='') as f:
-            writer = csv.writer(f)
-            writer.writerow([
-                'timestamp', 'direction', 'entry_recommended', 'confidence_score',
-                'reasoning', 'entry_price', 'stop_loss', 'take_profit',
-                'timeframe_alignment', 'executed'
-            ])
+        if not self.trading_decisions_file.exists():
+            with open(self.trading_decisions_file, 'w', newline='') as f:
+                writer = csv.writer(f)
+                writer.writerow([
+                    'timestamp', 'direction', 'entry_recommended', 'confidence_score',
+                    'reasoning', 'entry_price', 'stop_loss', 'take_profit',
+                    'timeframe_alignment', 'executed'
+                ])
+            print(f"📝 Created new decisions file: {self.trading_decisions_file.name}")
+        else:
+            print(f"📂 Using existing decisions file: {self.trading_decisions_file.name}")
 
-        print(f"📁 Data logging initialized: {self.session_dir}")
+        print(f"📁 Data logging initialized: {self.data_dir}")
 
     def reconnect_hyperliquid(self):
         """Connect to Hyperliquid"""
@@ -177,13 +182,19 @@ class DualTimeframeBot:
         print(f"🤖 Auto-Trading: {'ENABLED ✅' if self.auto_trade else 'DISABLED ❌'}")
         print(f"🧠 Claude AI: {'ENABLED ✅' if self.claude else 'DISABLED ❌'}")
         print("\n" + "="*80)
-        print("\nTradingView Setup Instructions:")
-        print("  1. Log in to TradingView in BOTH browsers")
-        print("  2. BROWSER 1: Open 5-minute chart with Annii's Ribbon")
-        print("  3. BROWSER 2: Open 15-minute chart with Annii's Ribbon")
-        print("  4. Make sure ALL EMAs are visible on both charts")
-        print("  5. Press ENTER when both charts are ready")
+        print("\n🚀 Opening TradingView charts with Annii's Ribbon indicator...")
+        print("   The indicator will be loaded automatically on both charts.")
+        print("   Please wait while the browsers load...")
         print("="*80 + "\n")
+
+        # Base chart URL with ETH/USD and the indicator already added
+        # Format: chart URL + interval parameter + indicator
+        base_chart_url = "https://www.tradingview.com/chart/gsKW80Wm/?symbol=BINANCE%3AETHUSD"
+        indicator_script = "JvAOl84K-Ribbon-for-Scalping-5-to-15-min-timeframes"
+
+        # Chart URLs with different timeframes
+        chart_5min_url = f"{base_chart_url}&interval=5"
+        chart_15min_url = f"{base_chart_url}&interval=15"
 
         # Setup 5min browser
         print("🔷 Opening Browser 1 (5-minute chart)...")
@@ -194,8 +205,9 @@ class DualTimeframeBot:
         chrome_options.add_argument('--window-size=960,1080')
 
         self.driver_5min = webdriver.Chrome(options=chrome_options)
-        self.driver_5min.get('https://www.tradingview.com/')
-        time.sleep(2)
+        self.driver_5min.get(chart_5min_url)
+        print("   ✅ 5-minute chart loaded with indicator")
+        time.sleep(3)
 
         # Setup 15min browser
         print("🔶 Opening Browser 2 (15-minute chart)...")
@@ -206,11 +218,25 @@ class DualTimeframeBot:
         chrome_options_15.add_argument('--window-size=960,1080')
 
         self.driver_15min = webdriver.Chrome(options=chrome_options_15)
-        self.driver_15min.get('https://www.tradingview.com/')
-        time.sleep(2)
+        self.driver_15min.get(chart_15min_url)
+        print("   ✅ 15-minute chart loaded with indicator")
+        time.sleep(3)
 
-        input("👉 Press ENTER when both charts are ready: ")
-        print("\n✅ Both browsers ready!")
+        print("\n" + "="*80)
+        print("📊 BOTH CHARTS READY!")
+        print("="*80)
+        print("\n⚠️  IMPORTANT: Check that:")
+        print("   1. Both charts show ETH/USD on Binance")
+        print("   2. Annii's Ribbon indicator is visible with all EMAs")
+        print("   3. Left browser = 5-minute timeframe")
+        print("   4. Right browser = 15-minute timeframe")
+        print("\n   If the indicator didn't load automatically, you may need to:")
+        print("   - Log in to TradingView")
+        print("   - Manually add the indicator from your favorites/library")
+        print("="*80)
+
+        input("\n👉 Press ENTER when both charts are ready and showing data: ")
+        print("\n✅ Both browsers confirmed ready!")
 
     def read_indicators(self, driver):
         """Read indicators from TradingView"""
@@ -935,7 +961,7 @@ class DualTimeframeBot:
         print("\n" + "─"*80)
         auto_status = "🤖 AUTO-TRADING: ACTIVE ✅" if self.auto_trade else "⚠️  AUTO-TRADING: DISABLED"
         print(f"{auto_status} | Network: {'TESTNET' if self.use_testnet else 'MAINNET'}")
-        print(f"📁 Data Logging: {self.session_dir.name}")
+        print(f"📁 Data Logging: {self.data_dir} (continuous files)")
         print("Press Ctrl+C to stop")
         print("─"*80)
 
@@ -1128,7 +1154,7 @@ class DualTimeframeBot:
                                         # Don't update last_signal for trailing - too noisy, just print
 
                         # CASE 2: No position - check for ENTRY signals
-                        elif self.claude.should_execute_trade(direction, entry_recommended, confidence_score, self.min_confidence):
+                        elif self.claude.should_execute_trade(direction, entry_recommended, confidence_score, self.min_confidence, targets.get('timeframe_alignment', 'UNKNOWN')):
                             action = direction.lower()
                             yellow_ema_stop = targets.get('yellow_ema_stop', 0)
 

@@ -199,7 +199,7 @@ Individual EMAs:
 
         Returns:
             Tuple of (direction, entry_action, confidence, reasoning, targets)
-            - direction: 'LONG', 'SHORT', or 'WAIT'
+            - direction: 'LONG' or 'SHORT' (always determined by ribbon state)
             - entry_action: 'ENTRY_RECOMMENDED: YES' or 'ENTRY_RECOMMENDED: NO'
             - confidence: float 0-1
             - reasoning: str explanation
@@ -256,20 +256,42 @@ The system uses two detection thresholds:
    - 10+ out of 12 EMAs have flipped to same color
    - Now you can recommend entry IF other conditions are met (fresh transition, proper momentum, etc.)
 
-**ENTRY RULES:**
+**DIRECTION DETERMINATION (ALWAYS REQUIRED):**
 
-LONG Entry:
-- Entry Strength must be "STRONG" (85%+ green alignment, not just "BUILDING")
-- Wait for near-complete ribbon (10-12 green EMAs out of 12)
-- Enter when price breaks above the band OR retests yellow EMAs after breakout
-- Confirm with historical data: This should be a FRESH transition, not hours into a trend
-- Both 5min and 15min should ideally align (or 15min green + 5min transitioning)
+You MUST always determine a direction (LONG or SHORT) based on the dominant ribbon state:
 
-SHORT Entry:
-- Entry Strength must be "STRONG" (85%+ red alignment, not just "BUILDING")
-- Wait for near-complete ribbon (10-12 red EMAs out of 12)
-- Enter when price breaks below the band OR retests yellow EMAs after breakout
-- Confirm with historical data: This should be a FRESH transition, not hours into a trend
+🚨 CRITICAL - DIRECTION RULES (FOLLOW EXACTLY):
+- If 5min shows predominantly RED EMAs (>50%) → Direction: SHORT (NOT LONG!)
+- If 5min shows predominantly GREEN EMAs (>50%) → Direction: LONG (NOT SHORT!)
+- If 15min shows predominantly RED EMAs (>50%) → Direction: SHORT (NOT LONG!)
+- If 15min shows predominantly GREEN EMAs (>50%) → Direction: LONG (NOT SHORT!)
+- RED ribbon = SHORT direction = bearish
+- GREEN ribbon = LONG direction = bullish
+- If mixed/unclear, choose based on 15min timeframe (higher timeframe = trend direction)
+
+DOUBLE CHECK YOUR DECISION:
+- Before outputting, verify that if you see "all_red" or "red alignment 90%+", your DECISION is "SHORT"
+- Before outputting, verify that if you see "all_green" or "green alignment 90%+", your DECISION is "LONG"
+
+**ENTRY RECOMMENDATION RULES:**
+
+After determining direction, decide whether to recommend entry (YES/NO):
+
+Recommend ENTRY: YES when ALL of these conditions are met:
+- Entry Strength is "STRONG" (85%+ alignment, not just "BUILDING")
+- Wait for near-complete ribbon (10-12 EMAs of same color out of 12)
+- Price breaks above/below the band OR retests yellow EMAs after breakout
+- FRESH transition confirmed in historical data (not hours into a trend)
+- Both timeframes ideally aligned (or 15min aligned + 5min transitioning)
+
+Recommend ENTRY: NO when:
+- Entry Strength is only "BUILDING" (50-84% alignment - not enough yet)
+- Ribbon is mixed or conflicting between timeframes (TIMEFRAME_ALIGNMENT: "CONFLICTING")
+- Transition is STALE (been in this state for 3+ hours)
+- Already in a position
+- Setup is unclear or low confidence
+- Price already far from yellow EMA (late entry)
+- 🚨 CRITICAL: If TIMEFRAME_ALIGNMENT is "CONFLICTING", you MUST set ENTRY_RECOMMENDED: "NO"
 
 **EXIT RULES (CRITICAL):**
 
@@ -289,9 +311,10 @@ For SHORT positions (reverse):
 4. Cross above yellow = EXIT
 
 **WHAT NOT TO DO:**
-- Do NOT enter when only 1-2 EMAs change color (could be just a pullback, not reversal)
-- Do NOT try to pick early reversals
-- Do NOT enter if ribbon has been green/red for hours (LATE entry)
+- Do NOT recommend entry when only 1-2 EMAs change color (could be just a pullback, not reversal)
+- Do NOT recommend entry trying to pick early reversals
+- Do NOT recommend entry if ribbon has been green/red for hours (LATE entry)
+- But ALWAYS provide a direction (LONG or SHORT) regardless of entry recommendation
 
 **ANALYSIS REQUIRED:**
 1. Evaluate ribbon state on both timeframes
@@ -315,13 +338,14 @@ MEDIUM CONFIDENCE:
 - Transition somewhat recent (1-2 hours)
 - Yellow EMA support visible but not strongly tested
 
-LOW CONFIDENCE (WAIT):
+LOW CONFIDENCE (Do NOT recommend entry):
 - Mixed ribbons or conflicting timeframes
 - Transition is STALE (been green/red for 3+ hours)
 - Outer bands already spreading
 - No clear yellow EMA support pattern
 - Already in position
 - Price already far from yellow EMA (late entry)
+- NOTE: Even with low confidence, you must still provide a LONG or SHORT direction
 
 **EXIT SIGNALS (for existing positions):**
 - Outer 3 bands spreading away from others
@@ -364,11 +388,33 @@ ANALYSIS INSTRUCTIONS:
 5. Confirm this isn't the tail-end of a move (price already moved significantly from earliest history)
 6. Look for patterns: V-bottoms, failed breakouts, momentum acceleration
 
+**PRICE TARGETS CALCULATION:**
+
+You MUST provide specific numerical values for ENTRY_PRICE, STOP_LOSS, and TAKE_PROFIT:
+
+1. **ENTRY_PRICE**: Use the current market price from the 5min timeframe
+
+2. **STOP_LOSS**:
+   - For LONG: Place stop loss at the identified yellow EMA level (below current price)
+   - For SHORT: Place stop loss at the identified yellow EMA level (above current price)
+   - If yellow EMA is unclear, use a 0.5-1% stop loss from entry
+   - Example: Current price $2650, LONG → Stop Loss at $2640 (yellow EMA or -0.5%)
+
+3. **TAKE_PROFIT**:
+   - For LONG: Set take profit 1.5-2% above entry price
+   - For SHORT: Set take profit 1.5-2% below entry price
+   - Adjust based on recent price volatility and support/resistance levels
+   - Example: Current price $2650, LONG → Take Profit at $2690 (+1.5%)
+
+4. **YELLOW_EMA_STOP**: Identify which yellow EMA (there are typically 2) has been acting as support/resistance in the historical data. This is used for trailing stops.
+
+IMPORTANT: All price fields must contain actual numeric values (not 0000.00 or 0). Calculate these based on current price.
+
 PROVIDE YOUR DECISION IN THIS EXACT JSON FORMAT:
 
 ```json
 {{
-  "DECISION": "LONG" | "SHORT" | "WAIT" | "EXIT",
+  "DECISION": "LONG" | "SHORT",
   "CONFIDENCE": "HIGH" | "MEDIUM" | "LOW",
   "CONFIDENCE_SCORE": 0.0-1.0,
   "TIMEFRAME_ALIGNMENT": "STRONG" | "MODERATE" | "WEAK" | "CONFLICTING",
@@ -382,6 +428,8 @@ PROVIDE YOUR DECISION IN THIS EXACT JSON FORMAT:
 - Exit Signals: [outer bands spreading, yellow EMA status, reversal signs]
 - Risk Factors: [concerns, cautions, why waiting/exiting might be better]",
   "ENTRY_PRICE": 0000.00,
+  "STOP_LOSS": 0000.00,
+  "TAKE_PROFIT": 0000.00,
   "YELLOW_EMA_STOP": 0000.00,
   "YELLOW_EMA_IDENTIFIED": "EMA_XX",
   "OUTER_BANDS_SPREADING": true | false,
@@ -389,11 +437,59 @@ PROVIDE YOUR DECISION IN THIS EXACT JSON FORMAT:
 }}
 ```
 
+🚨 CRITICAL LOGIC RULES - MUST FOLLOW EXACTLY:
+
+1. **ALWAYS PROVIDE A DIRECTION:**
+   - You MUST always choose either "LONG" or "SHORT" based on the dominant ribbon state
+   - There is NO "WAIT" option anymore
+   - Direction is determined by ribbon color, not by whether you want to enter
+
+2. **DIRECTION DETERMINATION:**
+   - If 5min or 15min shows predominantly GREEN EMAs → DECISION: "LONG"
+   - If 5min or 15min shows predominantly RED EMAs → DECISION: "SHORT"
+   - If mixed/unclear, use 15min timeframe to determine direction
+   - Even if both are mixed, you MUST still choose LONG or SHORT (prefer 15min state)
+
+3. **ENTRY RECOMMENDATION (SEPARATE FROM DIRECTION):**
+   - ENTRY_RECOMMENDED: "YES" = Setup is good, conditions met, recommend entering
+   - ENTRY_RECOMMENDED: "NO" = Setup is not ideal, do NOT enter yet (but direction is still provided)
+
+   Set ENTRY_RECOMMENDED: "YES" when:
+   - Entry Strength is "STRONG" (85%+ threshold met)
+   - FRESH transition confirmed in history
+   - Timeframes aligned or 15min aligned with 5min transitioning
+   - High confidence (typically 0.75+)
+
+   Set ENTRY_RECOMMENDED: "NO" when:
+   - Entry Strength is only "BUILDING" (50-84%)
+   - Transition is STALE (hours old)
+   - Already in a position
+   - Low confidence or unclear setup
+   - Late entry (price already moved far)
+
+4. **CORRECT EXAMPLES:**
+   ✅ DECISION: "LONG", ENTRY_RECOMMENDED: "YES", CONFIDENCE_SCORE: 0.85
+      → Ribbon is green, setup is good, enter long
+
+   ✅ DECISION: "LONG", ENTRY_RECOMMENDED: "NO", CONFIDENCE_SCORE: 0.45
+      → Ribbon is green (so direction is LONG), but setup is weak, do NOT enter
+
+   ✅ DECISION: "SHORT", ENTRY_RECOMMENDED: "YES", CONFIDENCE_SCORE: 0.90
+      → Ribbon is red, setup is excellent, enter short
+
+   ✅ DECISION: "SHORT", ENTRY_RECOMMENDED: "NO", CONFIDENCE_SCORE: 0.50
+      → Ribbon is red (so direction is SHORT), but conditions not met, do NOT enter
+
+5. **KEY POINT:**
+   - DECISION (LONG/SHORT) = What direction the ribbon is pointing
+   - ENTRY_RECOMMENDED (YES/NO) = Whether the setup is good enough to actually trade
+   - These are now INDEPENDENT fields - direction is always determined by ribbon state
+
 IMPORTANT:
 - Be conservative. Only recommend entry (ENTRY_RECOMMENDED: YES) when confidence is HIGH
 - Prefer 15min timeframe for trend direction, 5min for entry timing
-- If EMAs are mixed or in transition (gray), recommend WAIT
-- If already in position, recommend WAIT unless there's a clear exit signal
+- If EMAs are mixed or in transition (gray), set ENTRY_RECOMMENDED: NO (but still provide LONG or SHORT)
+- If already in position, set ENTRY_RECOMMENDED: NO unless there's a clear exit signal
 - Provide specific entry, stop loss, and take profit prices based on current price
 - In your REASONING, clearly explain the state of BOTH timeframes
 
@@ -462,11 +558,84 @@ Respond with ONLY the JSON object, no additional text."""
             decision = json.loads(response_text)
 
             # Extract fields
-            direction = decision.get('DIRECTION', 'WAIT').upper()
+            direction = decision.get('DIRECTION', '').upper()
             entry_recommended = decision.get('ENTRY_RECOMMENDED', 'NO').upper()
             exit_recommended = decision.get('EXIT_RECOMMENDED', 'NO').upper()
             confidence_score = float(decision.get('CONFIDENCE_SCORE', 0.5))
             reasoning = decision.get('REASONING', 'No reasoning provided')
+
+            # VALIDATE: Direction must be LONG or SHORT
+            if direction not in ['LONG', 'SHORT']:
+                print(f"⚠️  WARNING: Claude returned invalid direction: '{direction}'")
+                print("   Inferring direction from ribbon state...")
+                # Infer direction from ribbon state
+                if data_5min.get('state') == 'all_green' or data_15min.get('state') == 'all_green':
+                    direction = 'LONG'
+                    print(f"   → Setting DECISION to LONG (ribbon is green)")
+                elif data_5min.get('state') == 'all_red' or data_15min.get('state') == 'all_red':
+                    direction = 'SHORT'
+                    print(f"   → Setting DECISION to SHORT (ribbon is red)")
+                else:
+                    # Default to 15min state if both are mixed
+                    if data_15min.get('state') == 'all_green':
+                        direction = 'LONG'
+                    elif data_15min.get('state') == 'all_red':
+                        direction = 'SHORT'
+                    else:
+                        # Last resort: check which has more green/red EMAs
+                        green_5min = len(data_5min.get('ema_groups', {}).get('green', []))
+                        red_5min = len(data_5min.get('ema_groups', {}).get('red', []))
+                        direction = 'LONG' if green_5min > red_5min else 'SHORT'
+                    print(f"   → Defaulting DECISION to {direction} based on EMA counts")
+
+            # SAFETY CHECK: Validate direction matches ribbon state
+            # If ribbon is clearly red (>80% red), direction MUST be SHORT
+            # If ribbon is clearly green (>80% green), direction MUST be LONG
+            green_5min = len(data_5min.get('ema_groups', {}).get('green', []))
+            red_5min = len(data_5min.get('ema_groups', {}).get('red', []))
+            total_5min = green_5min + red_5min
+
+            green_15min = len(data_15min.get('ema_groups', {}).get('green', []))
+            red_15min = len(data_15min.get('ema_groups', {}).get('red', []))
+            total_15min = green_15min + red_15min
+
+            # Check 5min ribbon
+            if total_5min > 0:
+                red_pct_5min = (red_5min / total_5min) * 100
+                green_pct_5min = (green_5min / total_5min) * 100
+
+                if red_pct_5min > 80 and direction == 'LONG':
+                    print(f"🚨 CRITICAL ERROR: Claude returned LONG but 5min ribbon is {red_pct_5min:.1f}% RED!")
+                    print(f"   5min: {red_5min} red EMAs vs {green_5min} green EMAs")
+                    print(f"   FORCING direction to SHORT")
+                    direction = 'SHORT'
+                    entry_recommended = 'NO'  # Don't trust this decision
+
+                elif green_pct_5min > 80 and direction == 'SHORT':
+                    print(f"🚨 CRITICAL ERROR: Claude returned SHORT but 5min ribbon is {green_pct_5min:.1f}% GREEN!")
+                    print(f"   5min: {green_5min} green EMAs vs {red_5min} red EMAs")
+                    print(f"   FORCING direction to LONG")
+                    direction = 'LONG'
+                    entry_recommended = 'NO'  # Don't trust this decision
+
+            # Check 15min ribbon
+            if total_15min > 0:
+                red_pct_15min = (red_15min / total_15min) * 100
+                green_pct_15min = (green_15min / total_15min) * 100
+
+                if red_pct_15min > 80 and direction == 'LONG':
+                    print(f"🚨 CRITICAL ERROR: Claude returned LONG but 15min ribbon is {red_pct_15min:.1f}% RED!")
+                    print(f"   15min: {red_15min} red EMAs vs {green_15min} green EMAs")
+                    print(f"   FORCING direction to SHORT")
+                    direction = 'SHORT'
+                    entry_recommended = 'NO'  # Don't trust this decision
+
+                elif green_pct_15min > 80 and direction == 'SHORT':
+                    print(f"🚨 CRITICAL ERROR: Claude returned SHORT but 15min ribbon is {green_pct_15min:.1f}% GREEN!")
+                    print(f"   15min: {green_15min} green EMAs vs {red_15min} red EMAs")
+                    print(f"   FORCING direction to LONG")
+                    direction = 'LONG'
+                    entry_recommended = 'NO'  # Don't trust this decision
 
             # Extract targets and Annii's Ribbon exit management
             targets = {
@@ -503,8 +672,14 @@ Respond with ONLY the JSON object, no additional text."""
 
         except Exception as e:
             print(f"⚠️  Claude API error: {str(e)}")
-            # Fallback to conservative decision
-            return 'WAIT', 'NO', 0.0, f"API Error: {str(e)}", {
+            # Fallback: Infer direction from ribbon state, but don't recommend entry
+            fallback_direction = 'LONG'
+            if data_5min.get('state') == 'all_red' or data_15min.get('state') == 'all_red':
+                fallback_direction = 'SHORT'
+            elif data_5min.get('state') == 'all_green' or data_15min.get('state') == 'all_green':
+                fallback_direction = 'LONG'
+
+            return fallback_direction, 'NO', 0.0, f"API Error: {str(e)}", {
                 'entry_price': data_5min['price'],
                 'stop_loss': 0,
                 'take_profit': 0,
@@ -512,19 +687,26 @@ Respond with ONLY the JSON object, no additional text."""
             }
 
     def should_execute_trade(self, direction: str, entry_recommended: str,
-                            confidence_score: float, min_confidence: float = 0.75) -> bool:
+                            confidence_score: float, min_confidence: float = 0.75,
+                            timeframe_alignment: str = 'UNKNOWN') -> bool:
         """
         Determine if trade should be executed based on decision
 
         Args:
-            direction: LONG, SHORT, or WAIT
+            direction: LONG or SHORT (always provided)
             entry_recommended: YES or NO
             confidence_score: 0-1 confidence score
             min_confidence: Minimum confidence threshold (default 0.75)
+            timeframe_alignment: STRONG, MODERATE, WEAK, or CONFLICTING
 
         Returns:
             bool: True if trade should be executed
         """
+        # NEVER trade when timeframes are conflicting
+        if timeframe_alignment == 'CONFLICTING':
+            print(f"⚠️  BLOCKING TRADE: Timeframe alignment is CONFLICTING")
+            return False
+
         return (
             direction in ['LONG', 'SHORT'] and
             entry_recommended == 'YES' and

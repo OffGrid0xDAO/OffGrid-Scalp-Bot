@@ -91,6 +91,16 @@ class DualTimeframeBot:
         self.active_sl_order = None  # Stop loss order ID
         self.last_sl_price = None    # Track last stop loss price to avoid unnecessary updates
 
+        # Commentary tracking
+        self.last_commentary_time = None
+        self.commentary_interval = 600  # 10 minutes in seconds
+        self.last_commentary = None
+
+        # API call optimization
+        self.last_api_call_time = None
+        self.min_api_call_interval = 60  # Minimum 60 seconds between Claude calls
+        self.last_check_state = {'5min': None, '15min': None}  # Track state changes
+
         # Data logging
         self.setup_data_logging()
 
@@ -303,14 +313,29 @@ class DualTimeframeBot:
 
         non_yellow_total = len(green_emas) + len(red_emas)
 
+        # Two-tier threshold system:
+        # - 50% threshold: "start watching" (triggers state label)
+        # - 85% threshold: "consider entering" (strong alignment for trading)
         if non_yellow_total == 0:
             state = 'unknown'
-        elif len(green_emas) >= non_yellow_total * 0.9:
+            entry_strength = 'none'
+        elif len(green_emas) >= non_yellow_total * 0.5:  # 50% = start watching
             state = 'all_green'
-        elif len(red_emas) >= non_yellow_total * 0.9:
+            # Check if it's strong enough for entry (85%+)
+            if len(green_emas) >= non_yellow_total * 0.85:
+                entry_strength = 'strong'  # Ready for entry
+            else:
+                entry_strength = 'building'  # Watching, not ready
+        elif len(red_emas) >= non_yellow_total * 0.5:  # 50% = start watching
             state = 'all_red'
+            # Check if it's strong enough for entry (85%+)
+            if len(red_emas) >= non_yellow_total * 0.85:
+                entry_strength = 'strong'  # Ready for entry
+            else:
+                entry_strength = 'building'  # Watching, not ready
         else:
             state = 'mixed'
+            entry_strength = 'weak'
 
         ema_groups = {
             'yellow': yellow_emas,
@@ -318,7 +343,8 @@ class DualTimeframeBot:
             'red': red_emas,
             'gray': gray_emas,
             'dark_green': dark_green_emas,
-            'dark_red': dark_red_emas
+            'dark_red': dark_red_emas,
+            'entry_strength': entry_strength  # NEW: tells Claude if alignment is strong enough
         }
 
         return state, ema_groups, mma_indicators
@@ -831,6 +857,11 @@ class DualTimeframeBot:
         print(f"   {state_emoji_5min} State: {state_5min.upper()}")
         print(f"   💰 Price: ${price_5min:.2f}" if price_5min else "   💰 Price: N/A")
         print(f"   🟢 {len(ema_5min.get('green', []))} | 🔴 {len(ema_5min.get('red', []))} | ⚪ {len(ema_5min.get('gray', []))}")
+        # Show entry strength indicator
+        entry_strength_5min = ema_5min.get('entry_strength', 'unknown')
+        strength_emoji = "💪" if entry_strength_5min == 'strong' else "👀" if entry_strength_5min == 'building' else "⚠️"
+        if entry_strength_5min in ['strong', 'building']:
+            print(f"   {strength_emoji} Entry Strength: {entry_strength_5min.upper()}")
         if ema_5min.get('dark_green') or ema_5min.get('dark_red'):
             print(f"   💎 Dark: {len(ema_5min.get('dark_green', []))} green | {len(ema_5min.get('dark_red', []))} red")
 
@@ -844,6 +875,11 @@ class DualTimeframeBot:
         print(f"   {state_emoji_15min} State: {state_15min.upper()}")
         print(f"   💰 Price: ${price_15min:.2f}" if price_15min else "   💰 Price: N/A")
         print(f"   🟢 {len(ema_15min.get('green', []))} | 🔴 {len(ema_15min.get('red', []))} | ⚪ {len(ema_15min.get('gray', []))}")
+        # Show entry strength indicator
+        entry_strength_15min = ema_15min.get('entry_strength', 'unknown')
+        strength_emoji = "💪" if entry_strength_15min == 'strong' else "👀" if entry_strength_15min == 'building' else "⚠️"
+        if entry_strength_15min in ['strong', 'building']:
+            print(f"   {strength_emoji} Entry Strength: {entry_strength_15min.upper()}")
         if ema_15min.get('dark_green') or ema_15min.get('dark_red'):
             print(f"   💎 Dark: {len(ema_15min.get('dark_green', []))} green | {len(ema_15min.get('dark_red', []))} red")
 
@@ -870,6 +906,11 @@ class DualTimeframeBot:
         if self.last_signal:
             print(f"\n⚡ LAST SIGNAL: {self.last_signal}")
 
+        # Claude commentary
+        if self.last_commentary:
+            print(f"\n💬 CLAUDE'S THOUGHTS:")
+            print(f"   {self.last_commentary}")
+
         # Account info
         if account:
             available = account['account_value'] - account['margin_used']
@@ -880,6 +921,15 @@ class DualTimeframeBot:
         # Trade count
         if self.trades:
             print(f"\n📈 TRADES TODAY: {len(self.trades)}")
+
+        # Claude API cost tracking
+        if self.claude:
+            cost_stats = self.claude.get_cost_summary()
+            print(f"\n💰 API COSTS: ${cost_stats['session_cost_usd']:.4f} ({cost_stats['total_calls']} calls)")
+            if cost_stats['total_calls'] > 0:
+                calls_per_hour = (cost_stats['total_calls'] / check_num) * 120 if check_num > 0 else 0
+                estimated_hourly = cost_stats['session_cost_usd'] / (check_num / 120) if check_num > 0 else 0
+                print(f"   Est. hourly: ${estimated_hourly:.2f} | Cached: {cost_stats['total_cached_tokens']:,} tokens")
 
         # Footer
         print("\n" + "─"*80)
@@ -933,20 +983,32 @@ class DualTimeframeBot:
                 # 2. We detected a fresh transition right now
                 should_check_entry = self.warmup_complete or has_transition
 
+                # Smart API call logic to reduce costs
+                current_time = time.time()
+                time_since_last_call = (current_time - self.last_api_call_time) if self.last_api_call_time else 999
+                state_changed = (self.data_5min['state'] != self.last_check_state['5min'] or
+                               self.data_15min['state'] != self.last_check_state['15min'])
+
                 # Determine if we should ask Claude for decision
-                # - If NO position: Only on fresh transition or after warmup
-                # - If IN position: ALWAYS check (for exits, reversals, position management)
+                # Cost optimization: Only call Claude when necessary
                 should_ask_claude = False
 
                 if pos:
-                    # In position: Always check Claude for exit signals
-                    should_ask_claude = True
+                    # In position: Check every 60 seconds OR if state changed
+                    if time_since_last_call >= self.min_api_call_interval or state_changed:
+                        should_ask_claude = True
                 elif should_check_entry:
-                    # No position: Only check on transitions
-                    should_ask_claude = True
+                    # No position: Only check on transitions AND if enough time passed
+                    if (has_transition or state_changed) and time_since_last_call >= self.min_api_call_interval:
+                        should_ask_claude = True
+
+                # Update last check states
+                self.last_check_state['5min'] = self.data_5min['state']
+                self.last_check_state['15min'] = self.data_15min['state']
 
                 # Make Claude decision if we have Claude and conditions met
                 if self.claude and should_ask_claude:
+                    self.last_api_call_time = current_time  # Update call time
                     try:
                         direction, entry_recommended, confidence_score, reasoning, targets = \
                             self.claude.make_trading_decision(
@@ -1096,6 +1158,22 @@ class DualTimeframeBot:
                     except Exception as e:
                         print(f"⚠️  Claude decision error: {e}")
 
+                # Periodic commentary (every 10 minutes)
+                current_time_commentary = time.time()
+                if self.claude and (self.last_commentary_time is None or
+                                   current_time_commentary - self.last_commentary_time >= self.commentary_interval):
+                    try:
+                        commentary = self.claude.get_market_commentary(
+                            self.data_5min,
+                            self.data_15min,
+                            pos
+                        )
+                        self.last_commentary = commentary
+                        self.last_commentary_time = current_time_commentary
+                        print(f"\n💬 Claude: {commentary}")
+                    except Exception as e:
+                        print(f"⚠️  Commentary error: {e}")
+
                 # Display dashboard
                 self.display_dashboard(check_num, last_decision)
 
@@ -1108,6 +1186,10 @@ class DualTimeframeBot:
             if self.trades:
                 for i, trade in enumerate(self.trades, 1):
                     print(f"  {i}. {trade['time'].strftime('%H:%M:%S')} - {trade['action'].upper()} @ ${trade['price']:.2f} (Conf: {trade['confidence']:.0%})")
+
+            # Print Claude API cost summary
+            if self.claude:
+                self.claude.print_cost_summary()
 
         finally:
             self.running = False

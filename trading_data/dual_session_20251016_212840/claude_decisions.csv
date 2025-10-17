@@ -1,3 +1,0 @@
-timestamp,direction,entry_recommended,confidence_score,reasoning,entry_price,stop_loss,take_profit,timeframe_alignment,executed
-2025-10-16T21:34:16.350272,SHORT,YES,0.95,"Perfect SHORT setup with 100% red alignment on both timeframes. All 26 EMAs are red and dark red on both 5min and 15min, indicating extremely strong bearish momentum. Price is significantly below all ",3831.25,3850.41,3773.78,STRONG,True
-2025-10-16T21:36:00.033251,SHORT,YES,0.95,"Perfect SHORT setup with 100% red alignment on both timeframes. All 26 EMAs are red and dark red on both 5min and 15min, indicating extremely strong bearish momentum. Price is below all EMAs with sign",3835.65,3854.83,3778.12,STRONG,True

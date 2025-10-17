@@ -32,6 +32,13 @@ class ClaudeTrader:
         self.last_decision = None
         self.decision_history = []
 
+        # Cost tracking
+        self.total_input_tokens = 0
+        self.total_output_tokens = 0
+        self.total_cached_tokens = 0
+        self.total_calls = 0
+        self.session_cost = 0.0
+
         print(f"🧠 Claude Trader initialized with model: {model}")
 
     def format_ema_data(self, timeframe: str, indicators: Dict, state: str,
@@ -78,6 +85,9 @@ class ClaudeTrader:
         dark_green_count = len(ema_groups.get('dark_green', []))
         dark_red_count = len(ema_groups.get('dark_red', []))
 
+        # NEW: Get entry strength indicator
+        entry_strength = ema_groups.get('entry_strength', 'unknown')
+
         total = green_count + red_count
         green_pct = (green_count / total * 100) if total > 0 else 0
         red_pct = (red_count / total * 100) if total > 0 else 0
@@ -87,6 +97,7 @@ class ClaudeTrader:
 Timestamp: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}
 Current Price: ${current_price:.2f}
 Ribbon State: {state.upper().replace('_', ' ')}
+Entry Strength: {entry_strength.upper()} ⚠️ IMPORTANT: 'BUILDING' = watching only, 'STRONG' = consider entry
 
 EMA Alignment:
 - Green EMAs: {green_count} ({green_pct:.1f}%) | Dark Green: {dark_green_count}
@@ -232,16 +243,31 @@ Individual EMAs:
 
 ANNII'S RIBBON STRATEGY (5-15min Scalping):
 
+**IMPORTANT: TWO-TIER THRESHOLD SYSTEM**
+
+The system uses two detection thresholds:
+1. **50% Threshold (BUILDING)** = "Start watching" - State shows 'all_green' or 'all_red' but Entry Strength: BUILDING
+   - This triggers monitoring but NOT entry
+   - 6+ out of 12 EMAs have flipped to same color
+   - You should analyze and provide commentary but DO NOT recommend entry yet
+
+2. **85% Threshold (STRONG)** = "Consider entering" - Entry Strength: STRONG
+   - This signals the ribbon is nearly complete
+   - 10+ out of 12 EMAs have flipped to same color
+   - Now you can recommend entry IF other conditions are met (fresh transition, proper momentum, etc.)
+
 **ENTRY RULES:**
 
 LONG Entry:
-- Wait for ENTIRE ribbon to turn green (100% green alignment)
+- Entry Strength must be "STRONG" (85%+ green alignment, not just "BUILDING")
+- Wait for near-complete ribbon (10-12 green EMAs out of 12)
 - Enter when price breaks above the band OR retests yellow EMAs after breakout
 - Confirm with historical data: This should be a FRESH transition, not hours into a trend
 - Both 5min and 15min should ideally align (or 15min green + 5min transitioning)
 
 SHORT Entry:
-- Wait for ENTIRE ribbon to turn red (100% red alignment)
+- Entry Strength must be "STRONG" (85%+ red alignment, not just "BUILDING")
+- Wait for near-complete ribbon (10-12 red EMAs out of 12)
 - Enter when price breaks below the band OR retests yellow EMAs after breakout
 - Confirm with historical data: This should be a FRESH transition, not hours into a trend
 
@@ -392,13 +418,37 @@ Respond with ONLY the JSON object, no additional text."""
                 ]
             )
 
-            # Log cache usage for cost tracking
+            # Log cache usage and track costs
             usage = response.usage
-            if hasattr(usage, 'cache_creation_input_tokens') and usage.cache_creation_input_tokens:
-                print(f"💾 Cache created: {usage.cache_creation_input_tokens} tokens")
-            if hasattr(usage, 'cache_read_input_tokens') and usage.cache_read_input_tokens:
-                cache_savings = usage.cache_read_input_tokens * 0.9  # 90% savings
-                print(f"💰 Cache hit! Read {usage.cache_read_input_tokens} tokens from cache (saved ~{cache_savings:.0f} tokens = 90% cost)")
+
+            # Track token usage
+            input_tokens = getattr(usage, 'input_tokens', 0)
+            output_tokens = getattr(usage, 'output_tokens', 0)
+            cache_read_tokens = getattr(usage, 'cache_read_input_tokens', 0)
+            cache_creation_tokens = getattr(usage, 'cache_creation_input_tokens', 0)
+
+            self.total_input_tokens += input_tokens
+            self.total_output_tokens += output_tokens
+            self.total_cached_tokens += cache_read_tokens
+            self.total_calls += 1
+
+            # Calculate cost (Claude Sonnet 4 pricing)
+            # Input: $3 per million tokens
+            # Output: $15 per million tokens
+            # Cached: $0.30 per million tokens (90% discount)
+            input_cost = (input_tokens / 1_000_000) * 3.0
+            output_cost = (output_tokens / 1_000_000) * 15.0
+            cached_cost = (cache_read_tokens / 1_000_000) * 0.30
+            call_cost = input_cost + output_cost + cached_cost
+            self.session_cost += call_cost
+
+            if cache_creation_tokens:
+                print(f"💾 Cache created: {cache_creation_tokens} tokens")
+            if cache_read_tokens:
+                cache_savings = (cache_read_tokens / 1_000_000) * (3.0 - 0.30)  # Savings vs non-cached
+                print(f"💰 Cache hit! {cache_read_tokens} tokens (saved ${cache_savings:.4f})")
+
+            print(f"💵 Call cost: ${call_cost:.4f} | Session total: ${self.session_cost:.4f} ({self.total_calls} calls)")
 
             # Extract response
             response_text = response.content[0].text.strip()
@@ -480,6 +530,122 @@ Respond with ONLY the JSON object, no additional text."""
             entry_recommended == 'YES' and
             confidence_score >= min_confidence
         )
+
+    def get_market_commentary(
+        self,
+        data_5min: Dict,
+        data_15min: Dict,
+        current_position: Optional[Dict] = None
+    ) -> str:
+        """
+        Get Claude's sporadic commentary on market state and trading conditions.
+        This is a lighter-weight call than full trading decisions, focused on
+        narrative observations rather than trade execution.
+
+        Args:
+            data_5min: 5-minute timeframe data
+            data_15min: 15-minute timeframe data
+            current_position: Current position info
+
+        Returns:
+            Commentary string from Claude
+        """
+        # Format both timeframes (reuse existing method)
+        formatted_5min = self.format_ema_data(
+            "5min",
+            data_5min['indicators'],
+            data_5min['state'],
+            data_5min['ema_groups'],
+            data_5min['price']
+        )
+
+        formatted_15min = self.format_ema_data(
+            "15min",
+            data_15min['indicators'],
+            data_15min['state'],
+            data_15min['ema_groups'],
+            data_15min['price']
+        )
+
+        # Format position info
+        position_str = "No position"
+        if current_position:
+            position_str = f"{current_position['side'].upper()} {current_position['size']:.4f} @ ${current_position['entry_price']:.2f} (PnL: ${current_position.get('unrealized_pnl', 0):+.2f})"
+
+        try:
+            # Create a lightweight prompt for commentary
+            commentary_prompt = f"""You're a trading analyst providing brief, sporadic commentary on the market state.
+
+CURRENT MARKET STATE:
+
+5-MINUTE TIMEFRAME:
+{formatted_5min}
+
+15-MINUTE TIMEFRAME:
+{formatted_15min}
+
+CURRENT POSITION: {position_str}
+
+Provide a brief (2-3 sentences) commentary about what you're observing. Be conversational and insightful.
+Focus on:
+- Overall market momentum and ribbon state
+- Interesting patterns or transitions you notice
+- Brief risk/opportunity observations
+- If there's a position, comment on how it's looking
+
+Keep it casual and natural, like you're thinking out loud. Don't make specific recommendations, just observations.
+
+Respond with ONLY your commentary text, no JSON or formatting."""
+
+            response = self.client.messages.create(
+                model=self.model,
+                max_tokens=256,
+                temperature=0.7,  # Higher temperature for more natural, varied commentary
+                messages=[
+                    {
+                        "role": "user",
+                        "content": commentary_prompt
+                    }
+                ]
+            )
+
+            commentary = response.content[0].text.strip()
+            return commentary
+
+        except Exception as e:
+            return f"[Commentary unavailable: {str(e)}]"
+
+    def get_cost_summary(self) -> Dict:
+        """Get cost tracking summary"""
+        return {
+            'total_calls': self.total_calls,
+            'total_input_tokens': self.total_input_tokens,
+            'total_output_tokens': self.total_output_tokens,
+            'total_cached_tokens': self.total_cached_tokens,
+            'session_cost_usd': self.session_cost,
+            'avg_cost_per_call': self.session_cost / max(self.total_calls, 1)
+        }
+
+    def print_cost_summary(self):
+        """Print formatted cost summary"""
+        stats = self.get_cost_summary()
+        print(f"\n{'='*80}")
+        print("💰 CLAUDE API COST SUMMARY")
+        print(f"{'='*80}")
+        print(f"Total API Calls: {stats['total_calls']}")
+        print(f"Input Tokens: {stats['total_input_tokens']:,}")
+        print(f"Output Tokens: {stats['total_output_tokens']:,}")
+        print(f"Cached Tokens: {stats['total_cached_tokens']:,}")
+        print(f"Session Cost: ${stats['session_cost_usd']:.4f}")
+        print(f"Avg Cost/Call: ${stats['avg_cost_per_call']:.4f}")
+
+        # Estimate hourly and daily costs
+        if stats['total_calls'] > 0:
+            print(f"\n📊 PROJECTIONS:")
+            hourly_cost = stats['session_cost_usd'] / (stats['total_calls'] / 120)  # Assuming 30sec intervals
+            print(f"Estimated Hourly: ${hourly_cost:.2f}")
+            print(f"Estimated Daily (8 hours): ${hourly_cost * 8:.2f}")
+        print(f"{'='*80}\n")
 
     def get_decision_summary(self) -> str:
         """Get formatted summary of last decision"""

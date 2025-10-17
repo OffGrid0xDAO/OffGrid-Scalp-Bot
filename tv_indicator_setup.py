@@ -349,23 +349,35 @@ class TradingViewIndicatorSetup:
             while time.time() - start_time < timeout:
                 # If a Symbol Search popup is overlaying the chart, close it
                 self._close_symbol_search_if_present()
-                # Check if we can find MMA values in the values panel
-                mma_selectors = [
-                    "//div[contains(text(), 'MMA 8:')]",
-                    "//div[contains(text(), 'MMA 13:')]",
-                    "//div[contains(text(), 'MMA 21:')]",
-                    "//span[contains(text(), 'MMA')]"
-                ]
-                
-                for selector in mma_selectors:
-                    try:
-                        elements = self.driver.find_elements(By.XPATH, selector)
-                        if elements:
-                            print(f"   ✅ Found {len(elements)} MMA indicators!")
-                            return True
-                    except:
-                        continue
-                
+
+                # 1) Direct check for the indicator label
+                try:
+                    annis = self.driver.find_elements(By.XPATH, "//*[contains(text(), \"Anni's Ribbon\")]")
+                    if annis:
+                        print("   ✅ 'Anni's Ribbon' label found")
+                        return True
+                except Exception:
+                    pass
+
+                # 2) Check for legend numeric value cells (works when titles aren't shown)
+                try:
+                    value_cells = self.driver.find_elements(By.CSS_SELECTOR, "div[class*='valueValue']")
+                    if len(value_cells) >= 8:  # ribbon prints many values
+                        print(f"   ✅ Found {len(value_cells)} legend values")
+                        return True
+                except Exception:
+                    pass
+
+                # 3) Legacy MMA title check (some layouts show titles)
+                try:
+                    mma_titles = self.driver.find_elements(By.XPATH, "//span[contains(text(), 'MMA')]|
+                                                                  //div[contains(text(), 'MMA')]")
+                    if mma_titles:
+                        print("   ✅ MMA titles found")
+                        return True
+                except Exception:
+                    pass
+
                 time.sleep(1)
             
             # Final attempt: close Symbol Search if it just appeared and wait briefly again

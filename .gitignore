@@ -1,0 +1,39 @@
+# Environment variables - NEVER COMMIT!
+.env
+.env.local
+
+# Trading data and logs - Keep private!
+trading_data/
+*.csv
+*.pkl
+*.joblib
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Logs
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
+
+# ChromeDriver
+chromedriver.exe
+chromedriver
+
+# Chrome Profile (contains login session/cookies)
+chrome_profile/

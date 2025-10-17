@@ -34,3 +34,6 @@ Thumbs.db
 # ChromeDriver
 chromedriver.exe
 chromedriver
+
+# Chrome Profile (contains login session/cookies)
+chrome_profile/

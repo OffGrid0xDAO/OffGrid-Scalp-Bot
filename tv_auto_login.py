@@ -7,7 +7,9 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException, NoSuchElementException
+from selenium.webdriver.common.keys import Keys
 import time
+import random
 
 
 class TradingViewLogin:
@@ -16,6 +18,44 @@ class TradingViewLogin:
     def __init__(self, driver):
         self.driver = driver
         self.wait = WebDriverWait(driver, 20)
+    
+    def _human_type(self, element, text, min_delay=0.05, max_delay=0.15):
+        """
+        Type text with human-like delays and occasional mistakes
+        
+        Args:
+            element: WebElement to type into
+            text: Text to type
+            min_delay: Minimum delay between keystrokes (seconds)
+            max_delay: Maximum delay between keystrokes (seconds)
+        """
+        element.clear()
+        time.sleep(random.uniform(0.1, 0.3))  # Pause before typing
+        
+        for i, char in enumerate(text):
+            # Add random delay between keystrokes
+            delay = random.uniform(min_delay, max_delay)
+            
+            # Occasionally add longer pauses (like human hesitation)
+            if random.random() < 0.1:  # 10% chance
+                delay += random.uniform(0.2, 0.5)
+            
+            # Occasionally make a "typo" and correct it (very rarely)
+            if random.random() < 0.02 and i > 2:  # 2% chance, not on first few chars
+                # Type wrong character
+                wrong_char = random.choice('abcdefghijklmnopqrstuvwxyz')
+                element.send_keys(wrong_char)
+                time.sleep(random.uniform(0.1, 0.3))
+                # Backspace to correct
+                element.send_keys(Keys.BACKSPACE)
+                time.sleep(random.uniform(0.05, 0.15))
+            
+            # Type the actual character
+            element.send_keys(char)
+            time.sleep(delay)
+        
+        # Final pause after typing
+        time.sleep(random.uniform(0.2, 0.5))
     
     def check_if_logged_in(self):
         """
@@ -136,21 +176,25 @@ class TradingViewLogin:
                 print("   ℹ️  Email tab not found (might already be selected)")
                 pass  # Email might already be selected
             
-            # Find and fill username field
+            # Find and fill username field with human-like typing
             print("   📧 Entering username...")
             username_field = self.wait.until(
                 EC.presence_of_element_located((By.NAME, "id_username"))
             )
-            username_field.clear()
-            username_field.send_keys(username)
-            time.sleep(0.5)
+            # Click on field first to focus
+            username_field.click()
+            time.sleep(random.uniform(0.2, 0.4))
+            # Type with human-like delays
+            self._human_type(username_field, username, min_delay=0.08, max_delay=0.18)
             
-            # Find and fill password field
+            # Find and fill password field with human-like typing
             print("   🔑 Entering password...")
             password_field = self.driver.find_element(By.NAME, "id_password")
-            password_field.clear()
-            password_field.send_keys(password)
-            time.sleep(0.5)
+            # Click on field first to focus
+            password_field.click()
+            time.sleep(random.uniform(0.2, 0.4))
+            # Type with human-like delays (slightly faster for password)
+            self._human_type(password_field, password, min_delay=0.06, max_delay=0.14)
             
             # Click sign in button - try multiple selectors
             print("   🚀 Finding sign in button...")
@@ -178,7 +222,8 @@ class TradingViewLogin:
                     
                     if signin_button:
                         print(f"   ✓ Found button using {method}: {selector[:50]}...")
-                        time.sleep(0.5)  # Small delay to ensure button is ready
+                        # Human-like pause before clicking (like reading the form)
+                        time.sleep(random.uniform(0.8, 1.5))
                         signin_button.click()
                         print("   ✓ Sign in button clicked!")
                         break

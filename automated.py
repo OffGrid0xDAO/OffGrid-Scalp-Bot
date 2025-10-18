@@ -388,157 +388,91 @@ class AutoTradingSystem:
         
         login_handler = TradingViewLogin(self.driver)
         
-        # SKIP LOGIN: open chart directly and proceed to indicator setup
-        try:
-            print("\n🔓 Skipping TradingView login – opening chart directly...")
-            self.driver.get(tv_chart_url)
-            time.sleep(3)
-        except Exception:
-            pass
-
-        print("\n📊 Waiting for indicators to load...")
+        # CHECK INDICATORS FIRST: Only login if indicators are not present
+        print("\n🔍 Checking if indicators are already loaded...")
+        self.driver.get(tv_chart_url)
+        time.sleep(3)
+        
+        # Check for indicators first
         indicator_setup = TradingViewIndicatorSetup(self.driver)
-        if indicator_setup.setup_ribbon_indicator():
-            print("   ✅ Indicator setup completed!")
-            if indicator_setup.wait_for_indicators(timeout=15):
-                print("   ✅ Chart ready! Starting bot in 3 seconds...")
-                time.sleep(3)
+        indicators_present = indicator_setup.wait_for_indicators(timeout=5)
+        
+        if indicators_present:
+            print("   ✅ Indicators already present - no login needed!")
+            print("   🚀 Proceeding directly to monitoring...")
+        else:
+            print("   ❌ No indicators found - login required")
+            
+            # LOGIN ONLY IF NEEDED
+            if tv_username and tv_password:
+                # AUTO-LOGIN PATH
+                print("\n🔐 Auto-login enabled!")
+                print("   🔐 Performing auto-login...")
+                if login_handler.login(tv_username, tv_password):
+                    print("   ✅ Auto-login successful!")
+                else:
+                    print("   ❌ Auto-login failed - please login manually")
+                    input("👉 Press ENTER after manual login: ")
             else:
-                print("\n⚠️  Indicators not detected automatically")
-                print("   🔍 Please verify indicators are visible in values panel")
-                print("   📊 Values should look like: MMA 8: 3896.50")
+                # MANUAL LOGIN PATH
+                print("\n🔐 Manual login required")
+                print("💡 TIP: Set TRADINGVIEW_USERNAME and TRADINGVIEW_PASSWORD in .env for auto-login")
+                input("👉 Please login to TradingView manually, then press ENTER: ")
+
+        # Setup indicators only if not already present
+        if not indicators_present:
+            print("\n📊 Setting up indicators...")
+            if indicator_setup.setup_ribbon_indicator():
+                print("   ✅ Indicator setup completed!")
+                if indicator_setup.wait_for_indicators(timeout=15):
+                    print("   ✅ Chart ready! Starting bot in 3 seconds...")
+                    time.sleep(3)
+                else:
+                    print("\n⚠️  Indicators not detected automatically")
+                    print("   🔍 Please verify indicators are visible in values panel")
+                    print("   📊 Values should look like: MMA 8: 3896.50")
+                    print("="*80 + "\n")
+                    input("👉 Press ENTER when ready: ")
+            else:
+                print("\n⚠️  Automatic setup failed - manual setup needed")
+                print("   🔍 Please click 'Indicators' → Search 'RIBBON FOR SCALPING' → Add to chart")
+                print("   📊 Make sure ALL EMAs show in values panel (left side)")
                 print("="*80 + "\n")
                 input("👉 Press ENTER when ready: ")
         else:
-            print("\n⚠️  Automatic setup failed - manual setup needed")
-            print("   🔍 Please click 'Indicators' → Search 'RIBBON FOR SCALPING' → Add to chart")
-            print("   📊 Make sure ALL EMAs show in values panel (left side)")
-            print("="*80 + "\n")
-            input("👉 Press ENTER when ready: ")
+            print("\n📊 Indicators already present - skipping setup!")
+            print("   ✅ Chart ready! Starting bot in 3 seconds...")
+            time.sleep(3)
+
+        # ALWAYS set zoom to 80% for better indicator visibility (regardless of setup path)
+        print("\n🔍 Setting zoom to 80% for better indicator visibility...")
+        try:
+            from selenium.webdriver.common.keys import Keys
+            from selenium.webdriver.common.action_chains import ActionChains
+            
+            # Focus on the page first
+            self.driver.find_element(By.TAG_NAME, "body").click()
+            time.sleep(0.5)
+            
+            # Use Chrome's built-in zoom via keyboard shortcuts
+            # Press Ctrl + - (minus) twice to go from 100% → 90% → 80%
+            actions = ActionChains(self.driver)
+            
+            # First zoom: 100% → 90%
+            actions.key_down(Keys.CONTROL).send_keys('-').key_up(Keys.CONTROL).perform()
+            time.sleep(0.8)
+            
+            # Second zoom: 90% → 80%
+            actions.key_down(Keys.CONTROL).send_keys('-').key_up(Keys.CONTROL).perform()
+            time.sleep(0.8)
+            
+            print("   ✅ Zoom set to 80% using Chrome keyboard shortcuts")
+        except Exception as e:
+            print(f"   ⚠️  Could not set zoom: {e}")
+            print("   💡 You may need to manually zoom to 80% in the browser")
+            print("   🔧 Press Ctrl + - (minus) twice to zoom to 80%")
 
         return
-
-        # Check if we have auto-login credentials
-        if tv_username and tv_password:
-            # AUTO-LOGIN PATH
-            print("\n🔐 Auto-login enabled!")
-            
-            # First check if already logged in from previous session
-            print("🔍 Checking for saved login session...")
-            # Always navigate to preferred chart URL (env or default fallback)
-            self.driver.get(tv_chart_url)
-            time.sleep(3)
-            
-            already_logged_in = login_handler.check_if_logged_in()
-            
-            if already_logged_in:
-                print("   ✅ Already logged in from previous session!")
-                print("   💾 Using saved cookies - no login needed!")
-                success = True
-            else:
-                # Not logged in, use auto-login
-                print("   ❌ No saved session found")
-                print(f"   📧 Username: {tv_username}")
-                if tv_chart_url:
-                    print(f"   📊 Chart: {tv_chart_url}")
-                print("\n⏳ Logging in automatically...")
-                
-                success = login_handler.login(tv_username, tv_password, tv_chart_url)
-                
-                if success:
-                    print("\n✅ Auto-login successful!")
-                    print("   💾 Session saved for next time!")
-                else:
-                    print("\n❌ Auto-login failed - falling back to manual login")
-            
-            # Check for indicators
-            if success:
-                print("\n📊 Waiting for indicators to load...")
-                # Try automatic indicator setup
-                indicator_setup = TradingViewIndicatorSetup(self.driver)
-                if indicator_setup.setup_ribbon_indicator():
-                    print("   ✅ Indicator setup completed!")
-                    if indicator_setup.wait_for_indicators(timeout=15):
-                        print("   ✅ Chart ready! Starting bot in 3 seconds...")
-                        time.sleep(3)
-                    else:
-                        print("\n⚠️  Indicators not detected automatically")
-                        print("   🔍 Please verify indicators are visible in values panel")
-                        print("   📊 Values should look like: MMA 8: 3896.50")
-                        print("="*80 + "\n")
-                        input("👉 Press ENTER when ready: ")
-                else:
-                    print("\n⚠️  Automatic setup failed - manual setup needed")
-                    print("   🔍 Please click 'Indicators' → Search 'RIBBON FOR SCALPING' → Add to chart")
-                    print("   📊 Make sure ALL EMAs show in values panel (left side)")
-                    print("="*80 + "\n")
-                    input("👉 Press ENTER when ready: ")
-            else:
-                # Auto-login failed, need manual
-                print("\n⚠️  MANUAL LOGIN REQUIRED:")
-                print("  1. 🔐 Log in to TradingView in the browser window")
-                print("  2. 📊 Open your chart with Annii's Ribbon")
-                print("  3. 🔍 Click 'Indicators' → Find 'Annii's Ribbon' → Click it")
-                print("  4. 👁️  Verify ALL EMAs show in values panel (left side)")
-                print("  5. Press ENTER when ready")
-                print("="*80 + "\n")
-                input("👉 Press ENTER when ready: ")
-        
-        else:
-            # MANUAL LOGIN PATH (no credentials)
-            print("\n📋 TradingView Setup (Manual Login):")
-            print("  💾 Your session will be saved for next time!")
-            
-            # Check for saved session first
-            print("\n🔍 Checking for saved login session...")
-            if tv_chart_url:
-                self.driver.get(tv_chart_url)
-            else:
-                self.driver.get('https://www.tradingview.com/chart/')
-            time.sleep(3)
-            
-            already_logged_in = login_handler.check_if_logged_in()
-            
-            if already_logged_in:
-                print("   ✅ Already logged in from previous session!")
-                print("   💾 Using saved cookies!")
-                # Try automatic indicator setup
-                indicator_setup = TradingViewIndicatorSetup(self.driver)
-                if indicator_setup.setup_ribbon_indicator():
-                    print("   ✅ Indicator setup completed!")
-                    if indicator_setup.wait_for_indicators(timeout=15):
-                        print("   ✅ Chart ready! Starting bot in 3 seconds...")
-                        time.sleep(3)
-                    else:
-                        print("\n⚠️  Indicators not detected automatically")
-                        print("   🔍 Please verify indicators are visible in values panel")
-                        print("   📊 Values should look like: MMA 8: 3896.50")
-                        print("="*80 + "\n")
-                        input("👉 Press ENTER when ready: ")
-                else:
-                    print("\n⚠️  Automatic setup failed - manual setup needed")
-                    print("   🔍 Please click 'Indicators' → Search 'RIBBON FOR SCALPING' → Add to chart")
-                    print("   📊 Make sure ALL EMAs show in values panel (left side)")
-                    print("="*80 + "\n")
-                    input("👉 Press ENTER when ready: ")
-            else:
-                print("   ❌ No saved session found")
-                print("\n🌐 Browser opened to TradingView")
-                print("\n⚠️  PLEASE COMPLETE THESE STEPS:")
-                print("  1. 🍪 Accept cookies (if banner appears)")
-                print("  2. 🔐 LOG IN to TradingView in the browser")
-                print("  3. 📊 Navigate to your ETHUSD chart")
-                print("  4. 🔍 Click 'Indicators' button (top toolbar)")
-                print("  5. 📋 Search 'RIBBON FOR SCALPING' and click first result")
-                print("  6. 👁️  Make sure ALL EMAs show in values panel (left side)")
-                print("  7. 📊 Values should look like: MMA 8: 3896.50, MMA 13: 3895.20")
-            
-            print("\n💡 TIP: Add credentials to .env for automatic login next time:")
-            print("   TRADINGVIEW_USERNAME=your_email@example.com")
-            print("   TRADINGVIEW_PASSWORD=your_password")
-            print("="*80 + "\n")
-            
-        input("👉 Press ENTER when ready: ")
     
     # Hyperliquid functions
     def get_account_info(self):
@@ -640,10 +574,20 @@ class AutoTradingSystem:
     def read_indicators(self):
         """Read indicators from TradingView"""
         try:
-            # Robust selector: TradingView sets a semantic attribute for legend titles
-            value_items = self.driver.find_elements(By.CSS_SELECTOR, "div[data-test-id-value-title]")
+            # Use the EXACT same detection method as wait_for_indicators
+            # Look for MMA values with data-test-id-value-title attribute
+            value_items = self.driver.find_elements(By.CSS_SELECTOR, "div[data-test-id-value-title*='MMA']")
+            
+            # Must have at least 10 MMA values to be considered valid (same as wait_for_indicators)
+            if len(value_items) < 10:
+                print(f"   ⚠️  Only found {len(value_items)} MMA values, need at least 10")
+                return {}
+            
+            print(f"   🔍 Processing {len(value_items)} MMA values...")
             
             indicators = {}
+            processed_count = 0
+            skipped_count = 0
             
             for item in value_items:
                 try:
@@ -655,21 +599,38 @@ class AutoTradingSystem:
                     # Find corresponding numeric value element in the same legend row
                     value_elem = None
                     try:
-                        value_elem = item.find_element(By.XPATH, "following-sibling::*[contains(@class,'valueValue')]")
+                        # Try to find the value element within the same parent
+                        value_elem = item.find_element(By.XPATH, ".//div[contains(@class,'valueValue')]")
                     except Exception:
                         try:
-                            parent_row = item.find_element(By.XPATH, "./ancestor::div[contains(@class,'valueItem') or contains(@class,'legend')][1]")
-                            value_elem = parent_row.find_element(By.XPATH, ".//div[contains(@class,'valueValue')]")
+                            # Fallback: look for sibling element
+                            value_elem = item.find_element(By.XPATH, "following-sibling::*[contains(@class,'valueValue')]")
                         except Exception:
-                            # Generic fallback: any span/div with number next to item
-                            value_elem = item.find_element(By.XPATH, "following::*[self::div or self::span][contains(text(),'0') or contains(text(),'1') or contains(text(),'2') or contains(text(),'3') or contains(text(),'4') or contains(text(),'5') or contains(text(),'6') or contains(text(),'7') or contains(text(),'8') or contains(text(),'9')][1]")
+                            # Last resort: look in parent row
+                            try:
+                                parent_row = item.find_element(By.XPATH, "./ancestor::div[contains(@class,'valueItem')][1]")
+                                value_elem = parent_row.find_element(By.XPATH, ".//div[contains(@class,'valueValue')]")
+                            except Exception:
+                                pass
                     
+                    if not value_elem:
+                        print(f"   ⚠️  No value element found for {title}")
+                        skipped_count += 1
+                        continue
+                        
                     style = value_elem.get_attribute('style') if value_elem else ''
                     value = value_elem.text.replace(',', '') if value_elem else ''
+                    
+                    if not value or value == '':
+                        print(f"   ⚠️  Empty value for {title}")
+                        skipped_count += 1
+                        continue
                     
                     try:
                         price = float(value)
                     except:
+                        print(f"   ⚠️  Invalid price '{value}' for {title}")
+                        skipped_count += 1
                         price = None
                     
                     # Parse RGB and classify color with intensity
@@ -710,9 +671,13 @@ class AutoTradingSystem:
                             intensity = 'normal'
 
                         indicators[title] = {'value': value, 'price': price, 'color': color, 'intensity': intensity}
-                except:
+                        processed_count += 1
+                except Exception as e:
+                    print(f"   ⚠️  Error processing {title}: {e}")
+                    skipped_count += 1
                     continue
             
+            print(f"   ✅ Successfully processed {processed_count} indicators, skipped {skipped_count}")
             return indicators
         except:
             return {}
@@ -1143,7 +1108,7 @@ class AutoTradingSystem:
     
     def display_dashboard(self, indicators, state, ema_groups, current_price, check_num):
         """Display live dashboard"""
-        clear_screen()
+        print("\n" + "="*80)  # Add separator instead of clearing screen
 
         # Unpack ema_groups
         yellow_emas = ema_groups.get('yellow', [])
@@ -1591,8 +1556,16 @@ class AutoTradingSystem:
                 indicators = self.read_indicators()
                 
                 if not indicators:
-                    clear_screen()
                     print("⚠️  No indicators found")
+                    print("   🔍 Debug: Checking for MMA elements...")
+                    try:
+                        mma_elements = self.driver.find_elements(By.CSS_SELECTOR, "div[data-test-id-value-title*='MMA']")
+                        print(f"   📊 Found {len(mma_elements)} MMA elements")
+                        if mma_elements:
+                            titles = [elem.get_attribute('data-test-id-value-title') for elem in mma_elements[:5]]
+                            print(f"   📋 Sample titles: {titles}")
+                    except Exception as e:
+                        print(f"   ❌ Error checking elements: {e}")
                     time.sleep(10)
                     continue
                 

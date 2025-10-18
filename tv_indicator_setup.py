@@ -350,45 +350,31 @@ class TradingViewIndicatorSetup:
                 # If a Symbol Search popup is overlaying the chart, close it
                 self._close_symbol_search_if_present()
 
-                # 1) Direct check for the indicator label
+                # STRICT CHECK: Look for specific MMA values with data-test-id-value-title
                 try:
-                    annis = self.driver.find_elements(By.XPATH, "//*[contains(text(), \"Anni's Ribbon\")]")
+                    mma_values = self.driver.find_elements(By.CSS_SELECTOR, "div[data-test-id-value-title*='MMA']")
+                    if len(mma_values) >= 10:  # Must have at least 10 MMA values
+                        # Double-check by looking for specific MMA numbers
+                        mma_titles = [elem.get_attribute('data-test-id-value-title') for elem in mma_values]
+                        mma_numbers = [title for title in mma_titles if 'MMA' in title and any(char.isdigit() for char in title)]
+                        
+                        if len(mma_numbers) >= 10:
+                            print(f"   ✅ Found {len(mma_numbers)} MMA indicators: {mma_numbers[:5]}...")
+                            return True
+                except Exception:
+                    pass
+
+                # FALLBACK: Check for "Annii's Ribbon" text
+                try:
+                    annis = self.driver.find_elements(By.XPATH, "//*[contains(text(), \"Annii's Ribbon\")]")
                     if annis:
-                        print("   ✅ 'Anni's Ribbon' label found")
-                        return True
-                except Exception:
-                    pass
-
-                # 2) Check for legend numeric value cells (works when titles aren't shown)
-                try:
-                    value_cells = self.driver.find_elements(By.CSS_SELECTOR, "div[class*='valueValue']")
-                    if len(value_cells) >= 8:  # ribbon prints many values
-                        print(f"   ✅ Found {len(value_cells)} legend values")
-                        return True
-                except Exception:
-                    pass
-
-                # 3) Legacy MMA title check (some layouts show titles)
-                try:
-                    mma_titles = self.driver.find_elements(By.XPATH, "//span[contains(text(), 'MMA')] | //div[contains(text(), 'MMA')]")
-                    if mma_titles:
-                        print("   ✅ MMA titles found")
+                        print("   ✅ 'Annii's Ribbon' label found")
                         return True
                 except Exception:
                     pass
 
                 time.sleep(1)
             
-            # Final attempt: close Symbol Search if it just appeared and wait briefly again
-            if self._close_symbol_search_if_present():
-                print("   🔄 Closed Symbol Search; waiting 5s for indicators...")
-                for _ in range(5):
-                    mma = self.driver.find_elements(By.XPATH, "//span[contains(text(), 'MMA')]")
-                    if mma:
-                        print(f"   ✅ Found {len(mma)} MMA indicators!")
-                        return True
-                    time.sleep(1)
-
             print("   ⚠️  Timeout waiting for indicators")
             return False
             

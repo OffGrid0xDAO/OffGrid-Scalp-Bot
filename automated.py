@@ -373,7 +373,7 @@ class AutoTradingSystem:
             # Window might already be maximized, that's okay
             pass
         
-        clear_screen()
+        print("\n" + "="*80)
         print("="*80)
         print(" "*20 + "AUTO-TRADING SYSTEM SETUP")
         print("="*80)
@@ -393,6 +393,34 @@ class AutoTradingSystem:
         self.driver.get(tv_chart_url)
         time.sleep(3)
         
+        # SET ZOOM TO 80% FIRST - before checking indicators
+        print("\n🔍 Setting zoom to 80% for better indicator visibility...")
+        try:
+            from selenium.webdriver.common.keys import Keys
+            from selenium.webdriver.common.action_chains import ActionChains
+            
+            # Focus on the page first
+            self.driver.find_element(By.TAG_NAME, "body").click()
+            time.sleep(0.5)
+            
+            # Use Chrome's built-in zoom via keyboard shortcuts
+            # Press Ctrl + - (minus) twice to go from 100% → 90% → 80%
+            actions = ActionChains(self.driver)
+            
+            # First zoom: 100% → 90%
+            actions.key_down(Keys.CONTROL).send_keys('-').key_up(Keys.CONTROL).perform()
+            time.sleep(0.8)
+            
+            # Second zoom: 90% → 80%
+            actions.key_down(Keys.CONTROL).send_keys('-').key_up(Keys.CONTROL).perform()
+            time.sleep(0.8)
+            
+            print("   ✅ Zoom set to 80% using Chrome keyboard shortcuts")
+        except Exception as e:
+            print(f"   ⚠️  Could not set zoom: {e}")
+            print("   💡 You may need to manually zoom to 80% in the browser")
+            print("   🔧 Press Ctrl + - (minus) twice to zoom to 80%")
+        
         # Check for indicators first
         indicator_setup = TradingViewIndicatorSetup(self.driver)
         indicators_present = indicator_setup.wait_for_indicators(timeout=5)
@@ -410,6 +438,11 @@ class AutoTradingSystem:
                 print("   🔐 Performing auto-login...")
                 if login_handler.login(tv_username, tv_password):
                     print("   ✅ Auto-login successful!")
+                    # Wait for page to fully load after login
+                    time.sleep(3)
+                    # Navigate to chart page to ensure we're on the right page
+                    self.driver.get(tv_chart_url)
+                    time.sleep(2)
                 else:
                     print("   ❌ Auto-login failed - please login manually")
                     input("👉 Press ENTER after manual login: ")
@@ -443,34 +476,6 @@ class AutoTradingSystem:
             print("\n📊 Indicators already present - skipping setup!")
             print("   ✅ Chart ready! Starting bot in 3 seconds...")
             time.sleep(3)
-
-        # ALWAYS set zoom to 80% for better indicator visibility (regardless of setup path)
-        print("\n🔍 Setting zoom to 80% for better indicator visibility...")
-        try:
-            from selenium.webdriver.common.keys import Keys
-            from selenium.webdriver.common.action_chains import ActionChains
-            
-            # Focus on the page first
-            self.driver.find_element(By.TAG_NAME, "body").click()
-            time.sleep(0.5)
-            
-            # Use Chrome's built-in zoom via keyboard shortcuts
-            # Press Ctrl + - (minus) twice to go from 100% → 90% → 80%
-            actions = ActionChains(self.driver)
-            
-            # First zoom: 100% → 90%
-            actions.key_down(Keys.CONTROL).send_keys('-').key_up(Keys.CONTROL).perform()
-            time.sleep(0.8)
-            
-            # Second zoom: 90% → 80%
-            actions.key_down(Keys.CONTROL).send_keys('-').key_up(Keys.CONTROL).perform()
-            time.sleep(0.8)
-            
-            print("   ✅ Zoom set to 80% using Chrome keyboard shortcuts")
-        except Exception as e:
-            print(f"   ⚠️  Could not set zoom: {e}")
-            print("   💡 You may need to manually zoom to 80% in the browser")
-            print("   🔧 Press Ctrl + - (minus) twice to zoom to 80%")
 
         return
     
@@ -890,7 +895,7 @@ class AutoTradingSystem:
 
     def show_runtime_menu(self):
         """Show runtime settings menu"""
-        clear_screen()
+        print("\n" + "="*80)
         print("╔" + "="*78 + "╗")
         print("║" + " "*25 + "RUNTIME SETTINGS MENU" + " "*32 + "║")
         print("╚" + "="*78 + "╝")
@@ -925,7 +930,7 @@ class AutoTradingSystem:
                     print("\n⚠️  Cannot switch networks with an active position!")
                     print("   Close your position first, then switch networks.")
                     input("\nPress Enter to continue...")
-                    clear_screen()
+                    print("\n" + "="*80)
                     continue
                 
                 new_network = 'mainnet' if self.use_testnet else 'testnet'
@@ -938,7 +943,7 @@ class AutoTradingSystem:
                     if confirm != 'SWITCH TO MAINNET':
                         print("✓ Cancelled")
                         input("\nPress Enter to continue...")
-                        clear_screen()
+                        print("\n" + "="*80)
                         continue
                 
                 self.use_testnet = not self.use_testnet
@@ -1374,12 +1379,12 @@ class AutoTradingSystem:
             if self.last_solid_state and self.last_solid_state != state:
                 # State changed from one solid state to another
                 if self.last_solid_state == 'all_red' and state == 'all_green':
-                    signal = f"🚀 LONG @ ${current_price:.2f} (Ribbon: ALL RED → ALL GREEN | {len(green_emas)}G/{len(red_emas)}R)"
+                    signal = f"🚀 LONG @ ${current_price:.2f} (Ribbon: ALL RED → ALL GREEN | {len(green_emas)}G/{len(red_emas)}R/{len(yellow_emas)}Y)"
                     action = 'long'
                     self.profit_secured = False  # Reset protection flag
 
                 elif self.last_solid_state == 'all_green' and state == 'all_red':
-                    signal = f"🚀 SHORT @ ${current_price:.2f} (Ribbon: ALL GREEN → ALL RED | {len(green_emas)}G/{len(red_emas)}R)"
+                    signal = f"🚀 SHORT @ ${current_price:.2f} (Ribbon: ALL GREEN → ALL RED | {len(green_emas)}G/{len(red_emas)}R/{len(yellow_emas)}Y)"
                     action = 'short'
                     self.profit_secured = False  # Reset protection flag
 
@@ -1519,7 +1524,7 @@ class AutoTradingSystem:
         """Main monitoring loop"""
         self.setup_browser()
         
-        clear_screen()
+        print("\n" + "="*80)
         print("🚀 Starting auto-trading system...")
         print("\n💡 TIP: Type 'M' and press Enter at any time to open settings menu")
         time.sleep(3)
@@ -1546,7 +1551,7 @@ class AutoTradingSystem:
                     should_continue = self.show_runtime_menu()
                     if not should_continue:
                         break
-                    clear_screen()
+                    print("\n" + "="*80)
                     print("🚀 Resuming monitoring...")
                     time.sleep(2)
                 
@@ -1621,7 +1626,7 @@ class AutoTradingSystem:
                 time.sleep(10)
             
         except KeyboardInterrupt:
-            clear_screen()
+            print("\n" + "="*80)
             print("\n✓ System stopped by user")
             print(f"\nTrades executed: {len(self.trades)}")
             if self.trades:
@@ -1634,7 +1639,7 @@ class AutoTradingSystem:
 
 
 def main():
-    clear_screen()
+    print("\n" + "="*80)
     print("╔" + "="*78 + "╗")
     print("║" + " "*20 + "AUTO-TRADING SYSTEM SETUP" + " "*33 + "║")
     print("╚" + "="*78 + "╝")

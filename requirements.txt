@@ -1,7 +1,7 @@
 # Core Trading Dependencies
 selenium>=4.15.0
 python-dotenv>=1.0.0
-eth-account>=0.10.0
+eth-account==0.12.2
 
 # Hyperliquid SDK
 hyperliquid-python-sdk>=0.2.0

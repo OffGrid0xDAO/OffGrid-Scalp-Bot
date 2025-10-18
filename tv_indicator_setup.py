@@ -370,8 +370,7 @@ class TradingViewIndicatorSetup:
 
                 # 3) Legacy MMA title check (some layouts show titles)
                 try:
-                    mma_titles = self.driver.find_elements(By.XPATH, "//span[contains(text(), 'MMA')]|
-                                                                  //div[contains(text(), 'MMA')]")
+                    mma_titles = self.driver.find_elements(By.XPATH, "//span[contains(text(), 'MMA')] | //div[contains(text(), 'MMA')]")
                     if mma_titles:
                         print("   ✅ MMA titles found")
                         return True

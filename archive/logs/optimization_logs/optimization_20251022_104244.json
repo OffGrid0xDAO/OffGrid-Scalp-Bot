@@ -1,0 +1,81 @@
+{
+  "timestamp": "2025-10-22T10:42:44.403851",
+  "analysis": {
+    "timestamp": "2025-10-22T10:42:44.401910",
+    "optimal_trades": 271,
+    "backtest_trades": 187,
+    "optimal_total_profit": 1180.0266588272927,
+    "backtest_total_profit": 5.1270452466605345,
+    "profit_gap": 1174.8996135806321,
+    "profit_gap_pct": 99.56551445610934,
+    "missed_trades": {
+      "count": 261,
+      "missed_profit": 1140.202794712032,
+      "conditions": {
+        "avg_confluence_gap": 27.509578544061302,
+        "volume_high_pct": 17.624521072796934,
+        "avg_compression": 95.27530416901219
+      }
+    },
+    "early_exits": {
+      "count": 111,
+      "avg_gap": 1.719750434972959
+    },
+    "backtest_metrics": {
+      "total_trades": 187,
+      "winning_trades": 132,
+      "losing_trades": 55,
+      "win_rate": 70.58823529411765,
+      "total_pnl": 512.7045246660534,
+      "total_return": 5.1270452466605345,
+      "avg_win": 11.548097787838925,
+      "avg_loss": -18.393534242339722,
+      "profit_factor": 1.506803114923709,
+      "max_drawdown": 29.62079733905714,
+      "final_capital": 10512.704524666053,
+      "avg_mfe": 1.403724041251921,
+      "avg_mae": -1.2708117819367677
+    }
+  },
+  "params_before": {
+    "_comment": "Core confluence requirements (relaxed to allow more candidates for quality scoring)",
+    "confluence_gap_min": 25.0,
+    "confluence_score_min": 20,
+    "_comment_volume": "Volume confirmation - critical for confirming institutional interest",
+    "volume_requirement": [
+      "spike",
+      "elevated",
+      "normal"
+    ],
+    "_comment_rsi": "RSI range filter - avoid extreme overbought/oversold (optional)",
+    "rsi_range": [
+      20,
+      80
+    ],
+    "_comment_ema": "EMA alignment filters (disabled - using new indicators instead)",
+    "require_ema_alignment": false,
+    "min_price_above_ema20": false,
+    "_comment_macd": "MACD confirmation (disabled - Stochastic is better for day trading)",
+    "require_macd_confirmation": false,
+    "_comment_ribbon": "Ribbon filters (optional - can enable for ultra-selective mode)",
+    "require_ribbon_flip": false,
+    "min_ribbon_alignment": 0,
+    "_comment_stochastic": "Stochastic (5-3-3) - Entry timing filter",
+    "use_stochastic": true,
+    "stochastic_mode": "confirmation",
+    "_stochastic_note": "Filters out entries at extremes: no longs if >80, no shorts if <20",
+    "_comment_bollinger": "Bollinger Bands - Volatility breakout confirmation",
+    "use_bollinger": true,
+    "bollinger_mode": "breakout",
+    "_bollinger_note": "Confirms volatility expansion and price position relative to bands",
+    "_comment_vwap": "VWAP - Institutional price level alignment (MANDATORY)",
+    "use_vwap": true,
+    "vwap_mode": "flexible",
+    "_vwap_note": "MUST be above VWAP for longs, below for shorts - no exceptions",
+    "_comment_quality": "Quality Score System - Ensures only best 2-3 trades per day",
+    "min_quality_score": 56.0,
+    "_quality_breakdown": "30pts confluence + 20pts volume + 30pts indicators + 20pts trend",
+    "_quality_note": "Adjust min_quality_score: 75-80 = fewer trades, 60-65 = more trades"
+  },
+  "params_after": null
+}

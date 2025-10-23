@@ -1,0 +1,62 @@
+{
+  "baseline_win_rate": 54.2654028436019,
+  "best_win_rate": 60.30534351145038,
+  "total_improvement": 6.039940667848484,
+  "iterations": [
+    {
+      "iteration": 1,
+      "timestamp": "2025-10-21T18:17:03.128723",
+      "old_win_rate": 54.2654028436019,
+      "new_win_rate": 60.30534351145038,
+      "improvement_pct": 11.130371012367075,
+      "kept": true,
+      "suggestions": {
+        "suggested_changes": {
+          "confluence_gap_min": 20,
+          "confluence_score_min": 22,
+          "volume_requirement": [
+            "normal",
+            "elevated",
+            "spike",
+            "low"
+          ],
+          "take_profit_levels": [
+            0.8,
+            1.5,
+            2.5,
+            4.0
+          ],
+          "stop_loss_pct": 2.5
+        },
+        "reasoning": "Lower confluence thresholds (20/22 vs 25/25) should capture more of the missed trades since avg missed trade had 25.5 confluence gap. Adding 'low' volume captures the 22% of missed trades with lower volume. Tiered take profits (25% at each level) should reduce early exits by letting 75% of position ride longer trends. Tighter stop loss helps maintain profit factor while taking more trades."
+      }
+    },
+    {
+      "iteration": 2,
+      "timestamp": "2025-10-21T18:18:13.495172",
+      "old_win_rate": 60.30534351145038,
+      "new_win_rate": 42.857142857142854,
+      "improvement_pct": -28.933092224231473,
+      "kept": false,
+      "suggestions": {
+        "suggested_changes": {
+          "confluence_gap_min": 25,
+          "confluence_score_min": 20,
+          "volume_requirement": [
+            "normal",
+            "elevated",
+            "spike"
+          ],
+          "take_profit_levels": [
+            2.5,
+            5.0,
+            8.0,
+            12.0
+          ],
+          "stop_loss_pct": 3.5
+        },
+        "reasoning": "Increase confluence_gap_min to 25 (closer to missed trades' 26.5 avg) to capture higher quality setups. Lower confluence_score_min to 20 to be less restrictive on entry. Remove 'low' volume to focus on the 76.7% of profitable missed trades with normal+ volume. Implement tiered take-profit levels (25% at each level) instead of single exits to reduce the 1.45% avg left on table. Set stop-loss at 3.5% to maintain reasonable risk management while allowing for normal volatility."
+      }
+    }
+  ]
+}

@@ -1,0 +1,96 @@
+
+# Trading Strategy Optimization Request
+
+I'm running a cryptocurrency trading bot and need help optimizing the strategy parameters.
+
+## Current Performance
+
+**Backtest Results:**
+- Total trades: 187
+- Win rate: 70.6%
+- Total return: 5.13%
+- Profit factor: 1.51
+- Max drawdown: 29.62%
+
+**Optimal Performance (Perfect Hindsight):**
+- Potential trades: 271
+- Potential return: 1180.03%
+
+**Performance Gap:**
+- We're capturing 0.4% of available profit
+- Missed 261 trades worth 1140.20%
+- Exited 111 trades too early, leaving 1.72% avg on table
+
+## Missed Trade Analysis
+
+Conditions in missed profitable trades:
+- Average confluence gap: 27.5
+- High volume %: 17.6%
+- Average compression: 95.3
+
+## Current Parameters
+
+```json
+{
+  "_comment": "Core confluence requirements (relaxed to allow more candidates for quality scoring)",
+  "confluence_gap_min": 25.0,
+  "confluence_score_min": 20,
+  "_comment_volume": "Volume confirmation - critical for confirming institutional interest",
+  "volume_requirement": [
+    "spike",
+    "elevated",
+    "normal"
+  ],
+  "_comment_rsi": "RSI range filter - avoid extreme overbought/oversold (optional)",
+  "rsi_range": [
+    20,
+    80
+  ],
+  "_comment_ema": "EMA alignment filters (disabled - using new indicators instead)",
+  "require_ema_alignment": false,
+  "min_price_above_ema20": false,
+  "_comment_macd": "MACD confirmation (disabled - Stochastic is better for day trading)",
+  "require_macd_confirmation": false,
+  "_comment_ribbon": "Ribbon filters (optional - can enable for ultra-selective mode)",
+  "require_ribbon_flip": false,
+  "min_ribbon_alignment": 0,
+  "_comment_stochastic": "Stochastic (5-3-3) - Entry timing filter",
+  "use_stochastic": true,
+  "stochastic_mode": "confirmation",
+  "_stochastic_note": "Filters out entries at extremes: no longs if >80, no shorts if <20",
+  "_comment_bollinger": "Bollinger Bands - Volatility breakout confirmation",
+  "use_bollinger": true,
+  "bollinger_mode": "breakout",
+  "_bollinger_note": "Confirms volatility expansion and price position relative to bands",
+  "_comment_vwap": "VWAP - Institutional price level alignment (MANDATORY)",
+  "use_vwap": true,
+  "vwap_mode": "flexible",
+  "_vwap_note": "MUST be above VWAP for longs, below for shorts - no exceptions",
+  "_comment_quality": "Quality Score System - Ensures only best 2-3 trades per day",
+  "min_quality_score": 56.0,
+  "_quality_breakdown": "30pts confluence + 20pts volume + 30pts indicators + 20pts trend",
+  "_quality_note": "Adjust min_quality_score: 75-80 = fewer trades, 60-65 = more trades"
+}
+```
+
+## Question
+
+Based on this data, what parameter adjustments would you suggest to:
+1. Capture more of the missed profitable trades
+2. Reduce early exits (hold winners longer)
+3. Improve overall win rate and profit factor
+
+Please provide specific numerical suggestions in this JSON format:
+
+```json
+{
+  "suggested_changes": {
+    "confluence_gap_min": <number>,
+    "confluence_score_min": <number>,
+    "volume_requirement": [<list of strings>],
+    "take_profit_levels": [<list of numbers>],
+    "stop_loss_pct": <number>
+  },
+  "reasoning": "Brief explanation of why these changes should help"
+}
+```

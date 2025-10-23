@@ -1,0 +1,84 @@
+{
+  "total_trades": 22,
+  "profitable_trades": 6,
+  "losing_trades": 16,
+  "win_rate": 27.27272727272727,
+  "total_pnl": -28.50000000000182,
+  "avg_pnl_per_trade": -1.2954545454546282,
+  "long_stats": {
+    "total": 7,
+    "winners": 1,
+    "win_rate": 14.285714285714285,
+    "total_pnl": -1.0000000000009095
+  },
+  "short_stats": {
+    "total": 15,
+    "winners": 5,
+    "win_rate": 33.33333333333333,
+    "total_pnl": -27.50000000000091
+  },
+  "high_conf_performance": {
+    "total": 22,
+    "win_rate": 27.27272727272727
+  },
+  "med_conf_performance": {
+    "total": 0,
+    "win_rate": 0
+  },
+  "low_conf_performance": {
+    "total": 0,
+    "win_rate": 0
+  },
+  "avg_winner_hold_time": 37.35443143611111,
+  "avg_loser_hold_time": 12.691627839583333,
+  "best_trade": {
+    "entry_time": "2025-10-18T18:17:59.897370",
+    "entry_price": 3871.65,
+    "exit_time": "2025-10-18T21:17:43.061660",
+    "exit_price": 3888.85,
+    "direction": "LONG",
+    "confidence": 0.85,
+    "pnl_dollars": 17.199999999999818,
+    "pnl_percent": 0.44425503338369476,
+    "hold_minutes": 179.71940483333336,
+    "profitable": true,
+    "entry_reasoning": "5min Analysis: ALL_GREEN ribbon state with 16/16 green EMAs (100% green, excluding yellow/gray). Strong momentum confirmed with 16 LIGHT green EMAs showing full commitment to uptrend. Outer bands spreading indicating accelerating bullish momentum. |  | 15min Analysis: ALL_GREEN ribbon state with 24/26 green EMAs (92% green, excluding yellow). Strong momentum with 24 LIGHT green EMAs confirming sustained bullish commitment across longer timeframe. |  | Historical Context: FRESH transition - price was in ALL_RED state until 18:15:40, then rapidly transitioned through mixed states to ALL_GREEN by 18:16:05. This is a very recent 2-minute old bullish breakout. Yellow EMA40 at $3870.32 (5min) and EMA40 at $3873.84 (15min) have been acting as key resistance levels that price just broke above. |  | Signal Quality: EXCELLENT - This is a FRESH breakout with both timeframes showing maximum green alignment. All 16 green EMAs on 5min are LIGHT intensity showing complete bullish commitment. Price broke above yellow EMA resistance levels that held for over 30 minutes. |  | Exit Signals: No exit signals present. Outer bands spreading bullishly, yellow EMAs now acting as support below current price, no reversal signs detected. |  | Risk Factors: Minimal risk factors. Setup is fresh, aligned, and showing strong momentum. Only concern is ensuring stop loss below yellow EMA support to protect against false breakout.",
+    "exit_reasoning": "4H TREND ANALYSIS: Looking at the full 3-4 hour history, we see a clear UPTREND pattern with higher highs and higher lows. Price moved from ~$3885 to peaks around $3897, establishing strong bullish momentum. The yellow EMAs (EMA40 ~$3892, EMA100 ~$3887) have been acting as dynamic support throughout the uptrend. |  | 5min Analysis: Currently showing MIXED state (12 red, 12 green, 2 gray EMAs = 50/50 split). However, all 12 red EMAs are DARK (early transition), while we have 11 LIGHT green EMAs showing strong bullish commitment. This suggests the red EMAs are just early transition noise, not a confirmed bearish reversal. |  | 15min Analysis: Shows MIXED_GREEN state (21 green, 4 red, 1 gray = 81% green). Has 17 LIGHT green EMAs vs only 4 DARK red EMAs, indicating strong bullish momentum confirmation. This timeframe is clearly bullish-aligned. |  | Historical Context: The 5min ribbon was ALL_GREEN for over 40 minutes until 21:15 when it started transitioning. This is a FRESH transition (only 2 minutes old), but the 15min remains strongly green. The setup appears to be a normal pullback within the uptrend rather than a true reversal. |  | Signal Quality: MAJOR CONFLICT - 5min suggests SHORT direction but 15min strongly suggests LONG, and the 4-hour trend is clearly UP. Taking a SHORT here would be counter-trend trading against the established uptrend, which violates our core rule. |  | Exit Signals: Currently LONG from $3886.90, now at $3888.85 (+$0.03 profit). The 5min ribbon hasn't reached 50% red threshold (only 46% red), and the 15min remains strongly green (81%). Price is still above both yellow EMAs. This appears to be normal pullback noise within the uptrend, not a major reversal requiring exit. |  | Risk Factors: The conflicting timeframes create uncertainty, but the 15min strength and 4-hour uptrend suggest holding the LONG position. Exiting now would be premature based on minor 5min noise."
+  },
+  "worst_trade": {
+    "entry_time": "2025-10-19T04:17:55.023237",
+    "entry_price": 3872.95,
+    "exit_time": "2025-10-19T04:23:13.446743",
+    "exit_price": 3884.05,
+    "direction": "SHORT",
+    "confidence": 0.85,
+    "pnl_dollars": -11.100000000000364,
+    "pnl_percent": -0.2866032352599534,
+    "hold_minutes": 5.307058433333333,
+    "profitable": false,
+    "entry_reasoning": "30MIN + 15MIN RANGE CHECK: 30min HIGH: $3874.05, LOW: $3865.25, range: 0.23% | 15min HIGH: $3874.05, LOW: $3870.25, range: 0.10% | Ribbon flips: 2 in last 30min |  | MARKET CLASSIFICATION: RANGING market (30min: 0.23% < 0.4%, 15min: 0.10% < 0.4%) with stable ribbon (2 flips < 3). Using PATH B (Breakout Detection). |  | PATH SELECTION: PATH B (Breakout) - Market has been ranging with low volatility, perfect setup for catching explosive breakout moves. |  | BREAKOUT DETECTION: Current price $3872.95 vs 15min LOW $3870.25. Breakout threshold: $3870.25 * 0.9985 = $3864.44. Price NOT breaking down yet (still $8.51 above threshold). However, ribbon just transitioned - monitoring for imminent breakout. |  | 2H RANGE: Not applicable for PATH B (breakout strategy). |  | PRICE LOCATION: Price at $3872.95, near middle of recent range, good position for potential downward breakout. |  | 5min Analysis: MIXED_RED state (0 green, 15 red, 11 gray). Strong bearish bias with 12 LIGHT red EMAs showing committed downward momentum. Price below most EMAs. |  | 15min Analysis: MIXED_RED state (2 green, 21 red, 3 gray). Dominant bearish alignment with 17 LIGHT red EMAs. Strong downward pressure building. |  | Transition Timing: Ribbon showing fresh bearish transition in last 5 minutes - EARLY stage, perfect timing for breakout entry. |  | Entry Quality: PATH B setup building - ranging market with strong bearish ribbon alignment and high LIGHT EMA count. Waiting for price to break below $3864.44 for breakout confirmation, but ribbon already positioned for downward move. |  | Exit Signals: Not in position. |  | Learning: This is a ranging market breakout setup - exactly what we want to catch explosive moves early. Strong bearish ribbon with 12+ LIGHT red EMAs suggests committed downward momentum ready to break the range.",
+    "exit_reasoning": "30MIN + 15MIN RANGE CHECK: 30min HIGH: $3884.05, LOW: $3867.15, range: 0.44% | 15min HIGH: $3884.05, LOW: $3875.25, range: 0.23% | Ribbon flips: 1 (clean transition) |  | MARKET CLASSIFICATION: TRENDING (30min range 0.44% \u2265 0.5% threshold barely missed, but 15min <0.4% suggests recent ranging). Using PATH A logic but with caution. |  | PATH SELECTION: PATH A (Trending) - 30min range just under 0.5% but close enough with clean single flip suggests trending behavior rather than breakout scenario. |  | BREAKOUT DETECTION: Not applicable - using PATH A |  | 2H RANGE: 2h HIGH: ~$3884.05, LOW: ~$3865.55, MID: ~$3874.80. Current price $3884.05 is AT THE TOP (100% of range). |  | PRICE LOCATION: CRITICAL ISSUE - Price is at 2h HIGH ($3884.05), which violates our rule of not entering LONG at extremes. This is exactly the mistake from Trade #1 where we entered LONG at the top. |  | 5min Analysis: ALL_GREEN ribbon (100% green EMAs), 24+ LIGHT green EMAs - extremely strong bullish alignment |  | 15min Analysis: ALL_GREEN ribbon (100% green EMAs), 24+ LIGHT green EMAs - extremely strong bullish alignment |  | Transition Timing: Ribbon flipped to ALL_GREEN approximately 2.5 minutes ago (04:20:17) - VERY FRESH, almost too early |  | Entry Quality: Despite perfect ribbon alignment, ENTRY_RECOMMENDED: NO due to: | 1. Price at 2h HIGH - violates 'don't LONG at extremes' rule | 2. This exact scenario caused Trade #1 loss (LONG at $3873.95 top) | 3. Too fresh (2.5min since flip, prefer 3-10min window) |  | Exit Signals: CURRENTLY IN SHORT POSITION @ $3873.90, PnL: -$0.17 | - Ribbon completely flipped from ALL_RED to ALL_GREEN | - Price broke above all resistance levels | - 24+ LIGHT green EMAs = strong reversal confirmed | - Time in position: ~9 minutes | - EXIT_RECOMMENDED: YES - ribbon completely reversed against SHORT position |  | Learning: Perfect example of our rules working - ribbon shows LONG direction but we correctly avoid entering at the high. Must exit SHORT immediately as ribbon fully reversed."
+  },
+  "ema_patterns": [
+    {
+      "signature": "all_red_LG0_DG0_LR26_DR0",
+      "total": 2,
+      "profitable": 1,
+      "win_rate": 50.0,
+      "avg_pnl": -1.625
+    },
+    {
+      "signature": "all_green_LG0_DG0_LR0_DR0",
+      "total": 2,
+      "profitable": 0,
+      "win_rate": 0.0,
+      "avg_pnl": -5.7999999999999545
+    }
+  ],
+  "key_lessons": [
+    "WINNING PATTERN: Strong ribbon alignment (all_green/all_red) on both timeframes has 60%+ success rate",
+    "WINNING PATTERN: Fresh ribbon flips (not stale) lead to better entries",
+    "LOSING PATTERN: AVOID mixed/choppy conditions - over 50% of losses occur here",
+    "LOSING PATTERN: Ranging markets (<0.4% range) produce many losses - need breakout confirmation"
+  ]
+}

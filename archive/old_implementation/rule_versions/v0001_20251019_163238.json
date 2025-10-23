@@ -1,0 +1,106 @@
+{
+  "version": "1.0",
+  "last_updated": "2025-10-19T16:01:19.065310",
+  "updated_by": "claude_optimizer",
+  "entry_rules": {
+    "ribbon_alignment_threshold": 0.8,
+    "min_light_emas_required": 12,
+    "ribbon_states_allowed_long": [
+      "all_green",
+      "mixed_green"
+    ],
+    "ribbon_states_allowed_short": [
+      "all_red",
+      "mixed_red"
+    ],
+    "fresh_transition_max_minutes": 15,
+    "stale_transition_min_minutes": 20
+  },
+  "exit_rules": {
+    "max_hold_minutes": 15,
+    "profit_target_pct": 0.003,
+    "stop_loss_pct": 0.002,
+    "use_yellow_ema_trail": true,
+    "exit_on_ribbon_flip": true,
+    "exit_on_light_ema_change_count": 3
+  },
+  "pattern_rules": {
+    "path_e_dark_transition": {
+      "enabled": true,
+      "priority": 2,
+      "confidence_boost": 0.15,
+      "entry_window_seconds": 10
+    },
+    "path_d_early_reversal": {
+      "enabled": true,
+      "priority": 4,
+      "min_light_emas_opposite": 8,
+      "min_green_appearing": 2,
+      "confidence_threshold": 0.75
+    },
+    "path_c_wick_reversal": {
+      "enabled": true,
+      "priority": 1,
+      "min_wick_pct": 0.003,
+      "max_wick_pct": 0.008,
+      "confidence_boost": 0.2
+    },
+    "path_a_trending": {
+      "enabled": true,
+      "priority": 5,
+      "min_range_pct": 0.005,
+      "price_location_lower_pct": 0.5,
+      "price_location_upper_pct": 0.5,
+      "min_alignment_pct": 0.85
+    },
+    "path_b_breakout": {
+      "enabled": true,
+      "priority": 3,
+      "max_range_pct": 0.004,
+      "min_breakout_pct": 0.0015,
+      "ribbon_flip_max_minutes": 8
+    }
+  },
+  "performance_metrics": {
+    "total_trades_executed": 0,
+    "winning_trades": 0,
+    "losing_trades": 0,
+    "win_rate": 0.0,
+    "avg_winner_pnl_pct": 0.0,
+    "avg_loser_pnl_pct": 0.0,
+    "best_pattern": "unknown",
+    "worst_pattern": "unknown"
+  },
+  "claude_insights": {
+    "last_optimization": "2025-10-19T16:01:19.065281",
+    "key_findings": [
+      "Finding 1: Low win rate (25%) indicates current entry criteria may be capturing false signals or entering too early in pattern development",
+      "Finding 2: Winners significantly outperform losers (0.24% vs -0.07%) suggesting good risk-reward when trades work, but need better entry timing",
+      "Finding 3: Winning pattern shows strong ribbon alignment (61.5% green EMAs, 16 light green EMAs) indicating higher alignment threshold may improve quality",
+      "Finding 4: Losing patterns show weaker alignment (43.6% green, 11.3 light green) and include mixed_red states, suggesting current filters are insufficient",
+      "Finding 5: Zero actual trades executed suggests rules are now too restrictive after previous optimization, preventing data collection"
+    ],
+    "pattern_recommendations": [
+      "Increase ribbon alignment threshold to 0.80+ to filter out the weaker 43.6% alignment patterns that are losing",
+      "Require minimum 12-15 light EMAs in direction to match winning pattern characteristics (16 avg vs 11.3 losing avg)",
+      "Temporarily disable mixed_red state entries as 2 of 3 losing trades came from this pattern",
+      "Focus on mixed_green and all_green states which showed the winning pattern",
+      "Add minimum ribbon strength filter requiring >60% EMAs in trade direction"
+    ],
+    "rule_adjustments": {
+      "ribbon_alignment_threshold": 0.8,
+      "min_light_emas_required": 12,
+      "max_hold_minutes": 15,
+      "profit_target_pct": 0.003,
+      "stop_loss_pct": 0.002,
+      "path_priorities": {
+        "path_c_wick_reversal": 1,
+        "path_e_dark_transition": 2,
+        "path_b_breakout": 3,
+        "path_d_early_reversal": 4,
+        "path_a_trending": 5
+      }
+    },
+    "reasoning": "The data clearly shows winning trades have much stronger ribbon alignment (61.5% vs 43.6% green EMAs) and more light EMAs (16 vs 11.3). Increasing alignment threshold to 0.80 and requiring 12+ light EMAs should filter out the weaker patterns causing losses. Reducing profit target to 0.003% and stop to 0.002% maintains the favorable 1.5:1 reward-risk ratio while being more realistic for scalping. Shorter 15-minute hold time prevents trades from deteriorating. Prioritizing wick reversal patterns first as they typically offer clearest entry signals with defined risk levels."
+  }
+}

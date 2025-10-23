@@ -1,0 +1,122 @@
+//@version=5
+indicator("EMA Ribbon Data Exporter", overlay=true, max_labels_count=500)
+
+// ============================================================================
+// EMA RIBBON DATA EXPORTER
+// ============================================================================
+// This script calculates 12 EMAs and their colors for export to CSV
+// Usage:
+//   1. Add this indicator to your TradingView chart
+//   2. Wait for all historical bars to load
+//   3. Click chart menu (⋮) → "Export chart data..."
+//   4. Download CSV with all EMA values and colors
+// ============================================================================
+
+// EMA Periods (matching your ribbon)
+ema5 = ta.ema(close, 5)
+ema10 = ta.ema(close, 10)
+ema15 = ta.ema(close, 15)
+ema20 = ta.ema(close, 20)
+ema25 = ta.ema(close, 25)
+ema30 = ta.ema(close, 30)
+ema40 = ta.ema(close, 40)
+ema50 = ta.ema(close, 50)
+ema60 = ta.ema(close, 60)
+ema80 = ta.ema(close, 80)
+ema100 = ta.ema(close, 100)
+ema120 = ta.ema(close, 120)
+
+// Calculate EMA colors based on trend
+// Color logic: green if above previous, red if below
+ema5_color = ema5 > ema5[1] ? 1 : (ema5 < ema5[1] ? -1 : 0)
+ema10_color = ema10 > ema10[1] ? 1 : (ema10 < ema10[1] ? -1 : 0)
+ema15_color = ema15 > ema15[1] ? 1 : (ema15 < ema15[1] ? -1 : 0)
+ema20_color = ema20 > ema20[1] ? 1 : (ema20 < ema20[1] ? -1 : 0)
+ema25_color = ema25 > ema25[1] ? 1 : (ema25 < ema25[1] ? -1 : 0)
+ema30_color = ema30 > ema30[1] ? 1 : (ema30 < ema30[1] ? -1 : 0)
+ema40_color = ema40 > ema40[1] ? 1 : (ema40 < ema40[1] ? -1 : 0)
+ema50_color = ema50 > ema50[1] ? 1 : (ema50 < ema50[1] ? -1 : 0)
+ema60_color = ema60 > ema60[1] ? 1 : (ema60 < ema60[1] ? -1 : 0)
+ema80_color = ema80 > ema80[1] ? 1 : (ema80 < ema80[1] ? -1 : 0)
+ema100_color = ema100 > ema100[1] ? 1 : (ema100 < ema100[1] ? -1 : 0)
+ema120_color = ema120 > ema120[1] ? 1 : (ema120 < ema120[1] ? -1 : 0)
+
+// Ribbon state analysis
+green_count = (ema5_color == 1 ? 1 : 0) + (ema10_color == 1 ? 1 : 0) +
+              (ema15_color == 1 ? 1 : 0) + (ema20_color == 1 ? 1 : 0) +
+              (ema25_color == 1 ? 1 : 0) + (ema30_color == 1 ? 1 : 0) +
+              (ema40_color == 1 ? 1 : 0) + (ema50_color == 1 ? 1 : 0) +
+              (ema60_color == 1 ? 1 : 0) + (ema80_color == 1 ? 1 : 0) +
+              (ema100_color == 1 ? 1 : 0) + (ema120_color == 1 ? 1 : 0)
+
+red_count = (ema5_color == -1 ? 1 : 0) + (ema10_color == -1 ? 1 : 0) +
+            (ema15_color == -1 ? 1 : 0) + (ema20_color == -1 ? 1 : 0) +
+            (ema25_color == -1 ? 1 : 0) + (ema30_color == -1 ? 1 : 0) +
+            (ema40_color == -1 ? 1 : 0) + (ema50_color == -1 ? 1 : 0) +
+            (ema60_color == -1 ? 1 : 0) + (ema80_color == -1 ? 1 : 0) +
+            (ema100_color == -1 ? 1 : 0) + (ema120_color == -1 ? 1 : 0)
+
+// Ribbon state (1=all_green, 2=mixed_green, 0=mixed, -2=mixed_red, -1=all_red)
+ribbon_state = green_count >= 11 ? 1 : (green_count >= 9 ? 2 : (red_count >= 11 ? -1 : (red_count >= 9 ? -2 : 0)))
+
+// Plot all values (these will be exported to CSV)
+plot(ema5, "EMA5", display=display.none)
+plot(ema10, "EMA10", display=display.none)
+plot(ema15, "EMA15", display=display.none)
+plot(ema20, "EMA20", display=display.none)
+plot(ema25, "EMA25", display=display.none)
+plot(ema30, "EMA30", display=display.none)
+plot(ema40, "EMA40", display=display.none)
+plot(ema50, "EMA50", display=display.none)
+plot(ema60, "EMA60", display=display.none)
+plot(ema80, "EMA80", display=display.none)
+plot(ema100, "EMA100", display=display.none)
+plot(ema120, "EMA120", display=display.none)
+
+// Plot colors (1=green, -1=red, 0=neutral)
+plot(ema5_color, "EMA5_Color", display=display.none)
+plot(ema10_color, "EMA10_Color", display=display.none)
+plot(ema15_color, "EMA15_Color", display=display.none)
+plot(ema20_color, "EMA20_Color", display=display.none)
+plot(ema25_color, "EMA25_Color", display=display.none)
+plot(ema30_color, "EMA30_Color", display=display.none)
+plot(ema40_color, "EMA40_Color", display=display.none)
+plot(ema50_color, "EMA50_Color", display=display.none)
+plot(ema60_color, "EMA60_Color", display=display.none)
+plot(ema80_color, "EMA80_Color", display=display.none)
+plot(ema100_color, "EMA100_Color", display=display.none)
+plot(ema120_color, "EMA120_Color", display=display.none)
+
+// Plot ribbon state and counts
+plot(ribbon_state, "Ribbon_State", display=display.none)
+plot(green_count, "Green_Count", display=display.none)
+plot(red_count, "Red_Count", display=display.none)
+
+// Visual display (optional - shows EMA5 on chart)
+plot(ema5, "EMA5 (visible)", color=ema5_color == 1 ? color.green : color.red, linewidth=2)
+
+// Display info table
+var table infoTable = table.new(position.top_right, 2, 8, border_width=1)
+if barstate.islast
+    table.cell(infoTable, 0, 0, "Ribbon State", bgcolor=color.gray, text_color=color.white)
+    ribbon_text = ribbon_state == 1 ? "All Green" :
+                  ribbon_state == 2 ? "Mixed Green" :
+                  ribbon_state == -1 ? "All Red" :
+                  ribbon_state == -2 ? "Mixed Red" : "Mixed"
+    ribbon_color = ribbon_state > 0 ? color.green : (ribbon_state < 0 ? color.red : color.gray)
+    table.cell(infoTable, 1, 0, ribbon_text, bgcolor=ribbon_color, text_color=color.white)
+
+    table.cell(infoTable, 0, 1, "Green EMAs", bgcolor=color.gray, text_color=color.white)
+    table.cell(infoTable, 1, 1, str.tostring(green_count) + "/12", bgcolor=color.green, text_color=color.white)
+
+    table.cell(infoTable, 0, 2, "Red EMAs", bgcolor=color.gray, text_color=color.white)
+    table.cell(infoTable, 1, 2, str.tostring(red_count) + "/12", bgcolor=color.red, text_color=color.white)
+
+    table.cell(infoTable, 0, 3, "Price", bgcolor=color.gray, text_color=color.white)
+    table.cell(infoTable, 1, 3, str.tostring(close), text_color=color.white)
+
+    table.cell(infoTable, 0, 4, "EMA5", bgcolor=color.gray, text_color=color.white)
+    table.cell(infoTable, 1, 4, str.tostring(ema5, "#.##"), text_color=color.white)
+
+    table.cell(infoTable, 0, 5, "Instructions", bgcolor=color.blue, text_color=color.white)
+    table.cell(infoTable, 1, 5, "Export via ⋮ menu", bgcolor=color.blue, text_color=color.white)

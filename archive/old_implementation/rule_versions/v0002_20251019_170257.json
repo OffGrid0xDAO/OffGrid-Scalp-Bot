@@ -1,0 +1,139 @@
+{
+  "version": "1.0",
+  "last_updated": "2025-10-19T16:32:38.130894",
+  "updated_by": "claude_optimizer",
+  "entry_rules": {
+    "ribbon_alignment_threshold": 0.75,
+    "min_light_emas_required": 8,
+    "ribbon_states_allowed_long": [
+      "all_green",
+      "mixed_green"
+    ],
+    "ribbon_states_allowed_short": [
+      "all_red",
+      "mixed_red"
+    ],
+    "fresh_transition_max_minutes": 15,
+    "stale_transition_min_minutes": 20
+  },
+  "exit_rules": {
+    "max_hold_minutes": 20,
+    "profit_target_pct": 0.005,
+    "stop_loss_pct": 0.003,
+    "use_yellow_ema_trail": true,
+    "exit_on_ribbon_flip": true,
+    "exit_on_light_ema_change_count": 3
+  },
+  "pattern_rules": {
+    "path_e_dark_transition": {
+      "enabled": true,
+      "priority": 3,
+      "confidence_boost": 0.15,
+      "entry_window_seconds": 10
+    },
+    "path_d_early_reversal": {
+      "enabled": true,
+      "priority": 5,
+      "min_light_emas_opposite": 8,
+      "min_green_appearing": 2,
+      "confidence_threshold": 0.75
+    },
+    "path_c_wick_reversal": {
+      "enabled": true,
+      "priority": 2,
+      "min_wick_pct": 0.003,
+      "max_wick_pct": 0.008,
+      "confidence_boost": 0.2
+    },
+    "path_a_trending": {
+      "enabled": true,
+      "priority": 6,
+      "min_range_pct": 0.005,
+      "price_location_lower_pct": 0.5,
+      "price_location_upper_pct": 0.5,
+      "min_alignment_pct": 0.85
+    },
+    "path_b_breakout": {
+      "enabled": true,
+      "priority": 4,
+      "max_range_pct": 0.004,
+      "min_breakout_pct": 0.0015,
+      "ribbon_flip_max_minutes": 8
+    }
+  },
+  "performance_metrics": {
+    "total_trades_executed": 0,
+    "winning_trades": 0,
+    "losing_trades": 0,
+    "win_rate": 0.0,
+    "avg_winner_pnl_pct": 0.0,
+    "avg_loser_pnl_pct": 0.0,
+    "best_pattern": "unknown",
+    "worst_pattern": "unknown"
+  },
+  "claude_insights": {
+    "last_optimization": "2025-10-19T16:32:38.130874",
+    "key_findings": [
+      "Finding 1: CRITICAL - We're missing 36 big movements (avg 0.70%) with earliest warning signals 4.4 minutes before peak. Current rules are too restrictive and missing the most profitable opportunities.",
+      "Finding 2: Big movement patterns show 25.8 average light EMAs at signal time, but our current threshold is only 12 - we need to dramatically increase this to catch big moves early.",
+      "Finding 3: Current win rate of 38.5% is acceptable, but we're executing 0 actual trades, indicating rules are now over-optimized and preventing any entries.",
+      "Finding 4: Winning patterns prefer mixed states (3 mixed_red, 2 mixed_green) while losing patterns are more diverse, suggesting mixed states with high light EMA counts are optimal.",
+      "Finding 5: Big movements prefer slow transitions (31 vs 5 fast) and stable/expanding compression (34 vs 2 compressing), indicating we should avoid fast transition filters."
+    ],
+    "pattern_recommendations": [
+      "Create dedicated Path F - Momentum Surge with highest priority specifically for big movement detection using 25+ light EMAs threshold",
+      "Enable big movement detection that overrides normal stale and alignment filters when 25+ light EMAs appear",
+      "Prioritize mixed ribbon states (mixed_red, mixed_green) over pure states as they appear in 5/5 winning patterns",
+      "Reduce minimum light EMA requirement for normal trades to 8-10 to allow more entries while reserving 25+ for big movement detection",
+      "Add momentum filters that detect EMA expansion patterns which precede 34/36 big movements"
+    ],
+    "rule_adjustments": {
+      "ribbon_alignment_threshold": 0.75,
+      "min_light_emas_required": 8,
+      "max_hold_minutes": 20,
+      "profit_target_pct": 0.005,
+      "stop_loss_pct": 0.003,
+      "NEW_big_movement_detection": {
+        "enabled": true,
+        "min_price_move_pct": 0.005,
+        "ignore_stale_on_big_move": true,
+        "volume_surge_threshold": 1.5
+      },
+      "NEW_path_f_momentum_surge": {
+        "enabled": true,
+        "priority": 1,
+        "min_light_emas": 25,
+        "ignore_all_other_filters": true,
+        "confidence_boost": 0.3
+      },
+      "NEW_momentum_filters": {
+        "min_ema_spread_pct": 0.001,
+        "dark_to_light_transition_boost": 0.2
+      },
+      "NEW_big_movement_priority": {
+        "enabled": true,
+        "entry_overrides": {
+          "ignore_stale_filter": true,
+          "ignore_position_location_filter": true
+        }
+      },
+      "path_priorities": {
+        "path_f_momentum_surge": 1,
+        "path_c_wick_reversal": 2,
+        "path_e_dark_transition": 3,
+        "path_b_breakout": 4,
+        "path_d_early_reversal": 5,
+        "path_a_trending": 6
+      }
+    },
+    "reasoning": "The data shows we're missing massive profit opportunities - 36 big movements averaging 0.70% with clear early warning signals. The key insight is that big movements require 25+ light EMAs (vs our current 12), and we need special override rules to catch them. I'm reducing normal entry requirements (alignment to 0.75, light EMAs to 8) to allow more regular trades while creating a dedicated high-priority path for big movements. The new Path F with 25+ light EMA threshold and filter overrides should catch these profitable moves 4.4 minutes before they peak. Increasing profit targets to 0.5% and stops to 0.3% better matches the big movement magnitudes we're targeting.",
+    "NEW_big_movement_analysis": {
+      "last_analyzed": "2025-10-19T16:32:38.130890",
+      "big_moves_in_period": 36,
+      "catch_rate_pct": 0.0,
+      "recommendations": [
+        "Watch for 25.8 light EMAs appearing"
+      ]
+    }
+  }
+}

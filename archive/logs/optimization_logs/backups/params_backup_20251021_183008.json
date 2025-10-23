@@ -1,0 +1,65 @@
+{
+  "strategy_name": "Ribbon Scalping Strategy",
+  "version": "2.0.0",
+  "description": "EMA Ribbon alignment + compression scalping with confluence filtering",
+  "entry_filters": {
+    "confluence_gap_min": 20,
+    "confluence_score_min": 22,
+    "volume_requirement": [
+      "normal",
+      "elevated",
+      "spike",
+      "low"
+    ],
+    "require_ema_alignment": true,
+    "require_macd_confirmation": false,
+    "rsi_range": [
+      30,
+      70
+    ],
+    "min_price_above_ema20": false
+  },
+  "exit_strategy": {
+    "use_partial_exits": true,
+    "take_profit_levels": [
+      0.8,
+      1.5,
+      2.5,
+      4.0
+    ],
+    "take_profit_sizes": [
+      50,
+      30,
+      20
+    ],
+    "stop_loss_pct": 2.5,
+    "trailing_stop_enabled": false,
+    "trailing_stop_ema": 20,
+    "use_time_based_exit": true,
+    "max_hold_candles": 48
+  },
+  "risk_management": {
+    "max_risk_per_trade": 2.0,
+    "max_concurrent_trades": 3,
+    "max_daily_loss": 5.0,
+    "position_size_pct": 10.0,
+    "min_risk_reward_ratio": 1.5
+  },
+  "ribbon_settings": {
+    "compression_threshold": 60,
+    "expansion_rate_min": 5,
+    "color_flip_threshold": 0.85,
+    "use_compression_filter": true
+  },
+  "optimization": {
+    "update_frequency_minutes": 30,
+    "min_trades_before_optimization": 10,
+    "validation_split": 0.2,
+    "max_parameter_change_pct": 20
+  },
+  "backtest_settings": {
+    "initial_capital": 10000,
+    "commission_pct": 0.05,
+    "slippage_pct": 0.02
+  }
+}

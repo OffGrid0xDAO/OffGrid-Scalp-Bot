@@ -1,0 +1,72 @@
+{
+  "current_trend": "BEARISH",
+  "trend_strength": "MODERATE",
+  "5min_analysis": {
+    "ribbon_state": "all_red",
+    "recent_patterns": [
+      "Bearish rejection at 3888-3890 resistance",
+      "Lower highs pattern",
+      "Failed bounce at EMA resistance",
+      "Bearish engulfing pattern around 3897-3888"
+    ],
+    "key_observations": "Strong bearish momentum with ribbon flipping from all_green to all_red. Price rejected hard at 3888-3890 level and broke below key support. MMA5 and MMA10 both red and declining, showing short-term bearish control. Failed to reclaim 3890+ resistance multiple times.",
+    "support_levels": [
+      "3884 (recent low)",
+      "3880 (psychological level)"
+    ],
+    "resistance_levels": [
+      "3890-3892 (MMA20/40 cluster)",
+      "3896-3898 (previous support turned resistance)"
+    ]
+  },
+  "15min_analysis": {
+    "ribbon_state": "mixed",
+    "recent_patterns": [
+      "Shooting star/bearish reversal at 3906 high",
+      "Lower highs since 3919 peak",
+      "Failed breakout above 3910",
+      "Bearish engulfing from 3906 to 3891"
+    ],
+    "key_observations": "Higher timeframe showing distribution pattern after reaching 3919 high. Ribbon transitioning from all_green to mixed, indicating momentum shift. Price unable to hold above 3900 level, suggesting weakness. MMA5 and MMA10 turning red, confirming bearish shift.",
+    "support_levels": [
+      "3884-3888 (current test zone)",
+      "3880 (major support)"
+    ],
+    "resistance_levels": [
+      "3900-3906 (previous support cluster)",
+      "3910-3915 (strong resistance zone)"
+    ]
+  },
+  "high_probability_setups": [
+    {
+      "setup_type": "Bearish Continuation + Ribbon Confirmation",
+      "timeframe": "both",
+      "direction": "SHORT",
+      "confidence": "HIGH",
+      "description": "Both timeframes showing bearish momentum with 5min ribbon fully red and 15min ribbon turning bearish. Price rejected multiple times at 3890-3892 resistance and broke below 3888 support. Classic distribution pattern after 3919 high.",
+      "entry_trigger": "Break below 3884 with volume, or bounce to 3890-3892 resistance for short entry",
+      "invalidation": "Reclaim and hold above 3896 with ribbon turning green"
+    },
+    {
+      "setup_type": "Failed Bounce Short",
+      "timeframe": "5min",
+      "direction": "SHORT",
+      "confidence": "MEDIUM",
+      "description": "Any bounce toward 3890-3892 resistance (MMA20/40 cluster) offers short opportunity as ribbon remains red and higher timeframe is bearish. Multiple rejections at this level confirm strong resistance.",
+      "entry_trigger": "Bounce to 3890-3892 with bearish rejection candle",
+      "invalidation": "Break and hold above 3896 with increasing volume"
+    },
+    {
+      "setup_type": "Support Break Continuation",
+      "timeframe": "15min",
+      "direction": "SHORT",
+      "confidence": "HIGH",
+      "description": "Clean break below 3884 support with 15min ribbon turning bearish would target next support around 3870-3875. Volume expansion on break would confirm setup.",
+      "entry_trigger": "Decisive break below 3884 with follow-through",
+      "invalidation": "Quick reclaim above 3888 with strong buying volume"
+    }
+  ],
+  "overall_assessment": "Market is in a clear bearish phase with both timeframes confirming the downtrend. The 5-minute ribbon has flipped to all_red while the 15-minute is transitioning bearish, indicating strong selling pressure. Key resistance at 3890-3892 has held multiple times, and the break below 3888 support suggests further downside. The failed breakout above 3910 on the 15-minute and subsequent lower highs pattern confirms distribution. Risk/reward favors short positions with tight stops above 3896. Next major support targets are 3880 and potentially 3870-3875. Any bounces should be viewed as selling opportunities until price can reclaim 3896+ with conviction.",
+  "timestamp": "2025-10-19T08:43:16.646212",
+  "total_cost": 0.036993
+}

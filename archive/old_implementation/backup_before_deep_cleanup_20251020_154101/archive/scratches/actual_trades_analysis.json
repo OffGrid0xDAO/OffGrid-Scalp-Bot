@@ -1,0 +1,209 @@
+{
+  "timestamp": "2025-10-19T07:53:09.069409",
+  "total_trades": 22,
+  "profitable_trades": 6,
+  "losing_trades": 16,
+  "win_rate": 27.27272727272727,
+  "total_pnl_dollars": -28.50000000000182,
+  "avg_pnl_per_trade": -1.2954545454546282,
+  "trades": [
+    {
+      "entry_time": "2025-10-18T16:46:03.693937",
+      "entry_price": 3873.95,
+      "exit_time": "2025-10-18T17:20:19.385126",
+      "exit_price": 3868.95,
+      "direction": "LONG",
+      "pnl_dollars": -5.0,
+      "pnl_percent": -0.12906723112069077
+    },
+    {
+      "entry_time": "2025-10-18T17:30:42.106805",
+      "entry_price": 3865.35,
+      "exit_time": "2025-10-18T17:58:16.657039",
+      "exit_price": 3865.45,
+      "direction": "SHORT",
+      "pnl_dollars": -0.09999999999990905,
+      "pnl_percent": -0.0025870878445654094
+    },
+    {
+      "entry_time": "2025-10-18T18:07:51.683327",
+      "entry_price": 3863.15,
+      "exit_time": "2025-10-18T18:13:43.772205",
+      "exit_price": 3868.55,
+      "direction": "SHORT",
+      "pnl_dollars": -5.400000000000091,
+      "pnl_percent": -0.13978230200743152
+    },
+    {
+      "entry_time": "2025-10-18T18:17:59.897370",
+      "entry_price": 3871.65,
+      "exit_time": "2025-10-18T21:17:43.061660",
+      "exit_price": 3888.85,
+      "direction": "LONG",
+      "pnl_dollars": 17.199999999999818,
+      "pnl_percent": 0.44425503338369476
+    },
+    {
+      "entry_time": "2025-10-18T22:15:54.063881",
+      "entry_price": 3876.95,
+      "exit_time": "2025-10-18T22:22:45.018974",
+      "exit_price": 3876.55,
+      "direction": "SHORT",
+      "pnl_dollars": 0.3999999999996362,
+      "pnl_percent": 0.010317388668918511
+    },
+    {
+      "entry_time": "2025-10-18T22:31:20.327670",
+      "entry_price": 3887.75,
+      "exit_time": "2025-10-18T22:38:09.815750",
+      "exit_price": 3887.35,
+      "direction": "LONG",
+      "pnl_dollars": -0.40000000000009095,
+      "pnl_percent": -0.01028872741303044
+    },
+    {
+      "entry_time": "2025-10-18T23:23:24.167195",
+      "entry_price": 3889.45,
+      "exit_time": "2025-10-19T00:10:51.047791",
+      "exit_price": 3882.85,
+      "direction": "LONG",
+      "pnl_dollars": -6.599999999999909,
+      "pnl_percent": -0.16968980190000924
+    },
+    {
+      "entry_time": "2025-10-19T00:20:17.425828",
+      "entry_price": 3880.65,
+      "exit_time": "2025-10-19T00:26:06.002872",
+      "exit_price": 3884.85,
+      "direction": "SHORT",
+      "pnl_dollars": -4.199999999999818,
+      "pnl_percent": -0.10822929148466927
+    },
+    {
+      "entry_time": "2025-10-19T00:49:32.623861",
+      "entry_price": 3886.65,
+      "exit_time": "2025-10-19T01:03:03.862657",
+      "exit_price": 3886.2,
+      "direction": "LONG",
+      "pnl_dollars": -0.45000000000027285,
+      "pnl_percent": -0.011578094245694179
+    },
+    {
+      "entry_time": "2025-10-19T01:04:30.968732",
+      "entry_price": 3890.4,
+      "exit_time": "2025-10-19T01:11:22.557889",
+      "exit_price": 3884.95,
+      "direction": "LONG",
+      "pnl_dollars": -5.450000000000273,
+      "pnl_percent": -0.14008842278429653
+    },
+    {
+      "entry_time": "2025-10-19T01:18:04.956913",
+      "entry_price": 3882.15,
+      "exit_time": "2025-10-19T01:24:55.177171",
+      "exit_price": 3885.35,
+      "direction": "SHORT",
+      "pnl_dollars": -3.199999999999818,
+      "pnl_percent": -0.08242855118941354
+    },
+    {
+      "entry_time": "2025-10-19T01:30:09.727047",
+      "entry_price": 3880.05,
+      "exit_time": "2025-10-19T01:36:58.092754",
+      "exit_price": 3870.25,
+      "direction": "SHORT",
+      "pnl_dollars": 9.800000000000182,
+      "pnl_percent": 0.2525740647672113
+    },
+    {
+      "entry_time": "2025-10-19T01:45:50.823274",
+      "entry_price": 3863.45,
+      "exit_time": "2025-10-19T01:53:09.570942",
+      "exit_price": 3865.95,
+      "direction": "SHORT",
+      "pnl_dollars": -2.5,
+      "pnl_percent": -0.0647090036107624
+    },
+    {
+      "entry_time": "2025-10-19T02:33:21.228990",
+      "entry_price": 3864.45,
+      "exit_time": "2025-10-19T02:40:39.668191",
+      "exit_price": 3865.45,
+      "direction": "SHORT",
+      "pnl_dollars": -1.0,
+      "pnl_percent": -0.025876903569718848
+    },
+    {
+      "entry_time": "2025-10-19T02:43:11.390191",
+      "entry_price": 3864.85,
+      "exit_time": "2025-10-19T02:49:58.505985",
+      "exit_price": 3870.55,
+      "direction": "SHORT",
+      "pnl_dollars": -5.700000000000273,
+      "pnl_percent": -0.14748308472515811
+    },
+    {
+      "entry_time": "2025-10-19T03:13:46.447119",
+      "entry_price": 3867.1,
+      "exit_time": "2025-10-19T03:20:32.333905",
+      "exit_price": 3866.65,
+      "direction": "SHORT",
+      "pnl_dollars": 0.4499999999998181,
+      "pnl_percent": 0.01163662692973593
+    },
+    {
+      "entry_time": "2025-10-19T03:21:58.975428",
+      "entry_price": 3869.45,
+      "exit_time": "2025-10-19T03:29:16.732240",
+      "exit_price": 3866.65,
+      "direction": "SHORT",
+      "pnl_dollars": 2.799999999999727,
+      "pnl_percent": 0.07236170515188792
+    },
+    {
+      "entry_time": "2025-10-19T03:36:37.404808",
+      "entry_price": 3858.0,
+      "exit_time": "2025-10-19T03:43:50.779368",
+      "exit_price": 3867.55,
+      "direction": "SHORT",
+      "pnl_dollars": -9.550000000000182,
+      "pnl_percent": -0.24753758424054384
+    },
+    {
+      "entry_time": "2025-10-19T03:49:02.282368",
+      "entry_price": 3867.05,
+      "exit_time": "2025-10-19T03:56:22.280953",
+      "exit_price": 3871.55,
+      "direction": "SHORT",
+      "pnl_dollars": -4.5,
+      "pnl_percent": -0.11636777388448559
+    },
+    {
+      "entry_time": "2025-10-19T04:17:55.023237",
+      "entry_price": 3872.95,
+      "exit_time": "2025-10-19T04:23:13.446743",
+      "exit_price": 3884.05,
+      "direction": "SHORT",
+      "pnl_dollars": -11.100000000000364,
+      "pnl_percent": -0.2866032352599534
+    },
+    {
+      "entry_time": "2025-10-19T06:31:00.439796",
+      "entry_price": 3906.55,
+      "exit_time": "2025-10-19T06:37:47.978976",
+      "exit_price": 3906.25,
+      "direction": "LONG",
+      "pnl_dollars": -0.3000000000001819,
+      "pnl_percent": -0.007679410221299661
+    },
+    {
+      "entry_time": "2025-10-19T07:35:27.133538",
+      "entry_price": 3882.05,
+      "exit_time": "2025-10-19T07:52:08.600167",
+      "exit_price": 3875.75,
+      "direction": "SHORT",
+      "pnl_dollars": 6.300000000000182,
+      "pnl_percent": 0.16228539045092621
+    }
+  ]
+}

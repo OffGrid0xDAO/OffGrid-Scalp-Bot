@@ -1,0 +1,39 @@
+{
+  "market_regime_rules": {
+    "RANGING_QUIET": {
+      "long_wick_winrate": 5.128205128205128,
+      "short_wick_winrate": 3.067484662576687,
+      "long_sample_size": 39,
+      "short_sample_size": 163,
+      "recommendation": "CAUTION: Low win rates in ranging market. LONG: 5.1%, SHORT: 3.1%. Reduce size or skip until clear trend emerges."
+    },
+    "BULLISH_TRENDING": {
+      "long_wick_winrate": 0,
+      "short_wick_winrate": 0.0,
+      "long_sample_size": 0,
+      "short_sample_size": 2,
+      "recommendation": "NO DATA: No LONG wick samples in BULLISH regime. Monitor and take first clear wick down opportunity."
+    }
+  },
+  "wick_rules": {},
+  "ema_rules": {},
+  "risk_management": {},
+  "hold_times": {
+    "5min": {
+      "avg_profit": -0.0013469130640539353,
+      "win_rate": 0.0
+    },
+    "10min": {
+      "avg_profit": -0.018009258941158627,
+      "win_rate": 0.49019607843137253
+    },
+    "15min": {
+      "avg_profit": -0.02722059786786358,
+      "win_rate": 0.49019607843137253
+    },
+    "20min": {
+      "avg_profit": -0.023157791682382137,
+      "win_rate": 1.4705882352941175
+    }
+  }
+}

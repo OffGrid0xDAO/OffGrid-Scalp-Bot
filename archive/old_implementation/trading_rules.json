@@ -1,0 +1,61 @@
+{
+  "version": "user_pattern_1.0",
+  "description": "Pattern matching based on 9 profitable user trades",
+  "compression": {
+    "tight_min": 0.0005,
+    "tight_max": 0.002,
+    "wide_min": 0.0025,
+    "wide_max": 0.006,
+    "medium_allowed": true
+  },
+  "light_emas": {
+    "strong_trend_max": 2,
+    "transition_min": 5,
+    "avoid_middle": false
+  },
+  "ribbon_state": {
+    "allowed": [
+      "all_green",
+      "all_red",
+      "mixed",
+      "mixed_green",
+      "mixed_red"
+    ],
+    "prefer_aligned": false
+  },
+  "momentum": {
+    "enabled": true,
+    "required": false,
+    "lookback_minutes": 10,
+    "big_move_threshold": 0.0001,
+    "acceleration_threshold": 1.02
+  },
+  "quality_filter": {
+    "min_score": 0,
+    "factors": {
+      "compression_match": 25,
+      "light_ema_match": 20,
+      "momentum_detected": 35,
+      "ribbon_aligned": 15,
+      "volatility_spike": 10
+    }
+  },
+  "exit": {
+    "quick_exit_minutes": 15,
+    "medium_exit_minutes": 45,
+    "long_exit_minutes": 120,
+    "profit_target_quick": 0.004,
+    "profit_target_medium": 0.007,
+    "profit_target_long": 0.015,
+    "stop_loss": 0.002,
+    "adaptive_exit": true
+  },
+  "frequency": {
+    "max_trades_per_hour": 5,
+    "max_trades_per_4_hours": 8,
+    "max_trades_per_day": 12,
+    "min_time_between_trades_min": 5
+  },
+  "last_updated": "2025-10-21T09:02:41.369631",
+  "updated_by": "user_pattern_optimizer"
+}

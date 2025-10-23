@@ -1,0 +1,103 @@
+{
+  "baseline_win_rate": 42.10526315789473,
+  "best_win_rate": 51.0548523206751,
+  "total_improvement": 8.94958916278037,
+  "iterations": [
+    {
+      "iteration": 1,
+      "timestamp": "2025-10-22T10:29:40.276509",
+      "old_win_rate": 42.10526315789473,
+      "new_win_rate": 51.0548523206751,
+      "improvement_pct": 21.255274261603383,
+      "kept": true,
+      "suggestions": {
+        "suggested_changes": {
+          "confluence_gap_min": 25.0,
+          "confluence_score_min": 20,
+          "volume_requirement": [
+            "spike",
+            "elevated",
+            "normal"
+          ],
+          "min_quality_score": 55,
+          "vwap_mode": "flexible",
+          "take_profit_levels": [
+            1.5,
+            3.0,
+            5.0
+          ],
+          "trailing_stop_activation": 1.2,
+          "stop_loss_pct": 1.8
+        },
+        "reasoning": "Your missed trades had avg confluence gap of 28.8 (below your 30.0 threshold) and only 22.2% had high volume. Lowering confluence_gap_min to 25.0 and adding 'normal' volume captures these opportunities. Reducing quality score from 70 to 55 should significantly increase trade frequency. Implementing trailing stops starting at 1.2% profit helps hold winners longer while protecting gains. The flexible VWAP mode allows some discretion around institutional levels rather than strict requirements."
+      }
+    },
+    {
+      "iteration": 2,
+      "timestamp": "2025-10-22T10:30:52.535104",
+      "old_win_rate": 51.0548523206751,
+      "new_win_rate": 49.74003466204506,
+      "improvement_pct": -2.575304009052229,
+      "kept": false,
+      "suggestions": {
+        "suggested_changes": {
+          "confluence_gap_min": 22.0,
+          "confluence_score_min": 15,
+          "min_quality_score": 48.0,
+          "volume_requirement": [
+            "spike",
+            "elevated",
+            "normal",
+            "low"
+          ],
+          "rsi_range": [
+            15,
+            85
+          ],
+          "vwap_mode": "relaxed",
+          "take_profit_levels": [
+            1.5,
+            3.0,
+            5.0
+          ],
+          "trailing_stop_activation": 2.0,
+          "trailing_stop_distance": 1.0
+        },
+        "reasoning": "Your missed trades averaged 28.0 confluence gap, so lowering to 22.0 captures more opportunities while maintaining quality. Reducing quality score from 56 to 48 should increase trade frequency significantly. The key insight is that you're leaving 1.12% avg on the table per early exit - implementing a trailing stop system with partial profit-taking at 1.5%, 3.0%, and 5.0% levels, plus trailing stops after 2% gains, should help ride winners longer while protecting profits. Relaxing volume and RSI requirements slightly will help capture the 19.6% high volume trades you're missing."
+      }
+    },
+    {
+      "iteration": 3,
+      "timestamp": "2025-10-22T10:32:04.388860",
+      "old_win_rate": 51.0548523206751,
+      "new_win_rate": 51.245551601423486,
+      "improvement_pct": 0.3735184259286513,
+      "kept": true,
+      "suggestions": {
+        "suggested_changes": {
+          "confluence_gap_min": 22.0,
+          "confluence_score_min": 15,
+          "min_quality_score": 52.0,
+          "volume_requirement": [
+            "spike",
+            "elevated",
+            "normal",
+            "low"
+          ],
+          "rsi_range": [
+            15,
+            85
+          ],
+          "take_profit_levels": [
+            1.5,
+            2.5,
+            4.0
+          ],
+          "trailing_stop_activation": 1.2,
+          "stop_loss_pct": 2.5
+        },
+        "reasoning": "Relaxing entry filters to capture the 168 missed trades: lowering confluence requirements since missed trades averaged 28.0 gap, expanding volume acceptance since 19.6% of missed trades had high volume, widening RSI range, and reducing quality score threshold. For exits: implementing trailing stops and wider profit targets to address the 1.12% average left on table from 77 early exits. This should improve trade capture rate while maintaining quality through VWAP, Bollinger, and Stochastic filters."
+      }
+    }
+  ]
+}

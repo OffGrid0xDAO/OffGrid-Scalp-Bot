@@ -1,0 +1,340 @@
+{
+  "version": "2.0_EXPANDED",
+  "last_updated": "2025-10-19T00:00:00",
+  "updated_by": "expanded_ruleset",
+
+  "entry_rules": {
+    "ribbon_alignment_threshold": 0.85,
+    "min_light_emas_required": 2,
+    "ribbon_states_allowed_long": ["all_green", "mixed_green"],
+    "ribbon_states_allowed_short": ["all_red", "mixed_red"],
+    "fresh_transition_max_minutes": 15,
+    "stale_transition_min_minutes": 20,
+
+    "NEW_big_movement_detection": {
+      "enabled": true,
+      "detect_volume_surge": true,
+      "volume_surge_threshold": 1.5,
+      "min_price_move_pct": 0.003,
+      "acceleration_detection": true,
+      "ema_spread_threshold": 0.002,
+      "consecutive_green_candles_long": 3,
+      "consecutive_red_candles_short": 3,
+      "ignore_stale_on_big_move": true,
+      "priority_boost_big_move": 0.30
+    },
+
+    "NEW_momentum_filters": {
+      "require_all_light_emas_same_color": false,
+      "min_ema_spread_pct": 0.001,
+      "max_ema_compression_pct": 0.0005,
+      "require_price_above_all_emas_long": false,
+      "require_price_below_all_emas_short": false,
+      "ribbon_flip_velocity_min": 0.5,
+      "dark_to_light_transition_boost": 0.15
+    },
+
+    "NEW_volume_analysis": {
+      "enabled": false,
+      "min_volume_ratio": 1.2,
+      "volume_ma_period": 20,
+      "high_volume_boost": 0.10,
+      "low_volume_penalty": -0.15
+    },
+
+    "NEW_price_action_filters": {
+      "reject_inside_bars": false,
+      "require_higher_high_long": false,
+      "require_lower_low_short": false,
+      "min_candle_body_pct": 0.0003,
+      "reject_doji_entries": false,
+      "bullish_engulfing_boost": 0.10,
+      "bearish_engulfing_boost": 0.10
+    },
+
+    "NEW_trend_strength": {
+      "calculate_adx": false,
+      "min_adx_value": 20,
+      "strong_trend_threshold": 30,
+      "weak_trend_reject": false,
+      "trend_alignment_bonus": 0.08
+    }
+  },
+
+  "exit_rules": {
+    "max_hold_minutes": 15,
+    "profit_target_pct": 0.005,
+    "stop_loss_pct": 0.003,
+    "use_yellow_ema_trail": true,
+    "exit_on_ribbon_flip": true,
+    "exit_on_light_ema_change_count": 3,
+
+    "NEW_dynamic_exits": {
+      "enabled": true,
+      "scale_profit_target_by_volatility": false,
+      "min_profit_target_pct": 0.003,
+      "max_profit_target_pct": 0.015,
+      "use_atr_stops": false,
+      "atr_multiplier": 1.5,
+      "trail_stop_after_profit_pct": 0.003,
+      "trail_stop_distance_pct": 0.002
+    },
+
+    "NEW_time_based_exits": {
+      "exit_before_high_impact_news": false,
+      "max_hold_during_low_volatility": 10,
+      "max_hold_during_high_volatility": 20,
+      "force_exit_end_of_session": false,
+      "session_end_time": "23:45"
+    },
+
+    "NEW_profit_protection": {
+      "move_stop_to_breakeven_at_pct": 0.003,
+      "lock_profit_at_pct": 0.005,
+      "partial_exit_enabled": false,
+      "partial_exit_percent": 50,
+      "partial_exit_at_pct": 0.004
+    },
+
+    "NEW_loss_management": {
+      "max_consecutive_losses": 3,
+      "reduce_position_after_loss": false,
+      "pause_trading_after_losses": false,
+      "pause_duration_minutes": 30,
+      "daily_loss_limit_pct": 0.02,
+      "stop_trading_on_limit": true
+    }
+  },
+
+  "pattern_rules": {
+    "path_e_dark_transition": {
+      "enabled": true,
+      "priority": 1,
+      "confidence_boost": 0.15,
+      "entry_window_seconds": 10,
+      "NEW_require_volume_confirmation": false,
+      "NEW_min_ema_count_turning_dark": 2,
+      "NEW_allow_entry_after_seconds": 5
+    },
+    "path_d_early_reversal": {
+      "enabled": true,
+      "priority": 2,
+      "min_light_emas_opposite": 8,
+      "min_green_appearing": 2,
+      "confidence_threshold": 0.75,
+      "NEW_require_price_reversal": false,
+      "NEW_min_reversal_pct": 0.002,
+      "NEW_max_time_since_extreme": 5
+    },
+    "path_c_wick_reversal": {
+      "enabled": true,
+      "priority": 3,
+      "min_wick_pct": 0.003,
+      "max_wick_pct": 0.008,
+      "confidence_boost": 0.20,
+      "NEW_require_wick_at_ema": true,
+      "NEW_min_wick_rejection_pct": 0.5,
+      "NEW_confirm_with_next_candle": false
+    },
+    "path_a_trending": {
+      "enabled": true,
+      "priority": 4,
+      "min_range_pct": 0.005,
+      "price_location_lower_pct": 0.5,
+      "price_location_upper_pct": 0.5,
+      "min_alignment_pct": 0.85,
+      "NEW_require_consecutive_closes": false,
+      "NEW_min_consecutive_count": 2,
+      "NEW_trend_duration_min_minutes": 15
+    },
+    "path_b_breakout": {
+      "enabled": true,
+      "priority": 5,
+      "max_range_pct": 0.004,
+      "min_breakout_pct": 0.0015,
+      "ribbon_flip_max_minutes": 8,
+      "NEW_require_consolidation_minutes": 20,
+      "NEW_require_volume_expansion": false,
+      "NEW_retest_entry_allowed": true
+    },
+
+    "NEW_path_f_momentum_surge": {
+      "enabled": true,
+      "priority": 1,
+      "description": "Catch BIG movements with rapid EMA alignment",
+      "min_light_emas": 5,
+      "ema_alignment_speed": "fast",
+      "min_price_velocity_pct": 0.005,
+      "ribbon_flip_max_seconds": 30,
+      "confidence_boost": 0.35,
+      "ignore_all_other_filters": true,
+      "max_entry_delay_seconds": 5
+    },
+
+    "NEW_path_g_breakout_retest": {
+      "enabled": false,
+      "priority": 6,
+      "wait_for_pullback": true,
+      "pullback_depth_pct": 0.002,
+      "retest_zone_tolerance_pct": 0.001,
+      "require_support_at_ema": true,
+      "max_wait_minutes": 10
+    },
+
+    "NEW_path_h_trend_continuation": {
+      "enabled": false,
+      "priority": 7,
+      "require_established_trend_minutes": 30,
+      "entry_on_pullback_only": true,
+      "pullback_to_ema": "MMA20",
+      "bounce_confirmation_required": true
+    }
+  },
+
+  "NEW_big_movement_priority": {
+    "description": "Special rules to catch BIG movements (your priority!)",
+    "enabled": true,
+
+    "detection_criteria": {
+      "min_price_move_in_5min": 0.005,
+      "min_light_emas_appearing": 5,
+      "ribbon_flip_speed_seconds": 60,
+      "ema_spread_expanding": true,
+      "all_emas_aligned_same_direction": true
+    },
+
+    "entry_overrides": {
+      "ignore_stale_filter": true,
+      "ignore_position_location_filter": true,
+      "ignore_range_requirements": true,
+      "use_market_order": false,
+      "max_slippage_tolerance_pct": 0.001
+    },
+
+    "sizing": {
+      "increase_position_size_pct": 0,
+      "max_position_multiplier": 1.0,
+      "reduce_size_if_late_entry": true
+    },
+
+    "exit_modifications": {
+      "wider_profit_target_pct": 0.010,
+      "wider_stop_loss_pct": 0.005,
+      "trail_more_aggressively": true,
+      "dont_exit_on_minor_pullback": true,
+      "min_pullback_to_exit_pct": 0.003
+    }
+  },
+
+  "NEW_pattern_learning": {
+    "enabled": true,
+    "track_all_patterns": true,
+    "min_sample_size": 10,
+    "auto_disable_low_winrate": true,
+    "low_winrate_threshold": 0.45,
+    "auto_boost_high_winrate": true,
+    "high_winrate_threshold": 0.75,
+    "winrate_confidence_adjustment": 0.10
+  },
+
+  "NEW_market_regime_detection": {
+    "enabled": false,
+    "detect_trending": true,
+    "detect_ranging": true,
+    "detect_volatile": true,
+    "adjust_rules_by_regime": true,
+
+    "trending_adjustments": {
+      "increase_profit_targets": true,
+      "reduce_min_alignment": 0.05,
+      "favor_trend_following_patterns": true
+    },
+
+    "ranging_adjustments": {
+      "decrease_profit_targets": true,
+      "increase_min_alignment": 0.05,
+      "favor_mean_reversion_patterns": true
+    },
+
+    "volatile_adjustments": {
+      "widen_stops": true,
+      "reduce_position_size": true,
+      "require_stronger_signals": true
+    }
+  },
+
+  "NEW_time_of_day_rules": {
+    "enabled": false,
+    "sessions": {
+      "asian": {
+        "start": "00:00",
+        "end": "08:00",
+        "enabled": true,
+        "rule_adjustments": {
+          "reduce_targets": 0.0003,
+          "tighter_stops": 0.0001
+        }
+      },
+      "london": {
+        "start": "08:00",
+        "end": "16:00",
+        "enabled": true,
+        "rule_adjustments": {
+          "increase_targets": 0.0002,
+          "favor_breakouts": true
+        }
+      },
+      "new_york": {
+        "start": "13:00",
+        "end": "20:00",
+        "enabled": true,
+        "rule_adjustments": {
+          "increase_targets": 0.0003,
+          "favor_momentum": true
+        }
+      }
+    }
+  },
+
+  "performance_metrics": {
+    "total_trades_executed": 0,
+    "winning_trades": 0,
+    "losing_trades": 0,
+    "win_rate": 0.0,
+    "avg_winner_pnl_pct": 0.0,
+    "avg_loser_pnl_pct": 0.0,
+    "best_pattern": "unknown",
+    "worst_pattern": "unknown",
+
+    "NEW_big_move_stats": {
+      "big_moves_detected": 0,
+      "big_moves_caught": 0,
+      "big_moves_missed": 0,
+      "catch_rate": 0.0,
+      "avg_pnl_big_moves": 0.0
+    },
+
+    "NEW_pattern_performance": {
+      "path_e_winrate": 0.0,
+      "path_d_winrate": 0.0,
+      "path_c_winrate": 0.0,
+      "path_a_winrate": 0.0,
+      "path_b_winrate": 0.0,
+      "path_f_winrate": 0.0
+    }
+  },
+
+  "claude_insights": {
+    "last_optimization": "never",
+    "key_findings": [],
+    "pattern_recommendations": [],
+    "rule_adjustments": [],
+
+    "NEW_big_movement_analysis": {
+      "last_analyzed": "never",
+      "big_moves_in_period": 0,
+      "catch_rate_pct": 0.0,
+      "recommendations": []
+    }
+  }
+}

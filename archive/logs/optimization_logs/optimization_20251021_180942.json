@@ -1,0 +1,57 @@
+{
+  "timestamp": "2025-10-21T18:09:42.003018",
+  "analysis": {
+    "timestamp": "2025-10-21T18:09:42.001677",
+    "optimal_trades": 580,
+    "backtest_trades": 732,
+    "optimal_total_profit": 1580.6200219609502,
+    "backtest_total_profit": 4.393201355875225e+28,
+    "profit_gap": -4.393201355875225e+28,
+    "profit_gap_pct": -2.7794164915264883e+27,
+    "missed_trades": {
+      "count": 489,
+      "missed_profit": 1358.4016323047688,
+      "conditions": {
+        "avg_confluence_gap": 23.885480572597135,
+        "volume_high_pct": 14.314928425357873,
+        "avg_compression": 95.17832409955649
+      }
+    },
+    "early_exits": {
+      "count": 540,
+      "avg_gap": 1.6519957308204087
+    },
+    "backtest_metrics": {
+      "total_trades": 732,
+      "winning_trades": 472,
+      "losing_trades": 260,
+      "win_rate": 64.48087431693989,
+      "total_pnl": 4.393201355875225e+30,
+      "total_return": 4.393201355875225e+28,
+      "avg_win": 2.2921198366208177e+28,
+      "avg_loss": -2.4713862588365517e+28,
+      "profit_factor": 1.68370244559757,
+      "max_drawdown": 0.01499925001251905,
+      "final_capital": 1.341745190738889e+33,
+      "avg_mfe": 1.4364680591827765,
+      "avg_mae": -1.3365979171231535
+    }
+  },
+  "params_before": {
+    "confluence_gap_min": 25,
+    "confluence_score_min": 25,
+    "volume_requirement": [
+      "normal",
+      "elevated",
+      "spike"
+    ],
+    "require_ema_alignment": false,
+    "require_macd_confirmation": false,
+    "rsi_range": [
+      30,
+      70
+    ],
+    "min_price_above_ema20": false
+  },
+  "params_after": null
+}

@@ -1,0 +1,147 @@
+{
+  "version": "1.0",
+  "last_updated": "2025-10-20T11:30:56.537568",
+  "updated_by": "claude_optimizer",
+  "entry_rules": {
+    "ribbon_alignment_threshold": 0.0001,
+    "min_light_emas_required": 2,
+    "ribbon_states_allowed_long": [
+      "all_green",
+      "mixed_green"
+    ],
+    "ribbon_states_allowed_short": [
+      "all_red",
+      "mixed_red"
+    ],
+    "fresh_transition_max_minutes": 15,
+    "stale_transition_min_minutes": 20
+  },
+  "exit_rules": {
+    "max_hold_minutes": 180,
+    "profit_target_pct": 0.006,
+    "stop_loss_pct": 0.004,
+    "use_yellow_ema_trail": true,
+    "exit_on_ribbon_flip": true,
+    "exit_on_light_ema_change_count": 3
+  },
+  "pattern_rules": {
+    "path_e_dark_transition": {
+      "enabled": true,
+      "priority": 2,
+      "confidence_boost": 0.15,
+      "entry_window_seconds": 10
+    },
+    "path_d_early_reversal": {
+      "enabled": true,
+      "priority": 4,
+      "min_light_emas_opposite": 8,
+      "min_green_appearing": 2,
+      "confidence_threshold": 0.75
+    },
+    "path_c_wick_reversal": {
+      "enabled": true,
+      "priority": 3,
+      "min_wick_pct": 0.003,
+      "max_wick_pct": 0.008,
+      "confidence_boost": 0.2
+    },
+    "path_a_trending": {
+      "enabled": true,
+      "priority": 6,
+      "min_range_pct": 0.005,
+      "price_location_lower_pct": 0.5,
+      "price_location_upper_pct": 0.5,
+      "min_alignment_pct": 0.85
+    },
+    "path_b_breakout": {
+      "enabled": true,
+      "priority": 5,
+      "max_range_pct": 0.004,
+      "min_breakout_pct": 0.0015,
+      "ribbon_flip_max_minutes": 8
+    }
+  },
+  "performance_metrics": {
+    "total_trades_executed": 0,
+    "winning_trades": 0,
+    "losing_trades": 0,
+    "win_rate": 0.0,
+    "avg_winner_pnl_pct": 0.0,
+    "avg_loser_pnl_pct": 0.0,
+    "best_pattern": "unknown",
+    "worst_pattern": "unknown"
+  },
+  "claude_insights": {
+    "last_optimization": "2025-10-20T11:30:56.537551",
+    "key_findings": [
+      "Finding 1: CATASTROPHIC MISS RATE - We missed 100% of 40 big movements averaging 0.70% each, representing 28% potential profit in just 30 minutes. This is a complete system failure.",
+      "Finding 2: MASSIVE LIGHT EMA THRESHOLD GAP - Big movements average 25.8 light EMAs but our minimum is only 2. This 12.9x mismatch explains why we're filtering out every significant opportunity.",
+      "Finding 3: EARLY WARNING SYSTEM UNUSED - We have 4.5-minute early detection capability with optimal 2.5-minute entry timing, but zero execution means this massive timing advantage is completely wasted.",
+      "Finding 4: STRONG DIRECTIONAL BIAS IGNORED - 77.5% of big movements are upward (31 up vs 9 down), representing a clear statistical edge we're not exploiting with directional weighting.",
+      "Finding 5: STALE FILTER BLOCKING PROFITS - 15-minute fresh transition limit is filtering out valid big movement opportunities that show stable expansion patterns lasting longer periods."
+    ],
+    "pattern_recommendations": [
+      "EMERGENCY PRIORITY: Implement Path F Momentum Surge with absolute priority 1 to catch the 40 missed big movements - this represents our highest ROI opportunity at 0.70% per trade",
+      "Create dual-threshold system: maintain 2+ light EMAs for normal scalping, add 25+ light EMAs trigger for momentum surge entries with complete filter bypass",
+      "Add volume surge detection (1.5x threshold) to confirm momentum entries and reduce false signals while maintaining maximum catch rate for big moves",
+      "Implement expansion detection to identify stable-to-expansion transitions that precede 50% of big movements, giving us earlier entry signals",
+      "Create enhanced profit targets for momentum surge trades: 0.8% based on average big movement size vs current 0.6% for normal trades",
+      "Add upward bias multiplier (1.5x confidence) for long positions during momentum surges given the 77.5% directional dominance"
+    ],
+    "rule_adjustments": {
+      "ribbon_alignment_threshold": 0.0001,
+      "min_light_emas_required": 2,
+      "max_hold_minutes": 180,
+      "profit_target_pct": 0.006,
+      "stop_loss_pct": 0.004,
+      "fresh_transition_max_minutes": 180,
+      "NEW_big_movement_detection": {
+        "enabled": true,
+        "min_price_move_pct": 0.005,
+        "volume_surge_threshold": 1.5,
+        "ignore_stale_on_big_move": true
+      },
+      "NEW_path_f_momentum_surge": {
+        "enabled": true,
+        "priority": 1,
+        "min_light_emas": 25,
+        "ignore_all_other_filters": true,
+        "confidence_boost": 0.9,
+        "special_profit_target_pct": 0.008,
+        "entry_window_seconds": 300,
+        "upward_bias_multiplier": 1.5
+      },
+      "NEW_momentum_filters": {
+        "min_ema_spread_pct": 0.0001,
+        "dark_to_light_transition_boost": 0.7,
+        "expansion_detection_enabled": true
+      },
+      "NEW_big_movement_priority": {
+        "enabled": true,
+        "entry_overrides": {
+          "ignore_stale_filter": true,
+          "ignore_position_location_filter": true,
+          "ignore_alignment_threshold": true,
+          "ignore_range_requirements": true
+        }
+      },
+      "path_priorities": {
+        "path_f_momentum_surge": 1,
+        "path_e_dark_transition": 2,
+        "path_c_wick_reversal": 3,
+        "path_d_early_reversal": 4,
+        "path_b_breakout": 5,
+        "path_a_trending": 6
+      }
+    },
+    "reasoning": "The data reveals a complete system failure - we're missing 100% of the highest-value opportunities worth 0.70% each. The solution requires revolutionary changes: implement Path F Momentum Surge with absolute priority and complete filter override when 25+ light EMAs appear (matching the 25.8 average from big movements). I'm extending fresh_transition_max_minutes to 180 to stop blocking valid opportunities, while the momentum surge system handles big profits with volume confirmation to prevent false signals. The 4.5-minute early warning gives us massive edge if we execute properly. The 77.5% upward bias means heavily favoring longs during surges. This transforms us from zero-execution into a momentum-detection machine that prioritizes biggest moves first, then falls back to normal scalping patterns.",
+    "NEW_big_movement_analysis": {
+      "last_analyzed": "2025-10-20T11:30:56.537562",
+      "big_moves_in_period": 40,
+      "catch_rate_pct": 0.0,
+      "recommendations": [
+        "Watch for 25.8 light EMAs appearing"
+      ]
+    }
+  }
+}

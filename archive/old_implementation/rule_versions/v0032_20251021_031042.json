@@ -1,0 +1,252 @@
+{
+  "version": "2.0_phase1",
+  "last_updated": "2025-10-21T03:09:44.340588",
+  "updated_by": "claude_gap_analysis_auto",
+  "description": "Phase 1: Enhanced for trend holding with tiered entries and dynamic exits",
+  "ribbon_state_thresholds": {
+    "all_green": 0.92,
+    "strong_green": 0.75,
+    "weak_green": 0.5,
+    "mixed": 0.33,
+    "all_red": 0.92,
+    "strong_red": 0.75,
+    "weak_red": 0.5
+  },
+  "entry_rules": {
+    "ribbon_alignment_threshold": 0.0001,
+    "min_light_emas_required": 15,
+    "ribbon_states_allowed_long": [
+      "all_green",
+      "strong_green"
+    ],
+    "ribbon_states_allowed_short": [
+      "all_red",
+      "strong_red"
+    ],
+    "fresh_transition_max_minutes": 15,
+    "stale_transition_min_minutes": 30,
+    "entry_tiers": {
+      "tier_1_strong_trend": {
+        "enabled": true,
+        "description": "Strong trending conditions - hold aggressively",
+        "ribbon_states_long": [
+          "all_green"
+        ],
+        "ribbon_states_short": [
+          "all_red"
+        ],
+        "min_light_emas": 12,
+        "min_ribbon_stability_minutes": 5,
+        "entry_confidence_base": 0.85,
+        "timeframe_alignment_required": false
+      },
+      "tier_2_moderate_trend": {
+        "enabled": true,
+        "description": "Moderate trending conditions - normal holds",
+        "ribbon_states_long": [
+          "all_green",
+          "strong_green"
+        ],
+        "ribbon_states_short": [
+          "all_red",
+          "strong_red"
+        ],
+        "min_light_emas": 12,
+        "min_ribbon_stability_minutes": 3,
+        "entry_confidence_base": 0.75,
+        "timeframe_alignment_required": false
+      },
+      "tier_3_quick_scalp": {
+        "enabled": false,
+        "description": "Weak/choppy conditions - quick scalps only (DISABLED for now)",
+        "ribbon_states_long": [
+          "weak_green"
+        ],
+        "ribbon_states_short": [
+          "weak_red"
+        ],
+        "min_light_emas": 12,
+        "min_ribbon_stability_minutes": 1,
+        "entry_confidence_base": 0.6,
+        "timeframe_alignment_required": true
+      }
+    },
+    "min_compression_for_entry": 0.004
+  },
+  "exit_rules": {
+    "max_hold_minutes": 180,
+    "tier_1_strong_trend": {
+      "description": "Exit rules for strong trend entries (all_green/all_red with 11+ light EMAs)",
+      "min_hold_minutes": 20,
+      "profit_target_pct": 0.018,
+      "stop_loss_pct": 0.006,
+      "exit_on_ribbon_flip": false,
+      "exit_on_opposite_strong_state": true,
+      "exit_on_weak_state": true,
+      "use_yellow_ema_trail": true,
+      "trailing_ema": 60,
+      "trailing_buffer_pct": 0.012,
+      "min_light_emas_to_hold": 8
+    },
+    "tier_2_moderate_trend": {
+      "description": "Exit rules for moderate trend entries (strong_green/strong_red with 8+ light EMAs)",
+      "min_hold_minutes": 12,
+      "profit_target_pct": 0.015,
+      "stop_loss_pct": 0.005,
+      "exit_on_ribbon_flip": false,
+      "exit_on_opposite_state": true,
+      "exit_on_weak_state": true,
+      "use_yellow_ema_trail": true,
+      "trailing_ema": 30,
+      "trailing_buffer_pct": 0.012,
+      "min_light_emas_to_hold": 6
+    },
+    "tier_3_quick_scalp": {
+      "description": "Exit rules for quick scalp entries (weak conditions)",
+      "min_hold_minutes": 6,
+      "profit_target_pct": 0.0075,
+      "stop_loss_pct": 0.003,
+      "exit_on_ribbon_flip": true,
+      "exit_on_any_state_change": true,
+      "use_yellow_ema_trail": true,
+      "trailing_ema": 15,
+      "trailing_buffer_pct": 0.006,
+      "min_light_emas_to_hold": 4
+    },
+    "min_hold_time_minutes": 20,
+    "exit_on_ribbon_flip": false,
+    "exit_on_target_only": false,
+    "profit_target_pct": 0.015,
+    "use_yellow_ema_trail": true,
+    "yellow_ema_trail_buffer_pct": 0.012
+  },
+  "trend_strength_analysis": {
+    "enabled": true,
+    "description": "Calculate trend strength score to validate entries and exits",
+    "light_ema_ratio_weight": 25,
+    "ema_spread_weight": 20,
+    "ribbon_stability_weight": 20,
+    "slope_alignment_weight": 20,
+    "price_conviction_weight": 15,
+    "thresholds": {
+      "strong_trend": 70,
+      "moderate_trend": 50,
+      "weak_trend": 30
+    },
+    "ema_spread_thresholds": {
+      "expanding": 0.003,
+      "stable": 0.001,
+      "compressing": 0.0005
+    },
+    "ribbon_stability_thresholds": {
+      "very_stable": 20,
+      "stable": 10,
+      "unstable": 5
+    }
+  },
+  "choppy_market_detection": {
+    "enabled": true,
+    "description": "Detect and avoid choppy/ranging market conditions",
+    "flip_count_30min_threshold": 5,
+    "ema_compression_threshold": 0.0005,
+    "light_ema_changes_5min_threshold": 6,
+    "avoid_entry_choppy_score": 70,
+    "exit_if_choppy_score": 60
+  },
+  "pattern_rules": {
+    "path_e_dark_transition": {
+      "enabled": true,
+      "priority": 2,
+      "confidence_boost": 0.15,
+      "entry_window_seconds": 10
+    },
+    "path_d_early_reversal": {
+      "enabled": true,
+      "priority": 4,
+      "min_light_emas_opposite": 8,
+      "min_green_appearing": 2,
+      "confidence_threshold": 0.75
+    },
+    "path_c_wick_reversal": {
+      "enabled": true,
+      "priority": 3,
+      "min_wick_pct": 0.003,
+      "max_wick_pct": 0.008,
+      "confidence_boost": 0.2
+    },
+    "path_a_trending": {
+      "enabled": true,
+      "priority": 6,
+      "min_range_pct": 0.005,
+      "price_location_lower_pct": 0.5,
+      "price_location_upper_pct": 0.5,
+      "min_alignment_pct": 0.85
+    },
+    "path_b_breakout": {
+      "enabled": true,
+      "priority": 5,
+      "max_range_pct": 0.004,
+      "min_breakout_pct": 0.0015,
+      "ribbon_flip_max_minutes": 8
+    },
+    "path_f_momentum_surge": {
+      "enabled": true,
+      "priority": 1,
+      "min_light_emas": 25,
+      "ignore_all_other_filters": true,
+      "confidence_boost": 0.9,
+      "special_profit_target_pct": 0.008,
+      "entry_window_seconds": 300,
+      "upward_bias_multiplier": 1.5
+    }
+  },
+  "performance_metrics": {
+    "total_trades_executed": 0,
+    "winning_trades": 0,
+    "losing_trades": 0,
+    "win_rate": 0.0,
+    "avg_winner_pnl_pct": 0.0,
+    "avg_loser_pnl_pct": 0.0,
+    "best_pattern": "unknown",
+    "worst_pattern": "unknown",
+    "tier_1_trades": 0,
+    "tier_2_trades": 0,
+    "tier_3_trades": 0,
+    "tier_1_avg_hold_minutes": 0,
+    "tier_2_avg_hold_minutes": 0,
+    "tier_3_avg_hold_minutes": 0
+  },
+  "claude_insights": {
+    "last_optimization": "2025-10-21T03:09:44.340561",
+    "phase": "phase1_trend_holding",
+    "key_changes": [
+      "CRITICAL: Disabled exit_on_ribbon_flip for Tier 1 and Tier 2 - will hold through minor reversals",
+      "Added tiered entry system - strong trends (tier 1) vs moderate trends (tier 2)",
+      "Minimum hold times: 15min (tier 1), 8min (tier 2) - prevent premature exits",
+      "Enhanced ribbon states: all_green, strong_green, weak_green for better classification",
+      "Tier 1 only exits on: profit target, stop loss, or opposite STRONG state (all_red)",
+      "Tier 2 exits on: profit target, stop loss, or any opposite state",
+      "Increased profit targets: 1.2% (tier 1), 0.8% (tier 2) to let winners run",
+      "Wider stop losses: 0.6% (tier 1), 0.5% (tier 2) to survive noise"
+    ],
+    "expected_results": [
+      "Hold time: 3.5min \u2192 15-20min (5-6x improvement)",
+      "Win rate: 37% \u2192 50-60%",
+      "PnL: -0.14% \u2192 +3-5%",
+      "Reason: Holding through minor ribbon flips, only exiting on real reversals"
+    ],
+    "risk_mitigation": [
+      "Minimum hold times prevent panic exits",
+      "Still have stop losses for protection",
+      "Tier system allows fallback to tier 2 if tier 1 too restrictive",
+      "Can disable tier 3 (quick scalp) to avoid choppy markets entirely"
+    ],
+    "key_findings": [
+      "Finding 1: Backtest is exiting instantly (0.0min hold vs 16.9min optimal) - likely hitting immediate stops or exiting on first ribbon change, preventing any meaningful profit capture",
+      "Finding 2: Backtest is over-trading by 209% (429 vs 139 trades) with negative PnL, indicating entry rules are catching noise trades that optimal strategy filtered out",
+      "Finding 3: Current min_compression_for_entry of 0.0015 is too low - optimal trades likely required more EMA alignment/compression before entry to avoid false signals",
+      "Finding 4: Min_hold_time of 15 minutes is being overridden by aggressive exit conditions - exits are happening immediately despite the minimum hold rule",
+      "Finding 5: Current exit_on_ribbon_flip=false and exit_on_opposite_strong_state=true suggests exits are triggered by strong opposite states too quickly, not allowing trends to develop"
+    ]
+  }
+}

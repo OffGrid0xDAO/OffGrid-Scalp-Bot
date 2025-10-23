@@ -1,0 +1,59 @@
+{
+  "baseline_win_rate": 49.09090909090909,
+  "best_win_rate": 61.06870229007634,
+  "total_improvement": 11.977793199167245,
+  "iterations": [
+    {
+      "iteration": 1,
+      "timestamp": "2025-10-21T18:01:20.946685",
+      "old_win_rate": 49.09090909090909,
+      "new_win_rate": 0.0,
+      "improvement_pct": -100.0,
+      "kept": false,
+      "suggestions": {
+        "suggested_changes": {
+          "confluence_gap_min": 25,
+          "confluence_score_min": 25,
+          "volume_requirement": [
+            "normal",
+            "elevated",
+            "spike"
+          ],
+          "take_profit_levels": [
+            0.015,
+            0.035,
+            0.065
+          ],
+          "stop_loss_pct": 0.008
+        },
+        "reasoning": "Lower confluence thresholds (25 vs 30) to capture missed trades with avg gap of 28.4. Relaxed volume requirements since 20.8% of missed trades had normal volume. Tiered profit-taking (1.5%, 3.5%, 6.5%) with partial exits to reduce early exit impact while protecting gains. Conservative 0.8% stop-loss to maintain low max drawdown advantage."
+      }
+    },
+    {
+      "iteration": 2,
+      "timestamp": "2025-10-21T18:02:26.352777",
+      "old_win_rate": 49.09090909090909,
+      "new_win_rate": 61.06870229007634,
+      "improvement_pct": 24.399208368674017,
+      "kept": true,
+      "suggestions": {
+        "suggested_changes": {
+          "confluence_gap_min": 25,
+          "confluence_score_min": 25,
+          "volume_requirement": [
+            "normal",
+            "elevated",
+            "spike"
+          ],
+          "take_profit_levels": [
+            0.8,
+            1.5,
+            2.5
+          ],
+          "stop_loss_pct": 1.2
+        },
+        "reasoning": "The current confluence_gap_min (30) is too restrictive given missed trades averaged 28.4. Lowering both confluence parameters to 25 should capture more profitable setups. Adding 'normal' volume allows entry on 20.8% more opportunities where high volume wasn't present but trades were still profitable. The tiered take-profit system (25% at 0.8%, 50% at 1.5%, 25% at 2.5%) addresses early exits by letting portions run longer while securing some gains. The 1.2% stop loss balances the max drawdown risk with the improved profit targets."
+      }
+    }
+  ]
+}

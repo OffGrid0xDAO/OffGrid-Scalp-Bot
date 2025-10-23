@@ -1,0 +1,35 @@
+{
+  "baseline_win_rate": 67.07317073170732,
+  "best_win_rate": 67.07317073170732,
+  "total_improvement": 0.0,
+  "iterations": [
+    {
+      "iteration": 1,
+      "timestamp": "2025-10-21T22:26:56.932804",
+      "old_win_rate": 67.07317073170732,
+      "new_win_rate": 52.307692307692314,
+      "improvement_pct": -22.013986013986013,
+      "kept": false,
+      "suggestions": {
+        "suggested_changes": {
+          "confluence_gap_min": 25.0,
+          "confluence_score_min": 10,
+          "volume_requirement": [
+            "normal",
+            "elevated",
+            "spike",
+            "low"
+          ],
+          "take_profit_levels": [
+            8,
+            15,
+            25,
+            40
+          ],
+          "stop_loss_pct": 4.5
+        },
+        "reasoning": "Lower confluence_gap_min (25 vs 23.04) captures more trades near the 27.7 average of missed opportunities. Reduced confluence_score_min (10 vs 12) increases trade frequency. Added 'low' volume condition since 17.3% high volume in missed trades suggests volume filtering is too restrictive. Implemented tiered take profits (25%, 25%, 25%, 25% position sizing) with higher targets to reduce early exits and capture more of the 1.96% average left on table. Tighter stop loss (4.5%) to maintain risk control while taking more trades."
+      }
+    }
+  ]
+}

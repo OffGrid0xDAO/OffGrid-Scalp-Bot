@@ -1,0 +1,734 @@
+Adding 22 optimal trades from October 5-21, 2025...
+================================================================================
+
+[1/22] Processing LONG entry at 2025-10-05 18:30...
+
+================================================================================
+📝 Adding OPTIMAL LONG ENTRY
+================================================================================
+📊 Loading data with indicators: /Users/0x0010110/Documents/GitHub/TradingScalper/trading_data/indicators/eth_1h_full.csv
+   Loaded 5002 candles
+   Date range: 2025-03-27 06:00:00 to 2025-10-21 15:00:00
+
+🎯 Found candle at: 2025-10-05 18:00:00
+   Time difference: 0 days 00:30:00
+   Price: $4520.10
+
+✅ Captured optimal long entry
+   Price: $4520.10
+   Reason: User identified optimal long entry
+
+📊 Key indicators at entry:
+   confluence_score_long: 10.0
+   confluence_score_short: 40.0
+   rsi_14: 41.92398334516951
+   macd_fast_trend: strong_bearish
+   volume_status: low
+   stoch_k: 45.373665480426695
+   vwap: 3198.0385043331858
+   Nearest support: $4466.00 (1.21% away)
+   Nearest resistance: $4618.00 (2.17% away)
+
+💾 Saved to: /Users/0x0010110/Documents/GitHub/TradingScalper/trading_data/optimal_trades.json
+   Total examples: 1
+✅ Trade 1 added successfully
+
+[2/22] Processing LONG entry at 2025-10-07 08:20...
+
+================================================================================
+📝 Adding OPTIMAL LONG ENTRY
+================================================================================
+📊 Loading data with indicators: /Users/0x0010110/Documents/GitHub/TradingScalper/trading_data/indicators/eth_1h_full.csv
+   Loaded 5002 candles
+   Date range: 2025-03-27 06:00:00 to 2025-10-21 15:00:00
+
+🎯 Found candle at: 2025-10-07 08:00:00
+   Time difference: 0 days 00:20:00
+   Price: $4672.10
+
+✅ Captured optimal long entry
+   Price: $4672.10
+   Reason: User identified optimal long entry
+
+📊 Key indicators at entry:
+   confluence_score_long: 40.0
+   confluence_score_short: 50.0
+   rsi_14: 45.37852243653222
+   macd_fast_trend: strong_bearish
+   volume_status: elevated
+   stoch_k: 19.437730403662787
+   vwap: 3204.8026089309033
+   Nearest support: $4665.70 (0.14% away)
+   Nearest resistance: $4736.40 (1.38% away)
+   🎯 AT SUPPORT LEVEL!
+
+💾 Saved to: /Users/0x0010110/Documents/GitHub/TradingScalper/trading_data/optimal_trades.json
+   Total examples: 2
+✅ Trade 2 added successfully
+
+[3/22] Processing SHORT entry at 2025-10-07 13:45...
+
+================================================================================
+📝 Adding OPTIMAL SHORT ENTRY
+================================================================================
+📊 Loading data with indicators: /Users/0x0010110/Documents/GitHub/TradingScalper/trading_data/indicators/eth_1h_full.csv
+   Loaded 5002 candles
+   Date range: 2025-03-27 06:00:00 to 2025-10-21 15:00:00
+
+🎯 Found candle at: 2025-10-07 14:00:00
+   Time difference: 0 days 00:15:00
+   Price: $4596.60
+
+✅ Captured optimal short entry
+   Price: $4596.60
+   Reason: User identified optimal short entry
+
+📊 Key indicators at entry:
+   confluence_score_long: 20.0
+   confluence_score_short: 30.0
+   rsi_14: 29.553239959929044
+   macd_fast_trend: strong_bearish
+   volume_status: spike
+   stoch_k: 48.72017658478914
+   vwap: 3207.108951558026
+   Nearest support: $4476.60 (2.68% away)
+   Nearest resistance: $4733.70 (2.98% away)
+
+💾 Saved to: /Users/0x0010110/Documents/GitHub/TradingScalper/trading_data/optimal_trades.json
+   Total examples: 3
+✅ Trade 3 added successfully
+
+[4/22] Processing SHORT entry at 2025-10-08 21:15...
+
+================================================================================
+📝 Adding OPTIMAL SHORT ENTRY
+================================================================================
+📊 Loading data with indicators: /Users/0x0010110/Documents/GitHub/TradingScalper/trading_data/indicators/eth_1h_full.csv
+   Loaded 5002 candles
+   Date range: 2025-03-27 06:00:00 to 2025-10-21 15:00:00
+
+🎯 Found candle at: 2025-10-08 21:00:00
+   Time difference: 0 days 00:15:00
+   Price: $4528.00
+
+✅ Captured optimal short entry
+   Price: $4528.00
+   Reason: User identified optimal short entry
+
+📊 Key indicators at entry:
+   confluence_score_long: 50.0
+   confluence_score_short: 0.0
+   rsi_14: 60.904783536802185
+   macd_fast_trend: strong_bullish
+   volume_status: low
+   stoch_k: 57.63064389561878
+   vwap: 3214.881081497383
+   Nearest support: $4450.20 (1.75% away)
+   Nearest resistance: $4733.70 (4.54% away)
+
+💾 Saved to: /Users/0x0010110/Documents/GitHub/TradingScalper/trading_data/optimal_trades.json
+   Total examples: 4
+✅ Trade 4 added successfully
+
+[5/22] Processing SHORT entry at 2025-10-10 14:30...
+
+================================================================================
+📝 Adding OPTIMAL SHORT ENTRY
+================================================================================
+📊 Loading data with indicators: /Users/0x0010110/Documents/GitHub/TradingScalper/trading_data/indicators/eth_1h_full.csv
+   Loaded 5002 candles
+   Date range: 2025-03-27 06:00:00 to 2025-10-21 15:00:00
+
+🎯 Found candle at: 2025-10-10 14:00:00
+   Time difference: 0 days 00:30:00
+   Price: $4278.00
+
+✅ Captured optimal short entry
+   Price: $4278.00
+   Reason: User identified optimal short entry
+
+📊 Key indicators at entry:
+   confluence_score_long: 20.0
+   confluence_score_short: 50.0
+   rsi_14: 30.0507817101241
+   macd_fast_trend: strong_bearish
+   volume_status: elevated
+   stoch_k: 48.984949688727774
+   vwap: 3222.1971296610836
+   Nearest support: $4266.30 (0.27% away)
+   Nearest resistance: $4395.00 (2.73% away)
+   🎯 AT SUPPORT LEVEL!
+
+💾 Saved to: /Users/0x0010110/Documents/GitHub/TradingScalper/trading_data/optimal_trades.json
+   Total examples: 5
+✅ Trade 5 added successfully
+
+[6/22] Processing LONG entry at 2025-10-11 21:30...
+
+================================================================================
+📝 Adding OPTIMAL LONG ENTRY
+================================================================================
+📊 Loading data with indicators: /Users/0x0010110/Documents/GitHub/TradingScalper/trading_data/indicators/eth_1h_full.csv
+   Loaded 5002 candles
+   Date range: 2025-03-27 06:00:00 to 2025-10-21 15:00:00
+
+🎯 Found candle at: 2025-10-11 21:00:00
+   Time difference: 0 days 00:30:00
+   Price: $3733.80
+
+✅ Captured optimal long entry
+   Price: $3733.80
+   Reason: User identified optimal long entry
+
+📊 Key indicators at entry:
+   confluence_score_long: 10.0
+   confluence_score_short: 40.0
+   rsi_14: 34.460488461541374
+   macd_fast_trend: strong_bearish
+   volume_status: normal
+   stoch_k: 29.124432445566168
+   vwap: 3230.646536108592
+   Nearest support: $3241.20 (15.20% away)
+   Nearest resistance: $3854.70 (3.24% away)
+
+💾 Saved to: /Users/0x0010110/Documents/GitHub/TradingScalper/trading_data/optimal_trades.json
+   Total examples: 6
+✅ Trade 6 added successfully
+
+[7/22] Processing LONG entry at 2025-10-12 14:15...
+
+================================================================================
+📝 Adding OPTIMAL LONG ENTRY
+================================================================================
+📊 Loading data with indicators: /Users/0x0010110/Documents/GitHub/TradingScalper/trading_data/indicators/eth_1h_full.csv
+   Loaded 5002 candles
+   Date range: 2025-03-27 06:00:00 to 2025-10-21 15:00:00
+
+🎯 Found candle at: 2025-10-12 14:00:00
+   Time difference: 0 days 00:15:00
+   Price: $3974.10
+
+✅ Captured optimal long entry
+   Price: $3974.10
+   Reason: User identified optimal long entry
+
+📊 Key indicators at entry:
+   confluence_score_long: 40.0
+   confluence_score_short: 10.0
+   rsi_14: 79.9994293938754
+   macd_fast_trend: strong_bullish
+   volume_status: spike
+   stoch_k: 48.889765652185645
+   vwap: 3232.1739913418137
+   Nearest support: $3641.60 (9.13% away)
+
+💾 Saved to: /Users/0x0010110/Documents/GitHub/TradingScalper/trading_data/optimal_trades.json
+   Total examples: 7
+✅ Trade 7 added successfully
+
+[8/22] Processing LONG entry at 2025-10-13 11:45...
+
+================================================================================
+📝 Adding OPTIMAL LONG ENTRY
+================================================================================
+📊 Loading data with indicators: /Users/0x0010110/Documents/GitHub/TradingScalper/trading_data/indicators/eth_1h_full.csv
+   Loaded 5002 candles
+   Date range: 2025-03-27 06:00:00 to 2025-10-21 15:00:00
+
+🎯 Found candle at: 2025-10-13 12:00:00
+   Time difference: 0 days 00:15:00
+   Price: $4096.60
+
+✅ Captured optimal long entry
+   Price: $4096.60
+   Reason: User identified optimal long entry
+
+📊 Key indicators at entry:
+   confluence_score_long: 10.0
+   confluence_score_short: 40.0
+   rsi_14: 41.37846376006004
+   macd_fast_trend: strong_bearish
+   volume_status: normal
+   stoch_k: 35.26605259439325
+   vwap: 3235.7584768644356
+   Nearest support: $3792.10 (8.03% away)
+   Nearest resistance: $4192.50 (2.34% away)
+
+💾 Saved to: /Users/0x0010110/Documents/GitHub/TradingScalper/trading_data/optimal_trades.json
+   Total examples: 8
+✅ Trade 8 added successfully
+
+[9/22] Processing SHORT entry at 2025-10-14 01:45...
+
+================================================================================
+📝 Adding OPTIMAL SHORT ENTRY
+================================================================================
+📊 Loading data with indicators: /Users/0x0010110/Documents/GitHub/TradingScalper/trading_data/indicators/eth_1h_full.csv
+   Loaded 5002 candles
+   Date range: 2025-03-27 06:00:00 to 2025-10-21 15:00:00
+
+🎯 Found candle at: 2025-10-14 02:00:00
+   Time difference: 0 days 00:15:00
+   Price: $4169.60
+
+✅ Captured optimal short entry
+   Price: $4169.60
+   Reason: User identified optimal short entry
+
+📊 Key indicators at entry:
+   confluence_score_long: 10.0
+   confluence_score_short: 40.0
+   rsi_14: 40.229695733596984
+   macd_fast_trend: strong_bearish
+   volume_status: normal
+   stoch_k: 12.30551462600432
+   vwap: 3237.921839315794
+   Nearest support: $4038.70 (3.24% away)
+   Nearest resistance: $4192.50 (0.55% away)
+
+💾 Saved to: /Users/0x0010110/Documents/GitHub/TradingScalper/trading_data/optimal_trades.json
+   Total examples: 9
+✅ Trade 9 added successfully
+
+[10/22] Processing LONG entry at 2025-10-14 14:15...
+
+================================================================================
+📝 Adding OPTIMAL LONG ENTRY
+================================================================================
+📊 Loading data with indicators: /Users/0x0010110/Documents/GitHub/TradingScalper/trading_data/indicators/eth_1h_full.csv
+   Loaded 5002 candles
+   Date range: 2025-03-27 06:00:00 to 2025-10-21 15:00:00
+
+🎯 Found candle at: 2025-10-14 14:00:00
+   Time difference: 0 days 00:15:00
+   Price: $3968.40
+
+✅ Captured optimal long entry
+   Price: $3968.40
+   Reason: User identified optimal long entry
+
+📊 Key indicators at entry:
+   confluence_score_long: 40.0
+   confluence_score_short: 30.0
+   rsi_14: 34.36081550408075
+   macd_fast_trend: strong_bullish
+   volume_status: elevated
+   stoch_k: 55.24527020582738
+   vwap: 3240.4333362242746
+   Nearest resistance: $4192.50 (5.65% away)
+
+💾 Saved to: /Users/0x0010110/Documents/GitHub/TradingScalper/trading_data/optimal_trades.json
+   Total examples: 10
+✅ Trade 10 added successfully
+
+[11/22] Processing LONG entry at 2025-10-15 05:00...
+
+================================================================================
+📝 Adding OPTIMAL LONG ENTRY
+================================================================================
+📊 Loading data with indicators: /Users/0x0010110/Documents/GitHub/TradingScalper/trading_data/indicators/eth_1h_full.csv
+   Loaded 5002 candles
+   Date range: 2025-03-27 06:00:00 to 2025-10-21 15:00:00
+
+🎯 Found candle at: 2025-10-15 05:00:00
+   Time difference: 0 days 00:00:00
+   Price: $4109.30
+
+✅ Captured optimal long entry
+   Price: $4109.30
+   Reason: User identified optimal long entry
+
+📊 Key indicators at entry:
+   confluence_score_long: 30.0
+   confluence_score_short: 40.0
+   rsi_14: 54.2976194045232
+   macd_fast_trend: strong_bearish
+   volume_status: normal
+   stoch_k: 47.979191676670816
+   vwap: 3243.094157166928
+   Nearest support: $4038.70 (1.75% away)
+   Nearest resistance: $4160.00 (1.23% away)
+
+💾 Saved to: /Users/0x0010110/Documents/GitHub/TradingScalper/trading_data/optimal_trades.json
+   Total examples: 11
+✅ Trade 11 added successfully
+
+[12/22] Processing SHORT entry at 2025-10-15 09:15...
+
+================================================================================
+📝 Adding OPTIMAL SHORT ENTRY
+================================================================================
+📊 Loading data with indicators: /Users/0x0010110/Documents/GitHub/TradingScalper/trading_data/indicators/eth_1h_full.csv
+   Loaded 5002 candles
+   Date range: 2025-03-27 06:00:00 to 2025-10-21 15:00:00
+
+🎯 Found candle at: 2025-10-15 09:00:00
+   Time difference: 0 days 00:15:00
+   Price: $4155.20
+
+✅ Captured optimal short entry
+   Price: $4155.20
+   Reason: User identified optimal short entry
+
+📊 Key indicators at entry:
+   confluence_score_long: 50.0
+   confluence_score_short: 0.0
+   rsi_14: 62.582342078836405
+   macd_fast_trend: strong_bullish
+   volume_status: normal
+   stoch_k: 73.70776270282128
+   vwap: 3243.6900903830965
+   Nearest support: $4061.70 (2.30% away)
+   Nearest resistance: $4160.00 (0.12% away)
+   🎯 AT RESISTANCE LEVEL!
+
+💾 Saved to: /Users/0x0010110/Documents/GitHub/TradingScalper/trading_data/optimal_trades.json
+   Total examples: 12
+✅ Trade 12 added successfully
+
+[13/22] Processing LONG entry at 2025-10-15 22:10...
+
+================================================================================
+📝 Adding OPTIMAL LONG ENTRY
+================================================================================
+📊 Loading data with indicators: /Users/0x0010110/Documents/GitHub/TradingScalper/trading_data/indicators/eth_1h_full.csv
+   Loaded 5002 candles
+   Date range: 2025-03-27 06:00:00 to 2025-10-21 15:00:00
+
+🎯 Found candle at: 2025-10-15 22:00:00
+   Time difference: 0 days 00:10:00
+   Price: $3960.00
+
+✅ Captured optimal long entry
+   Price: $3960.00
+   Reason: User identified optimal long entry
+
+📊 Key indicators at entry:
+   confluence_score_long: 30.0
+   confluence_score_short: 0.0
+   rsi_14: 29.303718614395905
+   macd_fast_trend: strong_bullish
+   volume_status: normal
+   stoch_k: 35.4569067296339
+   vwap: 3246.056722611437
+   Nearest support: $3882.10 (2.01% away)
+   Nearest resistance: $4145.00 (4.67% away)
+
+💾 Saved to: /Users/0x0010110/Documents/GitHub/TradingScalper/trading_data/optimal_trades.json
+   Total examples: 13
+✅ Trade 13 added successfully
+
+[14/22] Processing SHORT entry at 2025-10-16 14:05...
+
+================================================================================
+📝 Adding OPTIMAL SHORT ENTRY
+================================================================================
+📊 Loading data with indicators: /Users/0x0010110/Documents/GitHub/TradingScalper/trading_data/indicators/eth_1h_full.csv
+   Loaded 5002 candles
+   Date range: 2025-03-27 06:00:00 to 2025-10-21 15:00:00
+
+🎯 Found candle at: 2025-10-16 14:00:00
+   Time difference: 0 days 00:05:00
+   Price: $4014.00
+
+✅ Captured optimal short entry
+   Price: $4014.00
+   Reason: User identified optimal short entry
+
+📊 Key indicators at entry:
+   confluence_score_long: 40.0
+   confluence_score_short: 50.0
+   rsi_14: 46.38039713192708
+   macd_fast_trend: strong_bearish
+   volume_status: elevated
+   stoch_k: 57.47416734669991
+   vwap: 3247.471690540648
+   Nearest support: $3938.20 (1.92% away)
+   Nearest resistance: $4145.00 (3.26% away)
+
+💾 Saved to: /Users/0x0010110/Documents/GitHub/TradingScalper/trading_data/optimal_trades.json
+   Total examples: 14
+✅ Trade 14 added successfully
+
+[15/22] Processing SHORT entry at 2025-10-17 05:15...
+
+================================================================================
+📝 Adding OPTIMAL SHORT ENTRY
+================================================================================
+📊 Loading data with indicators: /Users/0x0010110/Documents/GitHub/TradingScalper/trading_data/indicators/eth_1h_full.csv
+   Loaded 5002 candles
+   Date range: 2025-03-27 06:00:00 to 2025-10-21 15:00:00
+
+🎯 Found candle at: 2025-10-17 05:00:00
+   Time difference: 0 days 00:15:00
+   Price: $3893.40
+
+✅ Captured optimal short entry
+   Price: $3893.40
+   Reason: User identified optimal short entry
+
+📊 Key indicators at entry:
+   confluence_score_long: 30.0
+   confluence_score_short: 20.0
+   rsi_14: 40.97219815952808
+   macd_fast_trend: strong_bullish
+   volume_status: low
+   stoch_k: 40.47740298984003
+   vwap: 3249.57934629244
+   Nearest support: $3822.80 (1.85% away)
+   Nearest resistance: $4086.00 (4.95% away)
+
+💾 Saved to: /Users/0x0010110/Documents/GitHub/TradingScalper/trading_data/optimal_trades.json
+   Total examples: 15
+✅ Trade 15 added successfully
+
+[16/22] Processing LONG entry at 2025-10-17 15:45...
+
+================================================================================
+📝 Adding OPTIMAL LONG ENTRY
+================================================================================
+📊 Loading data with indicators: /Users/0x0010110/Documents/GitHub/TradingScalper/trading_data/indicators/eth_1h_full.csv
+   Loaded 5002 candles
+   Date range: 2025-03-27 06:00:00 to 2025-10-21 15:00:00
+
+🎯 Found candle at: 2025-10-17 16:00:00
+   Time difference: 0 days 00:15:00
+   Price: $3786.80
+
+✅ Captured optimal long entry
+   Price: $3786.80
+   Reason: User identified optimal long entry
+
+📊 Key indicators at entry:
+   confluence_score_long: 50.0
+   confluence_score_short: 20.0
+   rsi_14: 46.28288278857169
+   macd_fast_trend: strong_bullish
+   volume_status: normal
+   stoch_k: 64.05403235408613
+   vwap: 3251.657686462114
+   Nearest support: $3675.00 (3.04% away)
+   Nearest resistance: $3948.60 (4.27% away)
+
+💾 Saved to: /Users/0x0010110/Documents/GitHub/TradingScalper/trading_data/optimal_trades.json
+   Total examples: 16
+✅ Trade 16 added successfully
+
+[17/22] Processing LONG entry at 2025-10-19 09:30...
+
+================================================================================
+📝 Adding OPTIMAL LONG ENTRY
+================================================================================
+📊 Loading data with indicators: /Users/0x0010110/Documents/GitHub/TradingScalper/trading_data/indicators/eth_1h_full.csv
+   Loaded 5002 candles
+   Date range: 2025-03-27 06:00:00 to 2025-10-21 15:00:00
+
+🎯 Found candle at: 2025-10-19 09:00:00
+   Time difference: 0 days 00:30:00
+   Price: $3910.20
+
+✅ Captured optimal long entry
+   Price: $3910.20
+   Reason: User identified optimal long entry
+
+📊 Key indicators at entry:
+   confluence_score_long: 60.0
+   confluence_score_short: 10.0
+   rsi_14: 61.22829710386009
+   macd_fast_trend: strong_bullish
+   volume_status: spike
+   stoch_k: 43.97804853102881
+   vwap: 3253.7283673431957
+   Nearest support: $3854.00 (1.46% away)
+   Nearest resistance: $3925.70 (0.40% away)
+   🎯 AT RESISTANCE LEVEL!
+
+💾 Saved to: /Users/0x0010110/Documents/GitHub/TradingScalper/trading_data/optimal_trades.json
+   Total examples: 17
+✅ Trade 17 added successfully
+
+[18/22] Processing SHORT entry at 2025-10-19 23:15...
+
+================================================================================
+📝 Adding OPTIMAL SHORT ENTRY
+================================================================================
+📊 Loading data with indicators: /Users/0x0010110/Documents/GitHub/TradingScalper/trading_data/indicators/eth_1h_full.csv
+   Loaded 5002 candles
+   Date range: 2025-03-27 06:00:00 to 2025-10-21 15:00:00
+
+🎯 Found candle at: 2025-10-19 23:00:00
+   Time difference: 0 days 00:15:00
+   Price: $3980.40
+
+✅ Captured optimal short entry
+   Price: $3980.40
+   Reason: User identified optimal short entry
+
+📊 Key indicators at entry:
+   confluence_score_long: 30.0
+   confluence_score_short: 40.0
+   rsi_14: 53.34841468478662
+   macd_fast_trend: strong_bearish
+   volume_status: normal
+   stoch_k: 48.54629159577456
+   vwap: 3254.712682331235
+   Nearest support: $3854.00 (3.28% away)
+   Nearest resistance: $4025.50 (1.13% away)
+
+💾 Saved to: /Users/0x0010110/Documents/GitHub/TradingScalper/trading_data/optimal_trades.json
+   Total examples: 18
+✅ Trade 18 added successfully
+
+[19/22] Processing LONG entry at 2025-10-20 02:30...
+
+================================================================================
+📝 Adding OPTIMAL LONG ENTRY
+================================================================================
+📊 Loading data with indicators: /Users/0x0010110/Documents/GitHub/TradingScalper/trading_data/indicators/eth_1h_full.csv
+   Loaded 5002 candles
+   Date range: 2025-03-27 06:00:00 to 2025-10-21 15:00:00
+
+🎯 Found candle at: 2025-10-20 02:00:00
+   Time difference: 0 days 00:30:00
+   Price: $3954.30
+
+✅ Captured optimal long entry
+   Price: $3954.30
+   Reason: User identified optimal long entry
+
+📊 Key indicators at entry:
+   confluence_score_long: 30.0
+   confluence_score_short: 40.0
+   rsi_14: 46.54194312298211
+   macd_fast_trend: strong_bearish
+   volume_status: normal
+   stoch_k: 30.338325013865784
+   vwap: 3255.029884659952
+   Nearest support: $3854.00 (2.60% away)
+   Nearest resistance: $4025.50 (1.80% away)
+
+💾 Saved to: /Users/0x0010110/Documents/GitHub/TradingScalper/trading_data/optimal_trades.json
+   Total examples: 19
+✅ Trade 19 added successfully
+
+[20/22] Processing SHORT entry at 2025-10-20 16:00...
+
+================================================================================
+📝 Adding OPTIMAL SHORT ENTRY
+================================================================================
+📊 Loading data with indicators: /Users/0x0010110/Documents/GitHub/TradingScalper/trading_data/indicators/eth_1h_full.csv
+   Loaded 5002 candles
+   Date range: 2025-03-27 06:00:00 to 2025-10-21 15:00:00
+
+🎯 Found candle at: 2025-10-20 16:00:00
+   Time difference: 0 days 00:00:00
+   Price: $3948.60
+
+✅ Captured optimal short entry
+   Price: $3948.60
+   Reason: User identified optimal short entry
+
+📊 Key indicators at entry:
+   confluence_score_long: 20.0
+   confluence_score_short: 30.0
+   rsi_14: 24.72390702305114
+   macd_fast_trend: strong_bearish
+   volume_status: spike
+   stoch_k: 29.08377509535195
+   vwap: 3256.5462361689
+   Nearest support: $3906.60 (1.08% away)
+   Nearest resistance: $4025.50 (1.95% away)
+
+💾 Saved to: /Users/0x0010110/Documents/GitHub/TradingScalper/trading_data/optimal_trades.json
+   Total examples: 20
+✅ Trade 20 added successfully
+
+[21/22] Processing SHORT entry at 2025-10-21 01:00...
+
+================================================================================
+📝 Adding OPTIMAL SHORT ENTRY
+================================================================================
+📊 Loading data with indicators: /Users/0x0010110/Documents/GitHub/TradingScalper/trading_data/indicators/eth_1h_full.csv
+   Loaded 5002 candles
+   Date range: 2025-03-27 06:00:00 to 2025-10-21 15:00:00
+
+🎯 Found candle at: 2025-10-21 01:00:00
+   Time difference: 0 days 00:00:00
+   Price: $3946.60
+
+✅ Captured optimal short entry
+   Price: $3946.60
+   Reason: User identified optimal short entry
+
+📊 Key indicators at entry:
+   confluence_score_long: 10.0
+   confluence_score_short: 40.0
+   rsi_14: 32.19364199872108
+   macd_fast_trend: strong_bearish
+   volume_status: normal
+   stoch_k: 29.067543365817517
+   vwap: 3257.220320513258
+   Nearest support: $3922.00 (0.63% away)
+   Nearest resistance: $3948.00 (0.04% away)
+   🎯 AT RESISTANCE LEVEL!
+
+💾 Saved to: /Users/0x0010110/Documents/GitHub/TradingScalper/trading_data/optimal_trades.json
+   Total examples: 21
+✅ Trade 21 added successfully
+
+[22/22] Processing LONG entry at 2025-10-21 12:00...
+
+================================================================================
+📝 Adding OPTIMAL LONG ENTRY
+================================================================================
+📊 Loading data with indicators: /Users/0x0010110/Documents/GitHub/TradingScalper/trading_data/indicators/eth_1h_full.csv
+   Loaded 5002 candles
+   Date range: 2025-03-27 06:00:00 to 2025-10-21 15:00:00
+
+🎯 Found candle at: 2025-10-21 12:00:00
+   Time difference: 0 days 00:00:00
+   Price: $3879.70
+
+✅ Captured optimal long entry
+   Price: $3879.70
+   Reason: User identified optimal long entry
+
+📊 Key indicators at entry:
+   confluence_score_long: 30.0
+   confluence_score_short: 20.0
+   rsi_14: 38.9371223154112
+   macd_fast_trend: strong_bullish
+   volume_status: normal
+   stoch_k: 67.68019215626872
+   vwap: 3258.1783185340296
+   Nearest support: $3839.50 (1.05% away)
+   Nearest resistance: $4002.80 (3.17% away)
+
+💾 Saved to: /Users/0x0010110/Documents/GitHub/TradingScalper/trading_data/optimal_trades.json
+   Total examples: 22
+✅ Trade 22 added successfully
+
+================================================================================
+🎉 FINISHED ADDING OPTIMAL TRADES
+================================================================================
+
+================================================================================
+📊 OPTIMAL TRADES DATASET SUMMARY
+================================================================================
+
+✅ Optimal Entries: 22
+   1. 2025-10-19 23:15 - SHORT - User identified optimal short entry...
+   2. 2025-10-20 02:30 - LONG - User identified optimal long entry...
+   3. 2025-10-20 16:00 - SHORT - User identified optimal short entry...
+   4. 2025-10-21 01:00 - SHORT - User identified optimal short entry...
+   5. 2025-10-21 12:00 - LONG - User identified optimal long entry...
+
+⚠️  Missed Opportunities: 0
+
+❌ False Signals: 0
+
+💾 Saved to: /Users/0x0010110/Documents/GitHub/TradingScalper/trading_data/optimal_trades.json
+📅 Last updated: 2025-10-22T12:08:14.895808
+
+✅ Next step: Run pattern analysis to discover what these trades have in common!
+   Command: python analyze_optimal_patterns.py

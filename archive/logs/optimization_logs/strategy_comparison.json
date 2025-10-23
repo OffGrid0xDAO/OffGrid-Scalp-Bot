@@ -1,0 +1,75 @@
+{
+  "confluence": {
+    "total_trades": 532,
+    "winning_trades": 350,
+    "losing_trades": 182,
+    "win_rate": 65.78947368421053,
+    "total_pnl": 337.882816923514,
+    "total_return": 3.37882816923514,
+    "avg_win": 11.681739706987207,
+    "avg_loss": -20.60838505781323,
+    "profit_factor": 1.0900846421918653,
+    "max_drawdown": 27.47536636678375,
+    "final_capital": 10337.882816923515,
+    "avg_mfe": 1.6468356318350397,
+    "avg_mae": -1.5605848194083833
+  },
+  "ribbon": {
+    "total_trades": 126,
+    "winning_trades": 85,
+    "losing_trades": 41,
+    "win_rate": 67.46031746031747,
+    "total_pnl": 146.21578660094593,
+    "total_return": 1.4621578660094594,
+    "avg_win": 11.61205933178706,
+    "avg_loss": -20.507542843925712,
+    "profit_factor": 1.1738988783163928,
+    "max_drawdown": 29.52459484326846,
+    "final_capital": 10146.215786600946,
+    "avg_mfe": 1.7030643330280444,
+    "avg_mae": -1.5923676617245965
+  },
+  "comparison": {
+    "Metric": [
+      "Total Trades",
+      "Win Rate %",
+      "Total Return %",
+      "Profit Factor",
+      "Max Drawdown %",
+      "Avg Win %",
+      "Avg Loss %",
+      "Final Capital"
+    ],
+    "Confluence": [
+      "532.00",
+      "65.79",
+      "3.38",
+      "1.09",
+      "27.48",
+      "11.68",
+      "-20.61",
+      "10337.88"
+    ],
+    "Ribbon": [
+      "126.00",
+      "67.46",
+      "1.46",
+      "1.17",
+      "29.52",
+      "11.61",
+      "-20.51",
+      "10146.22"
+    ],
+    "Winner": [
+      "\u2705 Ribbon",
+      "\u2705 Ribbon",
+      "\u2705 Confluence",
+      "\u2705 Ribbon",
+      "\u2705 Confluence",
+      "\u2705 Confluence",
+      "\u2705 Ribbon",
+      "\u2705 Confluence"
+    ]
+  },
+  "winner": "tie"
+}

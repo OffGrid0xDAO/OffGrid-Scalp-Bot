@@ -1,0 +1,140 @@
+{
+  "baseline_win_rate": 50.210970464135016,
+  "best_win_rate": 50.210970464135016,
+  "total_improvement": 0.0,
+  "iterations": [
+    {
+      "iteration": 1,
+      "timestamp": "2025-10-21T17:48:38.613074",
+      "old_win_rate": 50.210970464135016,
+      "new_win_rate": 0.0,
+      "improvement_pct": -100.0,
+      "kept": false,
+      "suggestions": {
+        "suggested_changes": {
+          "confluence_gap_min": 22,
+          "confluence_score_min": 25,
+          "volume_requirement": [
+            "normal",
+            "elevated",
+            "spike"
+          ],
+          "take_profit_levels": [
+            0.015,
+            0.035,
+            0.065
+          ],
+          "stop_loss_pct": 0.008
+        },
+        "reasoning": "Lowering confluence_gap_min from 30 to 22 (below the 25.1 average of missed trades) and confluence_score_min to 25 should capture more profitable opportunities. Expanding volume_requirement to include 'normal' addresses the 13% of missed trades that weren't high volume. Implementing staged profit-taking (1.5%, 3.5%, 6.5%) instead of single exits should reduce the 1.53% average left on table from early exits. The tight 0.8% stop loss maintains the excellent 0.01% max drawdown while allowing more trade entries."
+      }
+    },
+    {
+      "iteration": 2,
+      "timestamp": "2025-10-21T17:49:47.576280",
+      "old_win_rate": 50.210970464135016,
+      "new_win_rate": 37.13592233009709,
+      "improvement_pct": -26.040221914008317,
+      "kept": false,
+      "suggestions": {
+        "suggested_changes": {
+          "confluence_gap_min": 25,
+          "confluence_score_min": 25,
+          "volume_requirement": [
+            "normal",
+            "elevated",
+            "spike"
+          ],
+          "take_profit_levels": [
+            0.02,
+            0.04,
+            0.08,
+            0.15
+          ],
+          "stop_loss_pct": 0.015
+        },
+        "reasoning": "Lower confluence thresholds (25 vs 30) align with missed trade averages. Expanded volume requirements capture 'normal' volume trades that may still be profitable. Tiered profit-taking (25% at each level) addresses early exits by letting 25% ride longer. Stop loss at 1.5% maintains favorable risk/reward while your max drawdown of 0.01% suggests you can handle slightly more risk for better capture."
+      }
+    },
+    {
+      "iteration": 3,
+      "timestamp": "2025-10-21T17:50:55.784070",
+      "old_win_rate": 50.210970464135016,
+      "new_win_rate": 42.1875,
+      "improvement_pct": -15.979516806722682,
+      "kept": false,
+      "suggestions": {
+        "suggested_changes": {
+          "confluence_gap_min": 20,
+          "confluence_score_min": 25,
+          "volume_requirement": [
+            "normal",
+            "elevated",
+            "spike"
+          ],
+          "take_profit_levels": [
+            15,
+            35,
+            60
+          ],
+          "stop_loss_pct": 8
+        },
+        "reasoning": "Lower confluence requirements (20 vs 30 gap, 25 vs 30 score) will capture more trades since missed trades averaged 25.1 gap. Expanding volume to include 'normal' captures the 13% of missed trades with high volume. Multi-level profit taking (15%/35%/60%) addresses early exits by taking partial profits while letting winners run. 8% stop loss balances the 0.01% max drawdown with room for normal volatility."
+      }
+    },
+    {
+      "iteration": 4,
+      "timestamp": "2025-10-21T17:52:03.940037",
+      "old_win_rate": 50.210970464135016,
+      "new_win_rate": 0.0,
+      "improvement_pct": -100.0,
+      "kept": false,
+      "suggestions": {
+        "suggested_changes": {
+          "confluence_gap_min": 25,
+          "confluence_score_min": 25,
+          "volume_requirement": [
+            "normal",
+            "elevated",
+            "spike"
+          ],
+          "take_profit_levels": [
+            0.015,
+            0.03,
+            0.05,
+            0.08
+          ],
+          "stop_loss_pct": 0.012
+        },
+        "reasoning": "Lowering confluence thresholds from 30 to 25 should capture the missed trades (avg gap 25.1). Expanding volume requirements to include 'normal' addresses the 13% high volume condition. Implementing tiered take profits with partial exits allows holding winners longer while protecting gains. The trailing approach reduces early exits that cost 1.53% avg per trade."
+      }
+    },
+    {
+      "iteration": 5,
+      "timestamp": "2025-10-21T17:53:11.355661",
+      "old_win_rate": 50.210970464135016,
+      "new_win_rate": 50.0,
+      "improvement_pct": -0.42016806722688127,
+      "kept": false,
+      "suggestions": {
+        "suggested_changes": {
+          "confluence_gap_min": 25,
+          "confluence_score_min": 25,
+          "volume_requirement": [
+            "normal",
+            "elevated",
+            "spike"
+          ],
+          "take_profit_levels": [
+            0.8,
+            1.5,
+            2.5,
+            4.0
+          ],
+          "stop_loss_pct": 0.5
+        },
+        "reasoning": "Lower confluence thresholds to capture missed trades (avg gap was 25.1 vs current 30 min), expand volume requirements to include normal volume since 13% of missed trades had high volume, implement tiered take profit levels to reduce early exits while protecting gains, and use a tight stop loss to maintain the excellent 0.01% max drawdown while allowing for more trade entries."
+      }
+    }
+  ]
+}

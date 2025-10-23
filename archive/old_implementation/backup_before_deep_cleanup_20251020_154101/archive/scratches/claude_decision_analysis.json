@@ -1,0 +1,283 @@
+{
+  "timestamp": "2025-10-19T06:00:19.116411",
+  "total_trades": 25,
+  "winners": 11,
+  "losers": 14,
+  "trades": [
+    {
+      "entry_time": "2025-10-18T16:46:03.693937",
+      "direction": "LONG",
+      "entry_price": 3873.95,
+      "exit_price": 3875.15,
+      "pnl_pct": 0.03097613546897283,
+      "hold_duration": 1.3762322,
+      "confidence": 0.0,
+      "is_winner": true,
+      "exit_type": "Manual"
+    },
+    {
+      "entry_time": "2025-10-18T17:15:05.938224",
+      "direction": "LONG",
+      "entry_price": 3874.35,
+      "exit_price": 3872.95,
+      "pnl_pct": -0.03613509362861102,
+      "hold_duration": 1.3134036666666666,
+      "confidence": 0.0,
+      "is_winner": false,
+      "exit_type": "Manual"
+    },
+    {
+      "entry_time": "2025-10-18T17:30:42.106805",
+      "direction": "SHORT",
+      "entry_price": 3865.35,
+      "exit_price": 3858.05,
+      "pnl_pct": 0.18885741265343958,
+      "hold_duration": 1.4124457666666668,
+      "confidence": 0.0,
+      "is_winner": true,
+      "exit_type": "Manual"
+    },
+    {
+      "entry_time": "2025-10-18T18:07:51.683327",
+      "direction": "SHORT",
+      "entry_price": 3863.15,
+      "exit_price": 3863.75,
+      "pnl_pct": -0.015531366889711998,
+      "hold_duration": 0.7924674666666667,
+      "confidence": 0.0,
+      "is_winner": false,
+      "exit_type": "Manual"
+    },
+    {
+      "entry_time": "2025-10-18T18:17:59.897370",
+      "direction": "LONG",
+      "entry_price": 3871.65,
+      "exit_price": 3871.95,
+      "pnl_pct": 0.0077486343031970125,
+      "hold_duration": 1.2923111333333333,
+      "confidence": 0.0,
+      "is_winner": true,
+      "exit_type": "Manual"
+    },
+    {
+      "entry_time": "2025-10-18T19:26:59.546124",
+      "direction": "LONG",
+      "entry_price": 3885.75,
+      "exit_price": 3885.45,
+      "pnl_pct": -0.007720517274662083,
+      "hold_duration": 1.3433180166666667,
+      "confidence": 0.0,
+      "is_winner": false,
+      "exit_type": "Manual"
+    },
+    {
+      "entry_time": "2025-10-18T20:43:42.421648",
+      "direction": "LONG",
+      "entry_price": 3887.25,
+      "exit_price": 3886.55,
+      "pnl_pct": -0.018007588912465577,
+      "hold_duration": 0.9020724666666666,
+      "confidence": 0.0,
+      "is_winner": false,
+      "exit_type": "Manual"
+    },
+    {
+      "entry_time": "2025-10-18T22:15:54.063881",
+      "direction": "SHORT",
+      "entry_price": 3876.95,
+      "exit_price": 3868.95,
+      "pnl_pct": 0.2063477733785579,
+      "hold_duration": 1.95671505,
+      "confidence": 0.0,
+      "is_winner": true,
+      "exit_type": "Manual"
+    },
+    {
+      "entry_time": "2025-10-18T22:31:20.327670",
+      "direction": "LONG",
+      "entry_price": 3887.75,
+      "exit_price": 3890.55,
+      "pnl_pct": 0.07202109189120139,
+      "hold_duration": 1.8666222333333333,
+      "confidence": 0.0,
+      "is_winner": true,
+      "exit_type": "Manual"
+    },
+    {
+      "entry_time": "2025-10-18T23:23:24.167195",
+      "direction": "LONG",
+      "entry_price": 3889.45,
+      "exit_price": 3892.15,
+      "pnl_pct": 0.06941855532273902,
+      "hold_duration": 2.3718391000000003,
+      "confidence": 0.0,
+      "is_winner": true,
+      "exit_type": "Manual"
+    },
+    {
+      "entry_time": "2025-10-18T23:45:32.863848",
+      "direction": "LONG",
+      "entry_price": 3896.62,
+      "exit_price": 3884.75,
+      "pnl_pct": -0.30462298094245505,
+      "hold_duration": 21.056170233333333,
+      "confidence": 0.0,
+      "is_winner": false,
+      "exit_type": "SL"
+    },
+    {
+      "entry_time": "2025-10-19T00:05:46.145331",
+      "direction": "LONG",
+      "entry_price": 3887.95,
+      "exit_price": 3884.75,
+      "pnl_pct": -0.08230558520556638,
+      "hold_duration": 0.8348121833333334,
+      "confidence": 0.0,
+      "is_winner": false,
+      "exit_type": "SL"
+    },
+    {
+      "entry_time": "2025-10-19T00:20:17.425828",
+      "direction": "SHORT",
+      "entry_price": 3880.65,
+      "exit_price": 3881.85,
+      "pnl_pct": -0.03092265470990216,
+      "hold_duration": 2.4539387833333333,
+      "confidence": 0.0,
+      "is_winner": false,
+      "exit_type": "Manual"
+    },
+    {
+      "entry_time": "2025-10-19T00:49:32.623861",
+      "direction": "LONG",
+      "entry_price": 3886.65,
+      "exit_price": 3884.35,
+      "pnl_pct": -0.05917692614462794,
+      "hold_duration": 2.43536895,
+      "confidence": 0.0,
+      "is_winner": false,
+      "exit_type": "SL"
+    },
+    {
+      "entry_time": "2025-10-19T01:04:30.968732",
+      "direction": "LONG",
+      "entry_price": 3890.4,
+      "exit_price": 3884.95,
+      "pnl_pct": -0.14008842278429653,
+      "hold_duration": 2.4050666333333335,
+      "confidence": 0.0,
+      "is_winner": false,
+      "exit_type": "SL"
+    },
+    {
+      "entry_time": "2025-10-19T01:18:04.956913",
+      "direction": "SHORT",
+      "entry_price": 3882.15,
+      "exit_price": 3880.7,
+      "pnl_pct": 0.037350437257712164,
+      "hold_duration": 2.4987773333333334,
+      "confidence": 0.0,
+      "is_winner": true,
+      "exit_type": "Manual"
+    },
+    {
+      "entry_time": "2025-10-19T01:30:09.727047",
+      "direction": "SHORT",
+      "entry_price": 3880.05,
+      "exit_price": 3876.65,
+      "pnl_pct": 0.08762773675597198,
+      "hold_duration": 1.9209223500000001,
+      "confidence": 0.0,
+      "is_winner": true,
+      "exit_type": "Manual"
+    },
+    {
+      "entry_time": "2025-10-19T01:45:50.823274",
+      "direction": "SHORT",
+      "entry_price": 3863.45,
+      "exit_price": 3862.35,
+      "pnl_pct": 0.028471961588733104,
+      "hold_duration": 2.397398533333333,
+      "confidence": 0.0,
+      "is_winner": true,
+      "exit_type": "Manual"
+    },
+    {
+      "entry_time": "2025-10-19T02:33:21.228990",
+      "direction": "SHORT",
+      "entry_price": 3864.45,
+      "exit_price": 3865.95,
+      "pnl_pct": -0.03881535535457827,
+      "hold_duration": 2.452903816666667,
+      "confidence": 0.0,
+      "is_winner": false,
+      "exit_type": "Manual"
+    },
+    {
+      "entry_time": "2025-10-19T02:43:11.390191",
+      "direction": "SHORT",
+      "entry_price": 3864.85,
+      "exit_price": 3868.25,
+      "pnl_pct": -0.08797236632728543,
+      "hold_duration": 1.9488456333333335,
+      "confidence": 0.0,
+      "is_winner": false,
+      "exit_type": "Manual"
+    },
+    {
+      "entry_time": "2025-10-19T03:13:46.447119",
+      "direction": "SHORT",
+      "entry_price": 3867.1,
+      "exit_price": 3865.85,
+      "pnl_pct": 0.03232396369372398,
+      "hold_duration": 1.9933790833333334,
+      "confidence": 0.0,
+      "is_winner": true,
+      "exit_type": "Manual"
+    },
+    {
+      "entry_time": "2025-10-19T03:21:58.975428",
+      "direction": "SHORT",
+      "entry_price": 3869.45,
+      "exit_price": 3868.75,
+      "pnl_pct": 0.018090426287969044,
+      "hold_duration": 2.363444933333333,
+      "confidence": 0.0,
+      "is_winner": true,
+      "exit_type": "Manual"
+    },
+    {
+      "entry_time": "2025-10-19T03:36:37.404808",
+      "direction": "SHORT",
+      "entry_price": 3858.0,
+      "exit_price": 3867.95,
+      "pnl_pct": -0.2579056505961591,
+      "hold_duration": 2.3799934333333335,
+      "confidence": 0.0,
+      "is_winner": false,
+      "exit_type": "Manual"
+    },
+    {
+      "entry_time": "2025-10-19T03:49:02.282368",
+      "direction": "SHORT",
+      "entry_price": 3867.05,
+      "exit_price": 3869.65,
+      "pnl_pct": -0.06723471379992266,
+      "hold_duration": 2.3828219666666666,
+      "confidence": 0.0,
+      "is_winner": false,
+      "exit_type": "Manual"
+    },
+    {
+      "entry_time": "2025-10-19T04:17:55.023237",
+      "direction": "SHORT",
+      "entry_price": 3872.95,
+      "exit_price": 3879.25,
+      "pnl_pct": -0.1626667010934864,
+      "hold_duration": 1.9174722166666667,
+      "confidence": 0.0,
+      "is_winner": false,
+      "exit_type": "Manual"
+    }
+  ]
+}

@@ -1,0 +1,338 @@
+{
+  "baseline_win_rate": 51.0548523206751,
+  "best_win_rate": 51.0548523206751,
+  "total_improvement": 0.0,
+  "iterations": [
+    {
+      "iteration": 1,
+      "timestamp": "2025-10-22T10:46:06.734493",
+      "old_win_rate": 51.0548523206751,
+      "new_win_rate": 50.08818342151675,
+      "improvement_pct": -1.8933928024837101,
+      "kept": false,
+      "suggestions": {
+        "suggested_changes": {
+          "confluence_gap_min": 20.0,
+          "confluence_score_min": 15,
+          "min_quality_score": 48.0,
+          "volume_requirement": [
+            "spike",
+            "elevated",
+            "normal",
+            "low"
+          ],
+          "rsi_range": [
+            15,
+            85
+          ],
+          "take_profit_levels": [
+            0.8,
+            1.6,
+            2.4,
+            3.2
+          ],
+          "trailing_stop_activation": 1.2,
+          "trailing_stop_distance": 0.6,
+          "position_sizing_mode": "dynamic"
+        },
+        "reasoning": "The current strategy is too restrictive, missing 71% of profitable opportunities. Key changes: (1) Lower confluence_gap_min from 25\u219220 to capture missed trades with avg gap of 28, (2) Reduce quality score threshold from 56\u219248 to increase trade frequency while maintaining selectivity, (3) Expand volume requirements to catch more setups, (4) Implement trailing stops instead of fixed exits to ride winners longer, (5) Use tiered profit-taking to balance early profits with trend-following. This should capture 30-40% more profitable trades while reducing the 1.12% average profit left on table through better exit management."
+      }
+    },
+    {
+      "iteration": 2,
+      "timestamp": "2025-10-22T10:47:18.980985",
+      "old_win_rate": 51.0548523206751,
+      "new_win_rate": 51.245551601423486,
+      "improvement_pct": 0.3735184259286513,
+      "kept": true,
+      "suggestions": {
+        "suggested_changes": {
+          "confluence_gap_min": 22.0,
+          "confluence_score_min": 18,
+          "volume_requirement": [
+            "spike",
+            "elevated",
+            "normal",
+            "low"
+          ],
+          "min_quality_score": 52.0,
+          "rsi_range": [
+            15,
+            85
+          ],
+          "take_profit_levels": [
+            1.5,
+            2.8,
+            4.2
+          ],
+          "trailing_stop_activation": 1.2,
+          "stop_loss_pct": 1.8
+        },
+        "reasoning": "Lowered confluence_gap_min from 25\u219222 and confluence_score_min from 20\u219218 to catch more of those missed trades averaging 28.0 gap. Added 'low' volume to requirements since only 19.6% of missed trades had high volume. Reduced min_quality_score from 56\u219252 to allow more trade candidates. Widened RSI range to avoid filtering profitable extremes. Added tiered take-profits and trailing stops to hold winners longer and capture that 1.12% avg being left on table."
+      }
+    },
+    {
+      "iteration": 3,
+      "timestamp": "2025-10-22T10:48:30.875521",
+      "old_win_rate": 51.0548523206751,
+      "new_win_rate": 51.245551601423486,
+      "improvement_pct": 0.3735184259286513,
+      "kept": true,
+      "suggestions": {
+        "suggested_changes": {
+          "confluence_gap_min": 22.0,
+          "confluence_score_min": 18,
+          "volume_requirement": [
+            "spike",
+            "elevated",
+            "normal",
+            "low"
+          ],
+          "min_quality_score": 52.0,
+          "rsi_range": [
+            15,
+            85
+          ],
+          "take_profit_levels": [
+            1.5,
+            3.0,
+            4.5
+          ],
+          "trailing_stop_activation": 2.0
+        },
+        "reasoning": "Relaxing confluence_gap_min from 25\u219222 and confluence_score_min from 20\u219218 should capture more of those missed trades with 28.0 avg gap. Adding 'low' volume and reducing quality score from 56\u219252 increases trade frequency. Expanding RSI range and implementing tiered take-profits with trailing stops should reduce early exits. These changes target the specific gaps: -168 missed trades and premature exits in 77 trades."
+      }
+    },
+    {
+      "iteration": 4,
+      "timestamp": "2025-10-22T10:49:41.805416",
+      "old_win_rate": 51.0548523206751,
+      "new_win_rate": 49.74003466204506,
+      "improvement_pct": -2.575304009052229,
+      "kept": false,
+      "suggestions": {
+        "suggested_changes": {
+          "confluence_gap_min": 20.0,
+          "confluence_score_min": 15,
+          "min_quality_score": 48.0,
+          "volume_requirement": [
+            "spike",
+            "elevated",
+            "normal",
+            "low"
+          ],
+          "rsi_range": [
+            15,
+            85
+          ],
+          "take_profit_levels": [
+            1.5,
+            3.0,
+            5.0
+          ],
+          "trailing_stop_activation": 1.2,
+          "stop_loss_pct": 2.5
+        },
+        "reasoning": "Relaxing confluence_gap_min from 25\u219220 and quality_score from 56\u219248 should capture more of the missed trades (avg gap was 28). Adding 'low' volume and widening RSI allows more entries. Implementing trailing stops at 1.2% profit should reduce early exits while protecting gains. Multiple take-profit levels (partial exits at 1.5%, 3%, 5%) will capture quick moves while letting winners run longer."
+      }
+    },
+    {
+      "iteration": 5,
+      "timestamp": "2025-10-22T10:50:53.917644",
+      "old_win_rate": 51.0548523206751,
+      "new_win_rate": 49.74003466204506,
+      "improvement_pct": -2.575304009052229,
+      "kept": false,
+      "suggestions": {
+        "suggested_changes": {
+          "confluence_gap_min": 20.0,
+          "confluence_score_min": 15,
+          "volume_requirement": [
+            "spike",
+            "elevated",
+            "normal",
+            "low"
+          ],
+          "min_quality_score": 48.0,
+          "rsi_range": [
+            15,
+            85
+          ],
+          "take_profit_levels": [
+            1.5,
+            3.0,
+            5.0
+          ],
+          "trailing_stop_activation": 1.2,
+          "trailing_stop_distance": 0.8
+        },
+        "reasoning": "The missed trades show profitable setups at confluence_gap_min ~28 and compression ~98.2, suggesting current 25.0 threshold is too restrictive. Lowering confluence requirements from 25\u219220 and score from 20\u219215 should capture more of these opportunities. Quality score reduction from 56\u219248 allows more trade candidates while maintaining selectivity. Expanding volume requirements and RSI range reduces false filtering. Most importantly, implementing trailing stops instead of fixed take-profits addresses the 'exiting too early' problem - letting winners run while protecting gains. The 77 early exits leaving 1.12% avg on table suggests static exit rules are the biggest profit leak."
+      }
+    },
+    {
+      "iteration": 6,
+      "timestamp": "2025-10-22T10:52:05.229356",
+      "old_win_rate": 51.0548523206751,
+      "new_win_rate": 48.77049180327869,
+      "improvement_pct": -4.474325972090499,
+      "kept": false,
+      "suggestions": {
+        "suggested_changes": {
+          "confluence_gap_min": 20.0,
+          "confluence_score_min": 15,
+          "min_quality_score": 45.0,
+          "volume_requirement": [
+            "spike",
+            "elevated",
+            "normal",
+            "low"
+          ],
+          "rsi_range": [
+            15,
+            85
+          ],
+          "take_profit_levels": [
+            1.5,
+            3.0,
+            5.0
+          ],
+          "trailing_stop_activation": 1.2,
+          "trailing_stop_distance": 0.8
+        },
+        "reasoning": "Your missed trades show avg confluence gap of 28.0, but your minimum is 25.0 - lowering to 20.0 captures more opportunities. The 19.6% high volume in missed trades suggests volume filters are too strict. Most critically, reducing min_quality_score from 56 to 45 should significantly increase trade frequency while maintaining quality. Adding trailing stops instead of fixed exits addresses the 'exiting too early' problem by letting winners run while protecting gains."
+      }
+    },
+    {
+      "iteration": 7,
+      "timestamp": "2025-10-22T10:53:15.756381",
+      "old_win_rate": 51.0548523206751,
+      "new_win_rate": 49.74003466204506,
+      "improvement_pct": -2.575304009052229,
+      "kept": false,
+      "suggestions": {
+        "suggested_changes": {
+          "confluence_gap_min": 22.0,
+          "confluence_score_min": 15,
+          "volume_requirement": [
+            "spike",
+            "elevated",
+            "normal",
+            "low"
+          ],
+          "min_quality_score": 48.0,
+          "rsi_range": [
+            15,
+            85
+          ],
+          "take_profit_levels": [
+            1.5,
+            3.0,
+            5.0
+          ],
+          "trailing_stop_activation": 1.2,
+          "trailing_stop_distance": 0.8
+        },
+        "reasoning": "The missed trades had avg confluence gap of 28.0, so lowering confluence_gap_min from 25.0 to 22.0 captures more opportunities. Reducing confluence_score_min and min_quality_score allows more trade candidates while maintaining selectivity. Including 'low' volume captures the 19.6% of missed trades with lower volume. Wider RSI range (15-85 vs 20-80) reduces false filtering. Most importantly, implementing trailing stops instead of fixed exits addresses the 77 early exits losing 1.12% avg profit. The tiered take-profit levels (1.5%, 3.0%, 5.0%) with trailing stops activated at 1.2% profit will let winners run while protecting gains."
+      }
+    },
+    {
+      "iteration": 8,
+      "timestamp": "2025-10-22T10:54:29.824836",
+      "old_win_rate": 51.0548523206751,
+      "new_win_rate": 49.74003466204506,
+      "improvement_pct": -2.575304009052229,
+      "kept": false,
+      "suggestions": {
+        "suggested_changes": {
+          "confluence_gap_min": 20.0,
+          "confluence_score_min": 15,
+          "volume_requirement": [
+            "spike",
+            "elevated",
+            "normal",
+            "low"
+          ],
+          "min_quality_score": 48.0,
+          "rsi_range": [
+            15,
+            85
+          ],
+          "take_profit_levels": [
+            1.5,
+            3.0,
+            5.0
+          ],
+          "trailing_stop_activation": 2.0,
+          "stop_loss_pct": 1.2
+        },
+        "reasoning": "Lowering confluence_gap_min from 25 to 20 matches the 28.0 average of missed trades. Reducing confluence_score_min and min_quality_score by ~20% should capture more of the missed opportunities. Adding 'low' volume and widening RSI range reduces restrictiveness. Implementing scaled take-profits (25% at 1.5%, 50% at 3%, 25% at 5%) with trailing stops after 2% gain should reduce early exits while protecting capital. Tighter initial stop-loss (1.2%) improves risk/reward ratio."
+      }
+    },
+    {
+      "iteration": 9,
+      "timestamp": "2025-10-22T10:55:42.912824",
+      "old_win_rate": 51.0548523206751,
+      "new_win_rate": 48.77049180327869,
+      "improvement_pct": -4.474325972090499,
+      "kept": false,
+      "suggestions": {
+        "suggested_changes": {
+          "confluence_gap_min": 20.0,
+          "confluence_score_min": 15,
+          "min_quality_score": 45.0,
+          "volume_requirement": [
+            "spike",
+            "elevated",
+            "normal",
+            "low"
+          ],
+          "rsi_range": [
+            15,
+            85
+          ],
+          "take_profit_levels": [
+            1.5,
+            3.0,
+            5.0
+          ],
+          "trailing_stop_activation": 2.0,
+          "stop_loss_pct": 2.5
+        },
+        "reasoning": "Your current filters are too restrictive, capturing only -0.2% of available profits. Lowering confluence_gap_min from 25 to 20 and min_quality_score from 56 to 45 should capture more of those missed trades with 28.0 avg confluence gap. Adding tiered take profits (1.5%, 3%, 5%) with trailing stops will reduce early exits. Expanding volume requirements and RSI range increases trade candidates while maintaining VWAP as your primary quality filter. The 19.6% high volume in missed trades suggests volume filtering may be too strict."
+      }
+    },
+    {
+      "iteration": 10,
+      "timestamp": "2025-10-22T10:56:55.879628",
+      "old_win_rate": 51.0548523206751,
+      "new_win_rate": 49.74003466204506,
+      "improvement_pct": -2.575304009052229,
+      "kept": false,
+      "suggestions": {
+        "suggested_changes": {
+          "confluence_gap_min": 22.0,
+          "confluence_score_min": 16,
+          "min_quality_score": 48.0,
+          "volume_requirement": [
+            "spike",
+            "elevated",
+            "normal",
+            "low"
+          ],
+          "rsi_range": [
+            15,
+            85
+          ],
+          "take_profit_levels": [
+            1.5,
+            2.8,
+            4.2
+          ],
+          "trailing_stop_activation": 1.2,
+          "trailing_stop_distance": 0.8
+        },
+        "reasoning": "Your missed trades had avg confluence gap of 28.0, so lowering confluence_gap_min from 25\u219222 and confluence_score_min from 20\u219216 should capture more of these. Reducing min_quality_score from 56\u219248 addresses the core issue of being too selective. Adding 'low' volume and widening RSI range reduces false filtering. Most importantly, implementing trailing stops instead of fixed exits should solve the early exit problem - let winners run while protecting gains."
+      }
+    }
+  ]
+}

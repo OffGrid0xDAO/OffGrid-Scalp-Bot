@@ -1,0 +1,26 @@
+{
+  "last_updated": "2025-10-21T01:59:25.485000",
+  "total_opportunities_analyzed": 32,
+  "win_rate": 59.375,
+  "best_hold_duration": 10,
+  "best_setups": [
+    "30min range \u22650.42% (trending markets)",
+    "Price location ~30% of 2h range",
+    "Ribbon flips \u22642.9 (stable)"
+  ],
+  "worst_setups": [
+    "Ranging (<0.4%): 6 losses",
+    "Choppy (\u22653 flips): 7 losses"
+  ],
+  "key_lessons": [
+    "\u2705 ENTER IN LOWER 40% OF RANGE: 17 wins",
+    "\u2705 STABLE RIBBON (\u22641 flip): 9 wins",
+    "\u274c SKIP RANGING MARKETS: 6 losses avoided if filtered",
+    "\u274c SKIP CHOPPY RIBBON: 7 losses avoided if filtered",
+    "\u23f1\ufe0f  OPTIMAL HOLD: 10 minutes (85.7% win rate)"
+  ],
+  "current_regime": "UNKNOWN",
+  "regime_strategy": "",
+  "wick_performance": {},
+  "optimal_confidence_threshold": 0.85
+}

@@ -1,0 +1,1265 @@
+{
+  "started": "2025-10-19T15:00:48.060504",
+  "total_learning_cycles": 21,
+  "learning_cycles": [
+    {
+      "cycle_number": 1,
+      "timestamp": "2025-10-19T15:02:39.731545",
+      "analysis_window": "4 hours",
+      "metrics": {
+        "total_opportunities": 28,
+        "trades_simulated": 28,
+        "win_rate": 35.71,
+        "winners": 10,
+        "losers": 18,
+        "best_hold_duration": 30,
+        "avg_winner_pnl": 0.141,
+        "avg_loser_pnl": -0.155,
+        "risk_reward_ratio": 0.91,
+        "profit_factor": 0.5
+      },
+      "improvements_from_previous": [
+        "\ud83c\udd95 First learning cycle - establishing baseline"
+      ],
+      "trading_tips": [
+        "\u23f0 ENTRY TIMING: Best entries when 30min range \u22650.37% (trending market)",
+        "\u23f1\ufe0f  HOLD TIME: Optimal exit at 30 minutes (best win rate)",
+        "\ud83d\udeab AVOID: Ranging markets (<0.4% in 30min) caused 11 losses",
+        "\ud83d\udeab AVOID: Choppy ribbon (\u22653 flips) caused 8 losses",
+        "\ud83d\udcc9 DIRECTION: Favor SHORT setups (7 wins vs 3 LONG wins)"
+      ],
+      "strategy_changes": [
+        "\ud83d\udd27 TIGHTEN range filter: 61% of losses in ranging markets - increase minimum to 0.5%",
+        "\ud83d\udd27 TIGHTEN choppy filter: 44% of losses with \u22653 flips - reduce max to 2 flips",
+        "\ud83d\udd27 ADJUST hold time: 30 min shows 75.0% win rate vs 35.7% overall - prioritize this duration",
+        "\ud83d\udd27 RELAX filters slightly: Win rate >30% indicates possibly missing good opportunities"
+      ],
+      "winning_patterns": {
+        "avg_30min_range": 0.37,
+        "avg_price_location": 46.3,
+        "avg_ribbon_flips": 3.8,
+        "best_direction": "SHORT (7 wins)"
+      },
+      "losing_patterns": {
+        "avg_30min_range": 0.395,
+        "ranging_losses": 11,
+        "choppy_losses": 8,
+        "worst_direction": "LONG (12 losses)"
+      },
+      "scalper_score": {
+        "total": 65,
+        "win_rate_component": 40,
+        "speed_component": 10,
+        "risk_management_component": 5,
+        "consistency_component": 10,
+        "grade": "C (Improving)"
+      }
+    },
+    {
+      "cycle_number": 2,
+      "timestamp": "2025-10-19T15:34:49.098745",
+      "analysis_window": "4 hours",
+      "metrics": {
+        "total_opportunities": 35,
+        "trades_simulated": 35,
+        "win_rate": 45.71,
+        "winners": 16,
+        "losers": 19,
+        "best_hold_duration": 30,
+        "avg_winner_pnl": 0.517,
+        "avg_loser_pnl": -0.26,
+        "risk_reward_ratio": 1.99,
+        "profit_factor": 1.68
+      },
+      "improvements_from_previous": [
+        "\ud83d\udcca Previous: 35.7% win rate | R:R 0.91 | Score 65.0"
+      ],
+      "trading_tips": [
+        "\u23f0 ENTRY TIMING: Best entries when 30min range \u22650.38% (trending market)",
+        "\ud83d\udccd PRICE LOCATION: Enter LONG in lower 29% of 2h range (don't chase highs)",
+        "\u23f1\ufe0f  HOLD TIME: Optimal exit at 30 minutes (best win rate)",
+        "\ud83d\udeab AVOID: Ranging markets (<0.4% in 30min) caused 12 losses",
+        "\ud83d\udeab AVOID: Choppy ribbon (\u22653 flips) caused 8 losses",
+        "\u26a0\ufe0f  RISK: Tighten stop losses - max loss was 1.68% (target <0.3%)"
+      ],
+      "strategy_changes": [
+        "\ud83d\udd27 TIGHTEN range filter: 63% of losses in ranging markets - increase minimum to 0.5%",
+        "\ud83d\udd27 TIGHTEN choppy filter: 42% of losses with \u22653 flips - reduce max to 2 flips",
+        "\ud83d\udd27 ADJUST hold time: 30 min shows 71.4% win rate vs 45.7% overall - prioritize this duration",
+        "\ud83d\udd27 RELAX filters slightly: Win rate >30% indicates possibly missing good opportunities"
+      ],
+      "winning_patterns": {
+        "avg_30min_range": 0.376,
+        "avg_price_location": 29.4,
+        "avg_ribbon_flips": 3.2,
+        "best_direction": "LONG (9 wins)"
+      },
+      "losing_patterns": {
+        "avg_30min_range": 0.426,
+        "ranging_losses": 12,
+        "choppy_losses": 8,
+        "worst_direction": "LONG (11 losses)"
+      },
+      "scalper_score": {
+        "total": 70,
+        "win_rate_component": 40,
+        "speed_component": 10,
+        "risk_management_component": 15,
+        "consistency_component": 5,
+        "grade": "B (Good Scalper)"
+      }
+    },
+    {
+      "cycle_number": 3,
+      "timestamp": "2025-10-19T16:04:45.615931",
+      "analysis_window": "4 hours",
+      "metrics": {
+        "total_opportunities": 35,
+        "trades_simulated": 35,
+        "win_rate": 40.0,
+        "winners": 14,
+        "losers": 21,
+        "best_hold_duration": 30,
+        "avg_winner_pnl": 0.523,
+        "avg_loser_pnl": -0.281,
+        "risk_reward_ratio": 1.86,
+        "profit_factor": 1.24
+      },
+      "improvements_from_previous": [
+        "\ud83d\udcca Previous: 45.7% win rate | R:R 1.99 | Score 70.0"
+      ],
+      "trading_tips": [
+        "\u23f0 ENTRY TIMING: Best entries when 30min range \u22650.40% (trending market)",
+        "\ud83d\udccd PRICE LOCATION: Enter LONG in lower 21% of 2h range (don't chase highs)",
+        "\u23f1\ufe0f  HOLD TIME: Optimal exit at 30 minutes (best win rate)",
+        "\ud83d\udeab AVOID: Ranging markets (<0.4% in 30min) caused 14 losses",
+        "\ud83d\udeab AVOID: Choppy ribbon (\u22653 flips) caused 8 losses",
+        "\u26a0\ufe0f  RISK: Tighten stop losses - max loss was 1.68% (target <0.3%)"
+      ],
+      "strategy_changes": [
+        "\ud83d\udd27 TIGHTEN range filter: 67% of losses in ranging markets - increase minimum to 0.5%",
+        "\ud83d\udd27 RELAX filters slightly: Win rate >30% indicates possibly missing good opportunities"
+      ],
+      "winning_patterns": {
+        "avg_30min_range": 0.397,
+        "avg_price_location": 21.4,
+        "avg_ribbon_flips": 3.7,
+        "best_direction": "EQUAL"
+      },
+      "losing_patterns": {
+        "avg_30min_range": 0.371,
+        "ranging_losses": 14,
+        "choppy_losses": 8,
+        "worst_direction": "LONG (13 losses)"
+      },
+      "scalper_score": {
+        "total": 70,
+        "win_rate_component": 40,
+        "speed_component": 10,
+        "risk_management_component": 15,
+        "consistency_component": 5,
+        "grade": "B (Good Scalper)"
+      }
+    },
+    {
+      "cycle_number": 4,
+      "timestamp": "2025-10-19T17:05:12.698364",
+      "analysis_window": "4 hours",
+      "metrics": {
+        "total_opportunities": 33,
+        "trades_simulated": 33,
+        "win_rate": 42.42,
+        "winners": 14,
+        "losers": 19,
+        "best_hold_duration": 30,
+        "avg_winner_pnl": 0.519,
+        "avg_loser_pnl": -0.247,
+        "risk_reward_ratio": 2.1,
+        "profit_factor": 1.55
+      },
+      "improvements_from_previous": [
+        "\ud83d\udcca Previous: 40.0% win rate | R:R 1.86 | Score 70.0"
+      ],
+      "trading_tips": [
+        "\u23f0 ENTRY TIMING: Best entries when 30min range \u22650.32% (trending market)",
+        "\u23f1\ufe0f  HOLD TIME: Optimal exit at 30 minutes (best win rate)",
+        "\ud83d\udeab AVOID: Ranging markets (<0.4% in 30min) caused 15 losses",
+        "\u26a0\ufe0f  RISK: Tighten stop losses - max loss was 1.68% (target <0.3%)"
+      ],
+      "strategy_changes": [
+        "\ud83d\udd27 TIGHTEN range filter: 79% of losses in ranging markets - increase minimum to 0.5%",
+        "\ud83d\udd27 RELAX filters slightly: Win rate >30% indicates possibly missing good opportunities"
+      ],
+      "winning_patterns": {
+        "avg_30min_range": 0.316,
+        "avg_price_location": 46.4,
+        "avg_ribbon_flips": 4.4,
+        "best_direction": "SHORT (8 wins)"
+      },
+      "losing_patterns": {
+        "avg_30min_range": 0.293,
+        "ranging_losses": 15,
+        "choppy_losses": 5,
+        "worst_direction": "LONG (12 losses)"
+      },
+      "scalper_score": {
+        "total": 75,
+        "win_rate_component": 40,
+        "speed_component": 10,
+        "risk_management_component": 20,
+        "consistency_component": 5,
+        "grade": "B (Good Scalper)"
+      }
+    },
+    {
+      "cycle_number": 5,
+      "timestamp": "2025-10-19T18:05:20.142536",
+      "analysis_window": "4 hours",
+      "metrics": {
+        "total_opportunities": 35,
+        "trades_simulated": 35,
+        "win_rate": 62.86,
+        "winners": 22,
+        "losers": 13,
+        "best_hold_duration": 15,
+        "avg_winner_pnl": 0.204,
+        "avg_loser_pnl": -0.131,
+        "risk_reward_ratio": 1.56,
+        "profit_factor": 2.64
+      },
+      "improvements_from_previous": [
+        "\ud83d\udcca Previous: 42.4% win rate | R:R 2.10 | Score 75.0"
+      ],
+      "trading_tips": [
+        "\u23f0 ENTRY TIMING: Best entries when 30min range \u22650.31% (trending market)",
+        "\u23f1\ufe0f  HOLD TIME: Optimal exit at 15 minutes (best win rate)",
+        "\ud83d\udeab AVOID: Ranging markets (<0.4% in 30min) caused 12 losses",
+        "\ud83d\udeab AVOID: Choppy ribbon (\u22653 flips) caused 12 losses"
+      ],
+      "strategy_changes": [
+        "\ud83d\udd27 TIGHTEN range filter: 92% of losses in ranging markets - increase minimum to 0.5%",
+        "\ud83d\udd27 TIGHTEN choppy filter: 92% of losses with \u22653 flips - reduce max to 2 flips",
+        "\ud83d\udd27 RELAX filters slightly: Win rate >30% indicates possibly missing good opportunities"
+      ],
+      "winning_patterns": {
+        "avg_30min_range": 0.308,
+        "avg_price_location": 58.3,
+        "avg_ribbon_flips": 6.4,
+        "best_direction": "SHORT (13 wins)"
+      },
+      "losing_patterns": {
+        "avg_30min_range": 0.382,
+        "ranging_losses": 12,
+        "choppy_losses": 12,
+        "worst_direction": "LONG (10 losses)"
+      },
+      "scalper_score": {
+        "total": 85,
+        "win_rate_component": 40,
+        "speed_component": 20,
+        "risk_management_component": 15,
+        "consistency_component": 10,
+        "grade": "A (Excellent Scalper)"
+      }
+    },
+    {
+      "cycle_number": 6,
+      "timestamp": "2025-10-19T19:05:42.320769",
+      "analysis_window": "4 hours",
+      "metrics": {
+        "total_opportunities": 51,
+        "trades_simulated": 51,
+        "win_rate": 56.86,
+        "winners": 29,
+        "losers": 22,
+        "best_hold_duration": 20,
+        "avg_winner_pnl": 0.301,
+        "avg_loser_pnl": -0.194,
+        "risk_reward_ratio": 1.55,
+        "profit_factor": 2.04
+      },
+      "improvements_from_previous": [
+        "\ud83d\udcca Previous: 62.9% win rate | R:R 1.56 | Score 85.0"
+      ],
+      "trading_tips": [
+        "\u23f0 ENTRY TIMING: Best entries when 30min range \u22650.40% (trending market)",
+        "\u23f1\ufe0f  HOLD TIME: Optimal exit at 20 minutes (best win rate)",
+        "\ud83d\udeab AVOID: Ranging markets (<0.4% in 30min) caused 12 losses",
+        "\ud83d\udeab AVOID: Choppy ribbon (\u22653 flips) caused 17 losses",
+        "\u26a0\ufe0f  RISK: Tighten stop losses - max loss was 0.99% (target <0.3%)"
+      ],
+      "strategy_changes": [
+        "\ud83d\udd27 TIGHTEN choppy filter: 77% of losses with \u22653 flips - reduce max to 2 flips",
+        "\ud83d\udd27 RELAX filters slightly: Win rate >30% indicates possibly missing good opportunities"
+      ],
+      "winning_patterns": {
+        "avg_30min_range": 0.404,
+        "avg_price_location": 59.0,
+        "avg_ribbon_flips": 5.6,
+        "best_direction": "LONG (15 wins)"
+      },
+      "losing_patterns": {
+        "avg_30min_range": 0.575,
+        "ranging_losses": 12,
+        "choppy_losses": 17,
+        "worst_direction": "EQUAL"
+      },
+      "scalper_score": {
+        "total": 80,
+        "win_rate_component": 40,
+        "speed_component": 20,
+        "risk_management_component": 15,
+        "consistency_component": 5,
+        "grade": "A (Excellent Scalper)"
+      }
+    },
+    {
+      "cycle_number": 7,
+      "timestamp": "2025-10-19T20:05:48.161481",
+      "analysis_window": "4 hours",
+      "metrics": {
+        "total_opportunities": 75,
+        "trades_simulated": 75,
+        "win_rate": 48.0,
+        "winners": 36,
+        "losers": 39,
+        "best_hold_duration": 20,
+        "avg_winner_pnl": 0.217,
+        "avg_loser_pnl": -0.187,
+        "risk_reward_ratio": 1.16,
+        "profit_factor": 1.07
+      },
+      "improvements_from_previous": [
+        "\ud83d\udcca Previous: 56.9% win rate | R:R 1.55 | Score 80.0"
+      ],
+      "trading_tips": [
+        "\u23f0 ENTRY TIMING: Best entries when 30min range \u22650.43% (trending market)",
+        "\u23f1\ufe0f  HOLD TIME: Optimal exit at 20 minutes (best win rate)",
+        "\ud83d\udeab AVOID: Choppy ribbon (\u22653 flips) caused 30 losses",
+        "\u26a0\ufe0f  RISK: Tighten stop losses - max loss was 0.99% (target <0.3%)"
+      ],
+      "strategy_changes": [
+        "\ud83d\udd27 TIGHTEN choppy filter: 77% of losses with \u22653 flips - reduce max to 2 flips",
+        "\ud83d\udd27 RELAX filters slightly: Win rate >30% indicates possibly missing good opportunities"
+      ],
+      "winning_patterns": {
+        "avg_30min_range": 0.425,
+        "avg_price_location": 41.2,
+        "avg_ribbon_flips": 5.9,
+        "best_direction": "LONG (21 wins)"
+      },
+      "losing_patterns": {
+        "avg_30min_range": 0.484,
+        "ranging_losses": 17,
+        "choppy_losses": 30,
+        "worst_direction": "SHORT (20 losses)"
+      },
+      "scalper_score": {
+        "total": 75,
+        "win_rate_component": 40,
+        "speed_component": 20,
+        "risk_management_component": 10,
+        "consistency_component": 5,
+        "grade": "B (Good Scalper)"
+      }
+    },
+    {
+      "cycle_number": 8,
+      "timestamp": "2025-10-19T23:10:14.158688",
+      "analysis_window": "4 hours",
+      "metrics": {
+        "total_opportunities": 25,
+        "trades_simulated": 25,
+        "win_rate": 60.0,
+        "winners": 15,
+        "losers": 10,
+        "best_hold_duration": 5,
+        "avg_winner_pnl": 0.143,
+        "avg_loser_pnl": -0.161,
+        "risk_reward_ratio": 0.89,
+        "profit_factor": 1.33
+      },
+      "improvements_from_previous": [
+        "\ud83d\udcca Previous: 48.0% win rate | R:R 1.16 | Score 75.0"
+      ],
+      "trading_tips": [
+        "\u23f0 ENTRY TIMING: Best entries when 30min range \u22650.19% (trending market)",
+        "\ud83d\udccd PRICE LOCATION: Enter SHORT in upper 27% of 2h range (don't short lows)",
+        "\u23f1\ufe0f  HOLD TIME: Optimal exit at 5 minutes (best win rate)",
+        "\ud83d\udeab AVOID: Ranging markets (<0.4% in 30min) caused 10 losses"
+      ],
+      "strategy_changes": [
+        "\ud83d\udd27 TIGHTEN range filter: 100% of losses in ranging markets - increase minimum to 0.5%",
+        "\ud83d\udd27 RELAX filters slightly: Win rate >30% indicates possibly missing good opportunities"
+      ],
+      "winning_patterns": {
+        "avg_30min_range": 0.19,
+        "avg_price_location": 72.6,
+        "avg_ribbon_flips": 2.3,
+        "best_direction": "LONG (9 wins)"
+      },
+      "losing_patterns": {
+        "avg_30min_range": 0.075,
+        "ranging_losses": 10,
+        "choppy_losses": 0,
+        "worst_direction": "SHORT (9 losses)"
+      },
+      "scalper_score": {
+        "total": 70,
+        "win_rate_component": 40,
+        "speed_component": 15,
+        "risk_management_component": 5,
+        "consistency_component": 10,
+        "grade": "B (Good Scalper)"
+      }
+    },
+    {
+      "cycle_number": 9,
+      "timestamp": "2025-10-20T00:10:37.648128",
+      "analysis_window": "4 hours",
+      "metrics": {
+        "total_opportunities": 11,
+        "trades_simulated": 11,
+        "win_rate": 81.82,
+        "winners": 9,
+        "losers": 2,
+        "best_hold_duration": 10,
+        "avg_winner_pnl": 0.143,
+        "avg_loser_pnl": -0.006,
+        "risk_reward_ratio": 22.75,
+        "profit_factor": 102.39
+      },
+      "improvements_from_previous": [
+        "\ud83d\udcca Previous: 60.0% win rate | R:R 0.89 | Score 70.0"
+      ],
+      "trading_tips": [
+        "\u23f0 ENTRY TIMING: Best entries when 30min range \u22650.33% (trending market)",
+        "\ud83d\udccd PRICE LOCATION: Enter SHORT in upper 22% of 2h range (don't short lows)",
+        "\u23f1\ufe0f  HOLD TIME: Optimal exit at 10 minutes (best win rate)"
+      ],
+      "strategy_changes": [
+        "\ud83d\udd27 RELAX filters slightly: Win rate >30% indicates possibly missing good opportunities"
+      ],
+      "winning_patterns": {
+        "avg_30min_range": 0.328,
+        "avg_price_location": 77.8,
+        "avg_ribbon_flips": 0.6,
+        "best_direction": "LONG (5 wins)"
+      },
+      "losing_patterns": {
+        "avg_30min_range": 0.267,
+        "ranging_losses": 1,
+        "choppy_losses": 0,
+        "worst_direction": "SHORT (2 losses)"
+      },
+      "scalper_score": {
+        "total": 100,
+        "win_rate_component": 40,
+        "speed_component": 20,
+        "risk_management_component": 20,
+        "consistency_component": 20,
+        "grade": "A+ (Elite Scalper)"
+      }
+    },
+    {
+      "cycle_number": 10,
+      "timestamp": "2025-10-20T01:11:08.724108",
+      "analysis_window": "4 hours",
+      "metrics": {
+        "total_opportunities": 10,
+        "trades_simulated": 10,
+        "win_rate": 90.0,
+        "winners": 9,
+        "losers": 1,
+        "best_hold_duration": 10,
+        "avg_winner_pnl": 0.241,
+        "avg_loser_pnl": 0.0,
+        "risk_reward_ratio": 0,
+        "profit_factor": 999
+      },
+      "improvements_from_previous": [
+        "\ud83d\udcca Previous: 81.8% win rate | R:R 22.75 | Score 100.0"
+      ],
+      "trading_tips": [
+        "\u23f0 ENTRY TIMING: Best entries when 30min range \u22650.24% (trending market)",
+        "\ud83d\udccd PRICE LOCATION: Enter LONG in lower 35% of 2h range (don't chase highs)",
+        "\u23f1\ufe0f  HOLD TIME: Optimal exit at 10 minutes (best win rate)"
+      ],
+      "strategy_changes": [
+        "\ud83d\udd27 RELAX filters slightly: Win rate >30% indicates possibly missing good opportunities"
+      ],
+      "winning_patterns": {
+        "avg_30min_range": 0.238,
+        "avg_price_location": 35.8,
+        "avg_ribbon_flips": 0.4,
+        "best_direction": "LONG (5 wins)"
+      },
+      "losing_patterns": {
+        "avg_30min_range": 0.534,
+        "ranging_losses": 0,
+        "choppy_losses": 0,
+        "worst_direction": "SHORT (1 losses)"
+      },
+      "scalper_score": {
+        "total": 85,
+        "win_rate_component": 40,
+        "speed_component": 20,
+        "risk_management_component": 5,
+        "consistency_component": 20,
+        "grade": "A (Excellent Scalper)"
+      }
+    },
+    {
+      "cycle_number": 11,
+      "timestamp": "2025-10-20T02:11:36.999307",
+      "analysis_window": "4 hours",
+      "metrics": {
+        "total_opportunities": 10,
+        "trades_simulated": 10,
+        "win_rate": 90.0,
+        "winners": 9,
+        "losers": 1,
+        "best_hold_duration": 10,
+        "avg_winner_pnl": 0.241,
+        "avg_loser_pnl": 0.0,
+        "risk_reward_ratio": 0,
+        "profit_factor": 999
+      },
+      "improvements_from_previous": [
+        "\ud83d\udcca Previous: 90.0% win rate | R:R 0.00 | Score 85.0"
+      ],
+      "trading_tips": [
+        "\u23f0 ENTRY TIMING: Best entries when 30min range \u22650.24% (trending market)",
+        "\ud83d\udccd PRICE LOCATION: Enter LONG in lower 35% of 2h range (don't chase highs)",
+        "\u23f1\ufe0f  HOLD TIME: Optimal exit at 10 minutes (best win rate)"
+      ],
+      "strategy_changes": [
+        "\ud83d\udd27 RELAX filters slightly: Win rate >30% indicates possibly missing good opportunities"
+      ],
+      "winning_patterns": {
+        "avg_30min_range": 0.238,
+        "avg_price_location": 35.8,
+        "avg_ribbon_flips": 0.4,
+        "best_direction": "LONG (5 wins)"
+      },
+      "losing_patterns": {
+        "avg_30min_range": 0.534,
+        "ranging_losses": 0,
+        "choppy_losses": 0,
+        "worst_direction": "SHORT (1 losses)"
+      },
+      "scalper_score": {
+        "total": 85,
+        "win_rate_component": 40,
+        "speed_component": 20,
+        "risk_management_component": 5,
+        "consistency_component": 20,
+        "grade": "A (Excellent Scalper)"
+      }
+    },
+    {
+      "cycle_number": 12,
+      "timestamp": "2025-10-20T03:11:52.056581",
+      "analysis_window": "4 hours",
+      "metrics": {
+        "total_opportunities": 26,
+        "trades_simulated": 26,
+        "win_rate": 57.69,
+        "winners": 15,
+        "losers": 11,
+        "best_hold_duration": 30,
+        "avg_winner_pnl": 0.22,
+        "avg_loser_pnl": -0.136,
+        "risk_reward_ratio": 1.61,
+        "profit_factor": 2.2
+      },
+      "improvements_from_previous": [
+        "\ud83d\udcca Previous: 90.0% win rate | R:R 0.00 | Score 85.0"
+      ],
+      "trading_tips": [
+        "\u23f0 ENTRY TIMING: Best entries when 30min range \u22650.35% (trending market)",
+        "\ud83d\udccd PRICE LOCATION: Enter LONG in lower 36% of 2h range (don't chase highs)",
+        "\u23f1\ufe0f  HOLD TIME: Optimal exit at 30 minutes (best win rate)",
+        "\ud83d\udeab AVOID: Choppy ribbon (\u22653 flips) caused 10 losses"
+      ],
+      "strategy_changes": [
+        "\ud83d\udd27 TIGHTEN choppy filter: 91% of losses with \u22653 flips - reduce max to 2 flips",
+        "\ud83d\udd27 RELAX filters slightly: Win rate >30% indicates possibly missing good opportunities"
+      ],
+      "winning_patterns": {
+        "avg_30min_range": 0.346,
+        "avg_price_location": 36.9,
+        "avg_ribbon_flips": 3.9,
+        "best_direction": "SHORT (9 wins)"
+      },
+      "losing_patterns": {
+        "avg_30min_range": 0.563,
+        "ranging_losses": 0,
+        "choppy_losses": 10,
+        "worst_direction": "LONG (7 losses)"
+      },
+      "scalper_score": {
+        "total": 75,
+        "win_rate_component": 40,
+        "speed_component": 10,
+        "risk_management_component": 15,
+        "consistency_component": 10,
+        "grade": "B (Good Scalper)"
+      }
+    },
+    {
+      "cycle_number": 13,
+      "timestamp": "2025-10-20T04:12:21.855489",
+      "analysis_window": "4 hours",
+      "metrics": {
+        "total_opportunities": 30,
+        "trades_simulated": 30,
+        "win_rate": 56.67,
+        "winners": 17,
+        "losers": 13,
+        "best_hold_duration": 5,
+        "avg_winner_pnl": 0.251,
+        "avg_loser_pnl": -0.165,
+        "risk_reward_ratio": 1.52,
+        "profit_factor": 1.99
+      },
+      "improvements_from_previous": [
+        "\ud83d\udcca Previous: 57.7% win rate | R:R 1.61 | Score 75.0"
+      ],
+      "trading_tips": [
+        "\u23f0 ENTRY TIMING: Best entries when 30min range \u22650.43% (trending market)",
+        "\u23f1\ufe0f  HOLD TIME: Optimal exit at 5 minutes (best win rate)",
+        "\ud83d\udeab AVOID: Choppy ribbon (\u22653 flips) caused 13 losses",
+        "\ud83d\udcc9 DIRECTION: Favor SHORT setups (11 wins vs 6 LONG wins)",
+        "\u26a0\ufe0f  RISK: Tighten stop losses - max loss was 0.53% (target <0.3%)"
+      ],
+      "strategy_changes": [
+        "\ud83d\udd27 TIGHTEN choppy filter: 100% of losses with \u22653 flips - reduce max to 2 flips",
+        "\ud83d\udd27 RELAX filters slightly: Win rate >30% indicates possibly missing good opportunities"
+      ],
+      "winning_patterns": {
+        "avg_30min_range": 0.435,
+        "avg_price_location": 45.9,
+        "avg_ribbon_flips": 4.9,
+        "best_direction": "SHORT (11 wins)"
+      },
+      "losing_patterns": {
+        "avg_30min_range": 0.533,
+        "ranging_losses": 0,
+        "choppy_losses": 13,
+        "worst_direction": "LONG (9 losses)"
+      },
+      "scalper_score": {
+        "total": 75,
+        "win_rate_component": 40,
+        "speed_component": 15,
+        "risk_management_component": 15,
+        "consistency_component": 5,
+        "grade": "B (Good Scalper)"
+      }
+    },
+    {
+      "cycle_number": 14,
+      "timestamp": "2025-10-20T05:12:51.331960",
+      "analysis_window": "4 hours",
+      "metrics": {
+        "total_opportunities": 40,
+        "trades_simulated": 40,
+        "win_rate": 45.0,
+        "winners": 18,
+        "losers": 22,
+        "best_hold_duration": 5,
+        "avg_winner_pnl": 0.401,
+        "avg_loser_pnl": -0.195,
+        "risk_reward_ratio": 2.05,
+        "profit_factor": 1.68
+      },
+      "improvements_from_previous": [
+        "\ud83d\udcca Previous: 56.7% win rate | R:R 1.52 | Score 75.0"
+      ],
+      "trading_tips": [
+        "\u23f0 ENTRY TIMING: Best entries when 30min range \u22650.44% (trending market)",
+        "\ud83d\udccd PRICE LOCATION: Enter SHORT in upper 37% of 2h range (don't short lows)",
+        "\u23f1\ufe0f  HOLD TIME: Optimal exit at 5 minutes (best win rate)",
+        "\ud83d\udeab AVOID: Choppy ribbon (\u22653 flips) caused 22 losses",
+        "\ud83d\udcc9 DIRECTION: Favor SHORT setups (11 wins vs 7 LONG wins)",
+        "\u26a0\ufe0f  RISK: Tighten stop losses - max loss was 0.74% (target <0.3%)"
+      ],
+      "strategy_changes": [
+        "\ud83d\udd27 TIGHTEN choppy filter: 100% of losses with \u22653 flips - reduce max to 2 flips",
+        "\ud83d\udd27 RELAX filters slightly: Win rate >30% indicates possibly missing good opportunities"
+      ],
+      "winning_patterns": {
+        "avg_30min_range": 0.436,
+        "avg_price_location": 62.9,
+        "avg_ribbon_flips": 4.8,
+        "best_direction": "SHORT (11 wins)"
+      },
+      "losing_patterns": {
+        "avg_30min_range": 0.502,
+        "ranging_losses": 0,
+        "choppy_losses": 22,
+        "worst_direction": "LONG (13 losses)"
+      },
+      "scalper_score": {
+        "total": 80,
+        "win_rate_component": 40,
+        "speed_component": 15,
+        "risk_management_component": 20,
+        "consistency_component": 5,
+        "grade": "A (Excellent Scalper)"
+      }
+    },
+    {
+      "cycle_number": 15,
+      "timestamp": "2025-10-20T06:12:52.871484",
+      "analysis_window": "4 hours",
+      "metrics": {
+        "total_opportunities": 35,
+        "trades_simulated": 35,
+        "win_rate": 37.14,
+        "winners": 13,
+        "losers": 22,
+        "best_hold_duration": 5,
+        "avg_winner_pnl": 0.261,
+        "avg_loser_pnl": -0.195,
+        "risk_reward_ratio": 1.34,
+        "profit_factor": 0.79
+      },
+      "improvements_from_previous": [
+        "\ud83d\udcca Previous: 45.0% win rate | R:R 2.05 | Score 80.0"
+      ],
+      "trading_tips": [
+        "\u23f0 ENTRY TIMING: Best entries when 30min range \u22650.53% (trending market)",
+        "\u23f1\ufe0f  HOLD TIME: Optimal exit at 5 minutes (best win rate)",
+        "\ud83d\udeab AVOID: Choppy ribbon (\u22653 flips) caused 18 losses",
+        "\u26a0\ufe0f  RISK: Tighten stop losses - max loss was 0.74% (target <0.3%)"
+      ],
+      "strategy_changes": [
+        "\ud83d\udd27 TIGHTEN choppy filter: 82% of losses with \u22653 flips - reduce max to 2 flips",
+        "\ud83d\udd27 RELAX filters slightly: Win rate >30% indicates possibly missing good opportunities"
+      ],
+      "winning_patterns": {
+        "avg_30min_range": 0.526,
+        "avg_price_location": 48.0,
+        "avg_ribbon_flips": 5.7,
+        "best_direction": "LONG (7 wins)"
+      },
+      "losing_patterns": {
+        "avg_30min_range": 0.364,
+        "ranging_losses": 7,
+        "choppy_losses": 18,
+        "worst_direction": "LONG (13 losses)"
+      },
+      "scalper_score": {
+        "total": 70,
+        "win_rate_component": 40,
+        "speed_component": 15,
+        "risk_management_component": 10,
+        "consistency_component": 5,
+        "grade": "B (Good Scalper)"
+      }
+    },
+    {
+      "cycle_number": 16,
+      "timestamp": "2025-10-20T07:13:09.917497",
+      "analysis_window": "4 hours",
+      "metrics": {
+        "total_opportunities": 20,
+        "trades_simulated": 20,
+        "win_rate": 30.0,
+        "winners": 6,
+        "losers": 14,
+        "best_hold_duration": 30,
+        "avg_winner_pnl": 0.305,
+        "avg_loser_pnl": -0.367,
+        "risk_reward_ratio": 0.83,
+        "profit_factor": 0.36
+      },
+      "improvements_from_previous": [
+        "\ud83d\udcca Previous: 37.1% win rate | R:R 1.34 | Score 70.0"
+      ],
+      "trading_tips": [
+        "\u23f0 ENTRY TIMING: Best entries when 30min range \u22650.52% (trending market)",
+        "\ud83d\udccd PRICE LOCATION: Enter SHORT in upper 13% of 2h range (don't short lows)",
+        "\u23f1\ufe0f  HOLD TIME: Optimal exit at 30 minutes (best win rate)",
+        "\ud83d\udeab AVOID: Choppy ribbon (\u22653 flips) caused 9 losses",
+        "\ud83d\udcc8 DIRECTION: Favor LONG setups (6 wins vs 0 SHORT wins)",
+        "\u26a0\ufe0f  RISK: Tighten stop losses - max loss was 0.84% (target <0.3%)"
+      ],
+      "strategy_changes": [
+        "\ud83d\udd27 TIGHTEN choppy filter: 64% of losses with \u22653 flips - reduce max to 2 flips",
+        "\ud83d\udd27 ADJUST hold time: 30 min shows 50.0% win rate vs 30.0% overall - prioritize this duration",
+        "\ud83d\udd27 DIRECTION bias: LONG showing 6 wins vs 0 SHORT - increase LONG confidence threshold"
+      ],
+      "winning_patterns": {
+        "avg_30min_range": 0.52,
+        "avg_price_location": 86.8,
+        "avg_ribbon_flips": 1.5,
+        "best_direction": "LONG (6 wins)"
+      },
+      "losing_patterns": {
+        "avg_30min_range": 0.295,
+        "ranging_losses": 5,
+        "choppy_losses": 9,
+        "worst_direction": "SHORT (10 losses)"
+      },
+      "scalper_score": {
+        "total": 60,
+        "win_rate_component": 40,
+        "speed_component": 10,
+        "risk_management_component": 5,
+        "consistency_component": 5,
+        "grade": "C (Improving)"
+      }
+    },
+    {
+      "cycle_number": 17,
+      "timestamp": "2025-10-20T08:13:34.642737",
+      "analysis_window": "4 hours",
+      "metrics": {
+        "total_opportunities": 7,
+        "trades_simulated": 7,
+        "win_rate": 14.29,
+        "winners": 1,
+        "losers": 6,
+        "best_hold_duration": 30,
+        "avg_winner_pnl": 0.8,
+        "avg_loser_pnl": -0.06,
+        "risk_reward_ratio": 13.4,
+        "profit_factor": 2.23
+      },
+      "improvements_from_previous": [
+        "\ud83d\udcca Previous: 30.0% win rate | R:R 0.83 | Score 60.0"
+      ],
+      "trading_tips": [
+        "\u23f0 ENTRY TIMING: Best entries when 30min range \u22650.22% (trending market)",
+        "\ud83d\udccd PRICE LOCATION: Enter SHORT in upper 0% of 2h range (don't short lows)",
+        "\u23f1\ufe0f  HOLD TIME: Optimal exit at 30 minutes (best win rate)",
+        "\ud83d\udeab AVOID: Ranging markets (<0.4% in 30min) caused 4 losses",
+        "\ud83d\udcc8 DIRECTION: Favor LONG setups (1 wins vs 0 SHORT wins)"
+      ],
+      "strategy_changes": [
+        "\ud83d\udd27 TIGHTEN range filter: 67% of losses in ranging markets - increase minimum to 0.5%",
+        "\ud83d\udd27 ADJUST hold time: 30 min shows 100.0% win rate vs 14.3% overall - prioritize this duration",
+        "\ud83d\udd27 DIRECTION bias: LONG showing 1 wins vs 0 SHORT - increase LONG confidence threshold",
+        "\ud83d\udd27 TIGHTEN all filters: Win rate <15% indicates too many bad entries - increase selectivity"
+      ],
+      "winning_patterns": {
+        "avg_30min_range": 0.22,
+        "avg_price_location": 100.0,
+        "avg_ribbon_flips": 0.0,
+        "best_direction": "LONG (1 wins)"
+      },
+      "losing_patterns": {
+        "avg_30min_range": 0.291,
+        "ranging_losses": 4,
+        "choppy_losses": 0,
+        "worst_direction": "LONG (4 losses)"
+      },
+      "scalper_score": {
+        "total": 78.6,
+        "win_rate_component": 28.6,
+        "speed_component": 10,
+        "risk_management_component": 20,
+        "consistency_component": 20,
+        "grade": "B (Good Scalper)"
+      }
+    },
+    {
+      "cycle_number": 18,
+      "timestamp": "2025-10-20T09:01:57.778487",
+      "analysis_window": "4 hours",
+      "metrics": {
+        "total_opportunities": 19,
+        "trades_simulated": 19,
+        "win_rate": 42.11,
+        "winners": 8,
+        "losers": 11,
+        "best_hold_duration": 30,
+        "avg_winner_pnl": 0.177,
+        "avg_loser_pnl": -0.129,
+        "risk_reward_ratio": 1.37,
+        "profit_factor": 1.0
+      },
+      "improvements_from_previous": [
+        "\ud83d\udcca Previous: 14.3% win rate | R:R 13.40 | Score 78.6"
+      ],
+      "trading_tips": [
+        "\u23f0 ENTRY TIMING: Best entries when 30min range \u22650.32% (trending market)",
+        "\ud83d\udccd PRICE LOCATION: Enter SHORT in upper 37% of 2h range (don't short lows)",
+        "\u23f1\ufe0f  HOLD TIME: Optimal exit at 30 minutes (best win rate)",
+        "\ud83d\udcc9 DIRECTION: Favor SHORT setups (6 wins vs 2 LONG wins)"
+      ],
+      "strategy_changes": [
+        "\ud83d\udd27 ADJUST hold time: 30 min shows 66.7% win rate vs 42.1% overall - prioritize this duration",
+        "\ud83d\udd27 RELAX filters slightly: Win rate >30% indicates possibly missing good opportunities"
+      ],
+      "winning_patterns": {
+        "avg_30min_range": 0.32,
+        "avg_price_location": 62.7,
+        "avg_ribbon_flips": 2.8,
+        "best_direction": "SHORT (6 wins)"
+      },
+      "losing_patterns": {
+        "avg_30min_range": 0.325,
+        "ranging_losses": 3,
+        "choppy_losses": 0,
+        "worst_direction": "LONG (8 losses)"
+      },
+      "scalper_score": {
+        "total": 70,
+        "win_rate_component": 40,
+        "speed_component": 10,
+        "risk_management_component": 10,
+        "consistency_component": 10,
+        "grade": "B (Good Scalper)"
+      }
+    },
+    {
+      "cycle_number": 19,
+      "timestamp": "2025-10-20T10:02:20.143296",
+      "analysis_window": "4 hours",
+      "metrics": {
+        "total_opportunities": 28,
+        "trades_simulated": 28,
+        "win_rate": 50.0,
+        "winners": 14,
+        "losers": 14,
+        "best_hold_duration": 30,
+        "avg_winner_pnl": 0.167,
+        "avg_loser_pnl": -0.186,
+        "risk_reward_ratio": 0.9,
+        "profit_factor": 0.9
+      },
+      "improvements_from_previous": [
+        "\ud83d\udcca Previous: 42.1% win rate | R:R 1.37 | Score 70.0"
+      ],
+      "trading_tips": [
+        "\u23f0 ENTRY TIMING: Best entries when 30min range \u22650.41% (trending market)",
+        "\ud83d\udccd PRICE LOCATION: Enter LONG in lower 39% of 2h range (don't chase highs)",
+        "\u23f1\ufe0f  HOLD TIME: Optimal exit at 30 minutes (best win rate)",
+        "\ud83d\udeab AVOID: Choppy ribbon (\u22653 flips) caused 5 losses",
+        "\ud83d\udcc9 DIRECTION: Favor SHORT setups (10 wins vs 4 LONG wins)"
+      ],
+      "strategy_changes": [
+        "\ud83d\udd27 RELAX filters slightly: Win rate >30% indicates possibly missing good opportunities"
+      ],
+      "winning_patterns": {
+        "avg_30min_range": 0.411,
+        "avg_price_location": 39.0,
+        "avg_ribbon_flips": 3.2,
+        "best_direction": "SHORT (10 wins)"
+      },
+      "losing_patterns": {
+        "avg_30min_range": 0.525,
+        "ranging_losses": 1,
+        "choppy_losses": 5,
+        "worst_direction": "LONG (10 losses)"
+      },
+      "scalper_score": {
+        "total": 65,
+        "win_rate_component": 40,
+        "speed_component": 10,
+        "risk_management_component": 5,
+        "consistency_component": 10,
+        "grade": "C (Improving)"
+      }
+    },
+    {
+      "cycle_number": 20,
+      "timestamp": "2025-10-20T11:02:31.069124",
+      "analysis_window": "4 hours",
+      "metrics": {
+        "total_opportunities": 41,
+        "trades_simulated": 41,
+        "win_rate": 41.46,
+        "winners": 17,
+        "losers": 24,
+        "best_hold_duration": 20,
+        "avg_winner_pnl": 0.192,
+        "avg_loser_pnl": -0.195,
+        "risk_reward_ratio": 0.99,
+        "profit_factor": 0.7
+      },
+      "improvements_from_previous": [
+        "\ud83d\udcca Previous: 50.0% win rate | R:R 0.90 | Score 65.0"
+      ],
+      "trading_tips": [
+        "\u23f0 ENTRY TIMING: Best entries when 30min range \u22650.43% (trending market)",
+        "\u23f1\ufe0f  HOLD TIME: Optimal exit at 20 minutes (best win rate)",
+        "\ud83d\udeab AVOID: Choppy ribbon (\u22653 flips) caused 16 losses",
+        "\ud83d\udcc9 DIRECTION: Favor SHORT setups (11 wins vs 6 LONG wins)",
+        "\u26a0\ufe0f  RISK: Tighten stop losses - max loss was 0.59% (target <0.3%)"
+      ],
+      "strategy_changes": [
+        "\ud83d\udd27 TIGHTEN choppy filter: 67% of losses with \u22653 flips - reduce max to 2 flips",
+        "\ud83d\udd27 RELAX filters slightly: Win rate >30% indicates possibly missing good opportunities"
+      ],
+      "winning_patterns": {
+        "avg_30min_range": 0.426,
+        "avg_price_location": 56.4,
+        "avg_ribbon_flips": 3.5,
+        "best_direction": "SHORT (11 wins)"
+      },
+      "losing_patterns": {
+        "avg_30min_range": 0.565,
+        "ranging_losses": 0,
+        "choppy_losses": 16,
+        "worst_direction": "LONG (15 losses)"
+      },
+      "scalper_score": {
+        "total": 70,
+        "win_rate_component": 40,
+        "speed_component": 20,
+        "risk_management_component": 5,
+        "consistency_component": 5,
+        "grade": "B (Good Scalper)"
+      }
+    },
+    {
+      "cycle_number": 21,
+      "timestamp": "2025-10-20T12:02:55.014077",
+      "analysis_window": "4 hours",
+      "metrics": {
+        "total_opportunities": 54,
+        "trades_simulated": 54,
+        "win_rate": 42.59,
+        "winners": 23,
+        "losers": 31,
+        "best_hold_duration": 30,
+        "avg_winner_pnl": 0.199,
+        "avg_loser_pnl": -0.191,
+        "risk_reward_ratio": 1.04,
+        "profit_factor": 0.77
+      },
+      "improvements_from_previous": [
+        "\ud83d\udcca Previous: 41.5% win rate | R:R 0.99 | Score 70.0"
+      ],
+      "trading_tips": [
+        "\u23f0 ENTRY TIMING: Best entries when 30min range \u22650.39% (trending market)",
+        "\ud83d\udccd PRICE LOCATION: Enter LONG in lower 35% of 2h range (don't chase highs)",
+        "\u23f1\ufe0f  HOLD TIME: Optimal exit at 30 minutes (best win rate)",
+        "\ud83d\udeab AVOID: Choppy ribbon (\u22653 flips) caused 23 losses",
+        "\ud83d\udcc9 DIRECTION: Favor SHORT setups (16 wins vs 7 LONG wins)",
+        "\u26a0\ufe0f  RISK: Tighten stop losses - max loss was 0.59% (target <0.3%)"
+      ],
+      "strategy_changes": [
+        "\ud83d\udd27 TIGHTEN choppy filter: 74% of losses with \u22653 flips - reduce max to 2 flips",
+        "\ud83d\udd27 RELAX filters slightly: Win rate >30% indicates possibly missing good opportunities"
+      ],
+      "winning_patterns": {
+        "avg_30min_range": 0.392,
+        "avg_price_location": 35.5,
+        "avg_ribbon_flips": 7.0,
+        "best_direction": "SHORT (16 wins)"
+      },
+      "losing_patterns": {
+        "avg_30min_range": 0.45,
+        "ranging_losses": 15,
+        "choppy_losses": 23,
+        "worst_direction": "LONG (18 losses)"
+      },
+      "scalper_score": {
+        "total": 65,
+        "win_rate_component": 40,
+        "speed_component": 10,
+        "risk_management_component": 10,
+        "consistency_component": 5,
+        "grade": "C (Improving)"
+      }
+    }
+  ],
+  "strategy_evolution": [
+    {
+      "cycle": 1,
+      "timestamp": "2025-10-19T15:02:39.731545",
+      "changes": [
+        "\ud83d\udd27 TIGHTEN range filter: 61% of losses in ranging markets - increase minimum to 0.5%",
+        "\ud83d\udd27 TIGHTEN choppy filter: 44% of losses with \u22653 flips - reduce max to 2 flips",
+        "\ud83d\udd27 ADJUST hold time: 30 min shows 75.0% win rate vs 35.7% overall - prioritize this duration",
+        "\ud83d\udd27 RELAX filters slightly: Win rate >30% indicates possibly missing good opportunities"
+      ]
+    },
+    {
+      "cycle": 2,
+      "timestamp": "2025-10-19T15:34:49.098745",
+      "changes": [
+        "\ud83d\udd27 TIGHTEN range filter: 63% of losses in ranging markets - increase minimum to 0.5%",
+        "\ud83d\udd27 TIGHTEN choppy filter: 42% of losses with \u22653 flips - reduce max to 2 flips",
+        "\ud83d\udd27 ADJUST hold time: 30 min shows 71.4% win rate vs 45.7% overall - prioritize this duration",
+        "\ud83d\udd27 RELAX filters slightly: Win rate >30% indicates possibly missing good opportunities"
+      ]
+    },
+    {
+      "cycle": 3,
+      "timestamp": "2025-10-19T16:04:45.615931",
+      "changes": [
+        "\ud83d\udd27 TIGHTEN range filter: 67% of losses in ranging markets - increase minimum to 0.5%",
+        "\ud83d\udd27 RELAX filters slightly: Win rate >30% indicates possibly missing good opportunities"
+      ]
+    },
+    {
+      "cycle": 4,
+      "timestamp": "2025-10-19T17:05:12.698364",
+      "changes": [
+        "\ud83d\udd27 TIGHTEN range filter: 79% of losses in ranging markets - increase minimum to 0.5%",
+        "\ud83d\udd27 RELAX filters slightly: Win rate >30% indicates possibly missing good opportunities"
+      ]
+    },
+    {
+      "cycle": 5,
+      "timestamp": "2025-10-19T18:05:20.142536",
+      "changes": [
+        "\ud83d\udd27 TIGHTEN range filter: 92% of losses in ranging markets - increase minimum to 0.5%",
+        "\ud83d\udd27 TIGHTEN choppy filter: 92% of losses with \u22653 flips - reduce max to 2 flips",
+        "\ud83d\udd27 RELAX filters slightly: Win rate >30% indicates possibly missing good opportunities"
+      ]
+    },
+    {
+      "cycle": 6,
+      "timestamp": "2025-10-19T19:05:42.320769",
+      "changes": [
+        "\ud83d\udd27 TIGHTEN choppy filter: 77% of losses with \u22653 flips - reduce max to 2 flips",
+        "\ud83d\udd27 RELAX filters slightly: Win rate >30% indicates possibly missing good opportunities"
+      ]
+    },
+    {
+      "cycle": 7,
+      "timestamp": "2025-10-19T20:05:48.161481",
+      "changes": [
+        "\ud83d\udd27 TIGHTEN choppy filter: 77% of losses with \u22653 flips - reduce max to 2 flips",
+        "\ud83d\udd27 RELAX filters slightly: Win rate >30% indicates possibly missing good opportunities"
+      ]
+    },
+    {
+      "cycle": 8,
+      "timestamp": "2025-10-19T23:10:14.158688",
+      "changes": [
+        "\ud83d\udd27 TIGHTEN range filter: 100% of losses in ranging markets - increase minimum to 0.5%",
+        "\ud83d\udd27 RELAX filters slightly: Win rate >30% indicates possibly missing good opportunities"
+      ]
+    },
+    {
+      "cycle": 9,
+      "timestamp": "2025-10-20T00:10:37.648128",
+      "changes": [
+        "\ud83d\udd27 RELAX filters slightly: Win rate >30% indicates possibly missing good opportunities"
+      ]
+    },
+    {
+      "cycle": 10,
+      "timestamp": "2025-10-20T01:11:08.724108",
+      "changes": [
+        "\ud83d\udd27 RELAX filters slightly: Win rate >30% indicates possibly missing good opportunities"
+      ]
+    },
+    {
+      "cycle": 11,
+      "timestamp": "2025-10-20T02:11:36.999307",
+      "changes": [
+        "\ud83d\udd27 RELAX filters slightly: Win rate >30% indicates possibly missing good opportunities"
+      ]
+    },
+    {
+      "cycle": 12,
+      "timestamp": "2025-10-20T03:11:52.056581",
+      "changes": [
+        "\ud83d\udd27 TIGHTEN choppy filter: 91% of losses with \u22653 flips - reduce max to 2 flips",
+        "\ud83d\udd27 RELAX filters slightly: Win rate >30% indicates possibly missing good opportunities"
+      ]
+    },
+    {
+      "cycle": 13,
+      "timestamp": "2025-10-20T04:12:21.855489",
+      "changes": [
+        "\ud83d\udd27 TIGHTEN choppy filter: 100% of losses with \u22653 flips - reduce max to 2 flips",
+        "\ud83d\udd27 RELAX filters slightly: Win rate >30% indicates possibly missing good opportunities"
+      ]
+    },
+    {
+      "cycle": 14,
+      "timestamp": "2025-10-20T05:12:51.331960",
+      "changes": [
+        "\ud83d\udd27 TIGHTEN choppy filter: 100% of losses with \u22653 flips - reduce max to 2 flips",
+        "\ud83d\udd27 RELAX filters slightly: Win rate >30% indicates possibly missing good opportunities"
+      ]
+    },
+    {
+      "cycle": 15,
+      "timestamp": "2025-10-20T06:12:52.871484",
+      "changes": [
+        "\ud83d\udd27 TIGHTEN choppy filter: 82% of losses with \u22653 flips - reduce max to 2 flips",
+        "\ud83d\udd27 RELAX filters slightly: Win rate >30% indicates possibly missing good opportunities"
+      ]
+    },
+    {
+      "cycle": 16,
+      "timestamp": "2025-10-20T07:13:09.917497",
+      "changes": [
+        "\ud83d\udd27 TIGHTEN choppy filter: 64% of losses with \u22653 flips - reduce max to 2 flips",
+        "\ud83d\udd27 ADJUST hold time: 30 min shows 50.0% win rate vs 30.0% overall - prioritize this duration",
+        "\ud83d\udd27 DIRECTION bias: LONG showing 6 wins vs 0 SHORT - increase LONG confidence threshold"
+      ]
+    },
+    {
+      "cycle": 17,
+      "timestamp": "2025-10-20T08:13:34.642737",
+      "changes": [
+        "\ud83d\udd27 TIGHTEN range filter: 67% of losses in ranging markets - increase minimum to 0.5%",
+        "\ud83d\udd27 ADJUST hold time: 30 min shows 100.0% win rate vs 14.3% overall - prioritize this duration",
+        "\ud83d\udd27 DIRECTION bias: LONG showing 1 wins vs 0 SHORT - increase LONG confidence threshold",
+        "\ud83d\udd27 TIGHTEN all filters: Win rate <15% indicates too many bad entries - increase selectivity"
+      ]
+    },
+    {
+      "cycle": 18,
+      "timestamp": "2025-10-20T09:01:57.778487",
+      "changes": [
+        "\ud83d\udd27 ADJUST hold time: 30 min shows 66.7% win rate vs 42.1% overall - prioritize this duration",
+        "\ud83d\udd27 RELAX filters slightly: Win rate >30% indicates possibly missing good opportunities"
+      ]
+    },
+    {
+      "cycle": 19,
+      "timestamp": "2025-10-20T10:02:20.143296",
+      "changes": [
+        "\ud83d\udd27 RELAX filters slightly: Win rate >30% indicates possibly missing good opportunities"
+      ]
+    },
+    {
+      "cycle": 20,
+      "timestamp": "2025-10-20T11:02:31.069124",
+      "changes": [
+        "\ud83d\udd27 TIGHTEN choppy filter: 67% of losses with \u22653 flips - reduce max to 2 flips",
+        "\ud83d\udd27 RELAX filters slightly: Win rate >30% indicates possibly missing good opportunities"
+      ]
+    },
+    {
+      "cycle": 21,
+      "timestamp": "2025-10-20T12:02:55.014077",
+      "changes": [
+        "\ud83d\udd27 TIGHTEN choppy filter: 74% of losses with \u22653 flips - reduce max to 2 flips",
+        "\ud83d\udd27 RELAX filters slightly: Win rate >30% indicates possibly missing good opportunities"
+      ]
+    }
+  ],
+  "performance_summary": {
+    "highest_win_rate": 90.0,
+    "best_risk_reward_ratio": 22.75,
+    "most_profitable_setup": {
+      "cycle": 14,
+      "win_rate": 45.0,
+      "risk_reward": 2.05,
+      "patterns": {
+        "avg_30min_range": 0.436,
+        "avg_price_location": 62.9,
+        "avg_ribbon_flips": 4.8,
+        "best_direction": "SHORT (11 wins)"
+      }
+    },
+    "safest_setup": null,
+    "highest_win_rate_cycle": 10,
+    "best_rr_cycle": 9
+  }
+}

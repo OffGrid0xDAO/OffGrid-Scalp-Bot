@@ -1,0 +1,22 @@
+{
+  "configuration": "Aggressive",
+  "scalping_score": 0.44583210256126216,
+  "parameters": {
+    "timeframe": "5m",
+    "minutes_per_candle": 5,
+    "n_harmonics": 5,
+    "noise_threshold": 0.25,
+    "base_ema_period": 20,
+    "correlation_threshold": 0.55,
+    "min_signal_strength": 0.25,
+    "max_holding_periods": 24
+  },
+  "performance": {
+    "return_pct": 3.052411349219401,
+    "sharpe_ratio": 0.6744282329921635,
+    "win_rate_pct": 57.49999999999999,
+    "num_trades": 40,
+    "trades_per_day": 5.71145265245414,
+    "max_drawdown_pct": -1.1319779658235503
+  }
+}

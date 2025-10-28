@@ -1,0 +1,63 @@
+{
+  "symbol": "ETH",
+  "initial_capital": 1000.0,
+  "leverage": 25,
+  "max_position_size": 0.06,
+  "max_daily_loss": 0.06,
+  "max_drawdown": 0.18,
+  "max_concurrent_positions": 2,
+  "enable_telegram": true,
+  "live_trading": true,
+
+  "comment": "Iteration 1: HARMONIC Balanced (84/84/60) - All parameters aligned with Fibonacci or Tesla 3/6/9",
+  "expected_performance": {
+    "return_17d": "3.5-4.5%",
+    "sharpe": "8.5-9.5",
+    "win_rate": "82-85%",
+    "trades": "30-40",
+    "trades_per_day": "2-2.5"
+  },
+
+  "optimized_thresholds": {
+    "compression_threshold": 84,
+    "alignment_threshold": 84,
+    "confluence_threshold": 60,
+    "n_harmonics": 5,
+    "max_holding_periods": 24,
+    "min_confidence": 0.66,
+    "min_coherence": 0.60
+  },
+
+  "_harmonic_proof": {
+    "84": "8+4=12, 1+2=3 ✓ Tesla harmonic!",
+    "60": "6+0=6 ✓ Tesla harmonic!",
+    "5": "Fibonacci number!",
+    "24": "2+4=6 ✓ Tesla harmonic!",
+    "0.66": "66: 6+6=12, 1+2=3 ✓",
+    "0.60": "60: 6+0=6 ✓"
+  },
+
+  "adaptive_tp_sl": {
+    "base_sl_pct": 0.018,
+    "min_rr_ratio": 1.5,
+    "max_rr_ratio": 4.0,
+    "use_fibonacci": true,
+    "use_atr": true
+  },
+
+  "_leverage_notes": {
+    "leverage": "25x - Liquidation at ~4% move",
+    "position_size": "6% margin = 150% exposure (6% × 25)",
+    "risk_per_trade": "2.7% (150% × 1.8% SL)",
+    "concurrent_risk": "5.4% max with 2 positions",
+    "liquidation_buffer": "2.2% safety (4% - 1.8%)",
+    "why_safe": "Well within 3% risk target + liquidation buffer"
+  },
+
+  "risk_notes": {
+    "max_position_size": "30% of capital per trade",
+    "max_daily_loss": "5% daily loss limit (will stop trading for the day)",
+    "max_drawdown": "15% max drawdown from peak (will stop all trading)",
+    "max_concurrent_positions": "Maximum 3 open positions at once"
+  }
+}

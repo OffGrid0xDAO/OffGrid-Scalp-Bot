@@ -26,7 +26,6 @@ from threading import Thread
 sys.path.append(str(Path(__file__).parent / 'src'))
 
 from data.hyperliquid_fetcher import HyperliquidFetcher
-from strategy.entry_detector_user_pattern import EntryDetector
 from dotenv import load_dotenv
 
 # Load environment
@@ -47,7 +46,6 @@ class LiveChartDashboard:
         self.timeframe = timeframe
         self.update_interval = update_interval
         self.fetcher = HyperliquidFetcher()
-        self.entry_detector = EntryDetector()
 
         # EMA periods to display
         self.ema_periods = [5, 8, 13, 21, 34, 55, 89, 144]
@@ -105,36 +103,19 @@ class LiveChartDashboard:
             'v': 'volume'
         })
         df['timestamp'] = pd.to_datetime(df['timestamp'], unit='ms')
+
+        # Convert price columns to float
+        for col in ['open', 'close', 'high', 'low', 'volume']:
+            df[col] = pd.to_numeric(df[col], errors='coerce')
+
         df = df.sort_values('timestamp').reset_index(drop=True)
 
         # Calculate EMAs
         df = self.calculate_emas(df)
 
-        # Get 5m data for signal
-        candles_5m = self.fetcher.fetch_historical_data(
-            interval='5m',
-            days_back=1,
-            use_checkpoint=False
-        )
+        return df
 
-        df_5m = pd.DataFrame(candles_5m)
-        df_5m = df_5m.rename(columns={
-            't': 'timestamp',
-            'o': 'open',
-            'c': 'close',
-            'h': 'high',
-            'l': 'low',
-            'v': 'volume'
-        })
-        df_5m['timestamp'] = pd.to_datetime(df_5m['timestamp'], unit='ms')
-        df_5m = df_5m.sort_values('timestamp').reset_index(drop=True)
-
-        # Get signal
-        signal = self.entry_detector.detect_entry(df, df_5m)
-
-        return df, signal
-
-    def create_chart(self, df: pd.DataFrame, signal: dict) -> go.Figure:
+    def create_chart(self, df: pd.DataFrame) -> go.Figure:
         """Create Plotly chart with EMA ribbons"""
 
         # Show last 200 candles for better visibility
@@ -239,38 +220,28 @@ class LiveChartDashboard:
             row=2, col=1
         )
 
-        # Add signal markers if there's a valid signal
-        if signal and signal.get('quality_score', 0) >= 50:
-            latest_time = df_display['timestamp'].iloc[-1]
-            latest_price = df_display['close'].iloc[-1]
+        # Add current price marker
+        latest_time = df_display['timestamp'].iloc[-1]
+        latest_price = df_display['close'].iloc[-1]
 
-            if signal['direction'] == 'long':
-                marker_color = '#00FF00'
-                marker_symbol = 'triangle-up'
-                text = f"🚀 LONG<br>Quality: {signal['quality_score']:.0f}"
-            else:
-                marker_color = '#FF0000'
-                marker_symbol = 'triangle-down'
-                text = f"🔻 SHORT<br>Quality: {signal['quality_score']:.0f}"
-
-            fig.add_trace(
-                go.Scatter(
-                    x=[latest_time],
-                    y=[latest_price],
-                    mode='markers+text',
-                    marker=dict(
-                        size=20,
-                        color=marker_color,
-                        symbol=marker_symbol,
-                        line=dict(width=2, color='white')
-                    ),
-                    text=text,
-                    textposition='top center',
-                    name='Signal',
-                    showlegend=False
+        fig.add_trace(
+            go.Scatter(
+                x=[latest_time],
+                y=[latest_price],
+                mode='markers+text',
+                marker=dict(
+                    size=15,
+                    color='#FFFFFF',
+                    symbol='diamond',
+                    line=dict(width=2, color='#00FF00')
                 ),
-                row=1, col=1
-            )
+                text=f"${latest_price:.2f}",
+                textposition='middle right',
+                name='Current Price',
+                showlegend=False
+            ),
+            row=1, col=1
+        )
 
         # Update layout
         fig.update_layout(
@@ -300,18 +271,13 @@ class LiveChartDashboard:
     def update_chart(self):
         """Fetch data and update chart"""
         try:
-            df, signal = self.fetch_data()
+            df = self.fetch_data()
 
             print(f"[{datetime.now().strftime('%H:%M:%S')}] Data fetched: {len(df)} candles")
-
-            if signal:
-                print(f"[{datetime.now().strftime('%H:%M:%S')}] Signal: {signal['direction'].upper()} "
-                      f"(Quality: {signal.get('quality_score', 0):.0f})")
-            else:
-                print(f"[{datetime.now().strftime('%H:%M:%S')}] No qualifying signal")
+            print(f"[{datetime.now().strftime('%H:%M:%S')}] Latest price: ${df['close'].iloc[-1]:.2f}")
 
             # Create chart
-            fig = self.create_chart(df, signal)
+            fig = self.create_chart(df)
 
             # Save to HTML with auto-refresh
             html_content = fig.to_html(include_plotlyjs='cdn')

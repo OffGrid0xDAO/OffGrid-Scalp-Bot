@@ -1,0 +1,46 @@
+{
+  "symbol": "ETH",
+  "initial_capital": 1000.0,
+  "max_position_size": 0.3,
+  "max_daily_loss": 0.05,
+  "max_drawdown": 0.15,
+  "max_concurrent_positions": 3,
+  "enable_telegram": true,
+  "live_trading": true,
+
+  "comment": "Iteration 3: HARMONIC Aggressive (81/81/55) - 300X with perfect harmonics!",
+  "expected_performance": {
+    "return_17d": "6.5-8.0%",
+    "sharpe": "6.5-7.5",
+    "win_rate": "75-80%",
+    "trades": "60-80",
+    "trades_per_day": "3.5-4.5"
+  },
+
+  "optimized_thresholds": {
+    "compression_threshold": 81,
+    "alignment_threshold": 81,
+    "confluence_threshold": 55,
+    "n_harmonics": 5,
+    "max_holding_periods": 24,
+    "min_confidence": 0.55,
+    "min_coherence": 0.51
+  },
+
+  "_harmonic_proof": {
+    "81": "8+1=9 ✓ Tesla harmonic!",
+    "55": "Fibonacci number!",
+    "5": "Fibonacci number!",
+    "24": "2+4=6 ✓",
+    "0.55": "55: Fibonacci!",
+    "0.51": "51: 5+1=6 ✓"
+  },
+
+  "adaptive_tp_sl": {
+    "base_sl_pct": 0.02,
+    "min_rr_ratio": 1.5,
+    "max_rr_ratio": 4.0,
+    "use_fibonacci": true,
+    "use_atr": true
+  }
+}

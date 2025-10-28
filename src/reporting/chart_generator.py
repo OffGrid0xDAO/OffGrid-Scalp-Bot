@@ -311,10 +311,129 @@ class ChartGenerator:
         if backtest_trades:
             for trade in backtest_trades:
                 direction = trade.get('direction', 'long')
-                entry_idx = trade.get('entry_idx')
+                entry_time = trade.get('entry_time')
+                entry_price = trade.get('entry_price')
 
-                # Entry marker (Long = circle orange, Short = circle blue)
-                if entry_idx and entry_idx < len(df):
+                # Get exit info
+                # First check for direct exit_time/exit_price fields (from backtests)
+                if 'exit_time' in trade and 'exit_price' in trade:
+                    exit_time = trade.get('exit_time')
+                    exit_price = trade.get('exit_price')
+                # Otherwise check for partial_exits (from live trading)
+                elif 'partial_exits' in trade and trade['partial_exits']:
+                    final_exit = trade['partial_exits'][-1]
+                    exit_time = final_exit.get('exit_time', entry_time)
+                    exit_price = final_exit.get('exit_price', entry_price)
+                # Fallback to entry time/price if no exit info
+                else:
+                    exit_time = entry_time
+                    exit_price = entry_price
+
+                # Draw TP/SL zones as rectangles FIRST (bottom layer)
+                tp_price = trade.get('tp_price')
+                sl_price = trade.get('sl_price')
+
+                if tp_price and sl_price and entry_time and exit_time:
+                    # Take Profit zone (green rectangle with low opacity)
+                    if direction == 'long':
+                        # For long: TP is above entry
+                        tp_y0, tp_y1 = entry_price, tp_price
+                        sl_y0, sl_y1 = sl_price, entry_price
+                    else:
+                        # For short: TP is below entry
+                        tp_y0, tp_y1 = tp_price, entry_price
+                        sl_y0, sl_y1 = entry_price, sl_price
+
+                    # Take Profit rectangle
+                    fig.add_trace(
+                        go.Scatter(
+                            x=[entry_time, entry_time, exit_time, exit_time, entry_time],
+                            y=[tp_y0, tp_y1, tp_y1, tp_y0, tp_y0],
+                            fill='toself',
+                            fillcolor='rgba(0, 255, 0, 0.1)',  # Green with 10% opacity
+                            line=dict(color='rgba(0, 255, 0, 0.3)', width=1, dash='dot'),
+                            name='Take Profit Zone',
+                            showlegend=False,
+                            hovertemplate=f'<b>Take Profit Zone</b><br>' +
+                                        f'TP: {tp_price:.2f}<br>' +
+                                        '<extra></extra>'
+                        ),
+                        row=row, col=1
+                    )
+
+                    # Stop Loss rectangle
+                    fig.add_trace(
+                        go.Scatter(
+                            x=[entry_time, entry_time, exit_time, exit_time, entry_time],
+                            y=[sl_y0, sl_y1, sl_y1, sl_y0, sl_y0],
+                            fill='toself',
+                            fillcolor='rgba(255, 0, 0, 0.1)',  # Red with 10% opacity
+                            line=dict(color='rgba(255, 0, 0, 0.3)', width=1, dash='dot'),
+                            name='Stop Loss Zone',
+                            showlegend=False,
+                            hovertemplate=f'<b>Stop Loss Zone</b><br>' +
+                                        f'SL: {sl_price:.2f}<br>' +
+                                        '<extra></extra>'
+                        ),
+                        row=row, col=1
+                    )
+
+                # Add P&L arrow from entry to exit
+                if entry_time and exit_time and entry_price and exit_price:
+                    pnl_pct = trade.get('total_pnl_pct', 0)
+
+                    # Color based on profit/loss
+                    if pnl_pct > 0:
+                        arrow_color = 'rgba(0, 255, 0, 0.6)'  # Green for profit
+                        arrow_name = f'Profit +{pnl_pct:.2f}%'
+                    else:
+                        arrow_color = 'rgba(255, 0, 0, 0.6)'  # Red for loss
+                        arrow_name = f'Loss {pnl_pct:.2f}%'
+
+                    # Draw arrow line from entry to exit
+                    fig.add_trace(
+                        go.Scatter(
+                            x=[entry_time, exit_time],
+                            y=[entry_price, exit_price],
+                            mode='lines',
+                            line=dict(
+                                color=arrow_color,
+                                width=3,
+                                dash='solid'
+                            ),
+                            name=arrow_name,
+                            showlegend=False,
+                            hovertemplate=f'<b>{arrow_name}</b><br>' +
+                                        f'Entry: {entry_price:.2f}<br>' +
+                                        f'Exit: {exit_price:.2f}<br>' +
+                                        f'PnL: {pnl_pct:.2f}%<br>' +
+                                        '<extra></extra>'
+                        ),
+                        row=row, col=1
+                    )
+
+                    # Add arrowhead annotation pointing to exit
+                    fig.add_annotation(
+                        x=exit_time,
+                        y=exit_price,
+                        ax=entry_time,
+                        ay=entry_price,
+                        xref=f'x{row}',
+                        yref=f'y{row}',
+                        axref=f'x{row}',
+                        ayref=f'y{row}',
+                        showarrow=True,
+                        arrowhead=2,
+                        arrowsize=1.5,
+                        arrowwidth=3,
+                        arrowcolor=arrow_color,
+                        standoff=10,
+                        hovertext=f'{arrow_name}',
+                        opacity=0.8
+                    )
+
+                # Entry marker - use timestamp directly (no index lookup)
+                if entry_time and entry_price:
                     if direction == 'long':
                         symbol, color = 'circle', 'orange'
                         name = 'Backtest Long Open'
@@ -324,65 +443,65 @@ class ChartGenerator:
 
                     fig.add_trace(
                         go.Scatter(
-                            x=[df.iloc[entry_idx]['timestamp']],
-                            y=[trade['entry_price']],
+                            x=[entry_time],
+                            y=[entry_price],
                             mode='markers+text',
                             marker=dict(
                                 symbol=symbol,
-                                size=14,  # Increased from 10
+                                size=16,  # Increased from 14 to be more visible
                                 color=color,
-                                line=dict(width=2, color='white'),
+                                line=dict(width=3, color='white'),  # Thicker border
                                 opacity=1.0  # Fully opaque
                             ),
                             text=['B'],  # B = Backtest
                             textposition='top center',
-                            textfont=dict(size=9, color='white', family='Arial Black'),
+                            textfont=dict(size=10, color='white', family='Arial Black'),
                             name=name,
                             showlegend=False,
                             hovertemplate=f'<b>Backtest {direction.upper()} Entry</b><br>' +
-                                        f'Price: {trade["entry_price"]:.2f}<br>' +
+                                        f'Time: {entry_time}<br>' +
+                                        f'Price: {entry_price:.2f}<br>' +
+                                        f'TP: {tp_price:.2f}<br>' +
+                                        f'SL: {sl_price:.2f}<br>' +
                                         '<extra></extra>'
                         ),
                         row=row, col=1
                     )
 
-                # Backtest exits (final exit only for clarity)
-                if 'partial_exits' in trade and trade['partial_exits']:
-                    # Show only final exit to reduce clutter
-                    final_exit = trade['partial_exits'][-1]
-                    exit_idx = final_exit.get('exit_idx')
-                    if exit_idx and exit_idx < len(df):
-                        if direction == 'long':
-                            symbol, color = 'square', 'orange'
-                            name = 'Backtest Long Close'
-                        else:
-                            symbol, color = 'square', 'cyan'
-                            name = 'Backtest Short Close'
+                # Exit marker - use timestamp directly (no index lookup)
+                if exit_time and exit_price:
+                    if direction == 'long':
+                        symbol, color = 'square', 'orange'
+                        name = 'Backtest Long Close'
+                    else:
+                        symbol, color = 'square', 'cyan'
+                        name = 'Backtest Short Close'
 
-                        fig.add_trace(
-                            go.Scatter(
-                                x=[df.iloc[exit_idx]['timestamp']],
-                                y=[final_exit['exit_price']],
-                                mode='markers+text',
-                                marker=dict(
-                                    symbol=symbol,
-                                    size=12,  # Increased from 8
-                                    color=color,
-                                    line=dict(width=2, color='white'),
-                                    opacity=1.0  # Fully opaque
-                                ),
-                                text=['C'],  # C = Close
-                                textposition='bottom center',
-                                textfont=dict(size=9, color='white', family='Arial Black'),
-                                name=name,
-                                showlegend=False,
-                                hovertemplate=f'<b>Backtest {direction.upper()} Exit</b><br>' +
-                                            f'Price: {final_exit["exit_price"]:.2f}<br>' +
-                                            f'Type: {final_exit.get("exit_type", "N/A")}<br>' +
-                                            '<extra></extra>'
+                    fig.add_trace(
+                        go.Scatter(
+                            x=[exit_time],
+                            y=[exit_price],
+                            mode='markers+text',
+                            marker=dict(
+                                symbol=symbol,
+                                size=14,  # Increased from 12
+                                color=color,
+                                line=dict(width=3, color='white'),  # Thicker border
+                                opacity=1.0  # Fully opaque
                             ),
-                            row=row, col=1
-                        )
+                            text=['C'],  # C = Close
+                            textposition='bottom center',
+                            textfont=dict(size=10, color='white', family='Arial Black'),
+                            name=name,
+                            showlegend=False,
+                            hovertemplate=f'<b>Backtest {direction.upper()} Exit</b><br>' +
+                                        f'Time: {exit_time}<br>' +
+                                        f'Price: {exit_price:.2f}<br>' +
+                                        f'PnL: {trade.get("total_pnl_pct", 0):.2f}%<br>' +
+                                        '<extra></extra>'
+                        ),
+                        row=row, col=1
+                    )
 
         # Actual trade markers (Cyan - live)
         if actual_trades:

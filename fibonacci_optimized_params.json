@@ -1,0 +1,57 @@
+{
+  "timestamp": "2025-10-28T09:13:31.796437",
+  "base_params": {
+    "timeframe": "5m",
+    "minutes_per_candle": 5,
+    "n_harmonics": 5,
+    "noise_threshold": 0.25,
+    "base_ema_period": 20,
+    "correlation_threshold": 0.55,
+    "min_signal_strength": 0.25,
+    "max_holding_periods": 24
+  },
+  "optimized_thresholds": {
+    "compression_threshold": 90,
+    "alignment_threshold": 60,
+    "confluence_threshold": 70,
+    "total_signals": 180,
+    "score": 97.33333333333333
+  },
+  "fibonacci_analysis_stats": {
+    "5m": {
+      "high_compression_pct": 100.0,
+      "strong_bullish_pct": 31.917500510516643,
+      "strong_bearish_pct": 27.69042270778027,
+      "high_confluence_pct": 2.389217888503165,
+      "optimal_long_pct": 1.2048192771084338,
+      "optimal_short_pct": 1.0822952828262202
+    },
+    "15m": {
+      "high_compression_pct": 100.0,
+      "strong_bullish_pct": 33.12921004286589,
+      "strong_bearish_pct": 27.372933251684017,
+      "high_confluence_pct": 2.6331904470300063,
+      "optimal_long_pct": 1.1022657685241886,
+      "optimal_short_pct": 1.224739742804654
+    },
+    "30m": {
+      "high_compression_pct": 100.0,
+      "strong_bullish_pct": 32.43574051407589,
+      "strong_bearish_pct": 24.96940024479804,
+      "high_confluence_pct": 3.549571603427173,
+      "optimal_long_pct": 1.4687882496940026,
+      "optimal_short_pct": 1.591187270501836
+    }
+  },
+  "backtest_results": {
+    "total_return_pct": 1.459020224463111,
+    "sharpe_ratio": 7.490433086619035,
+    "max_drawdown_pct": -0.22183247888424495,
+    "win_rate_pct": 72.22222222222221,
+    "profit_factor": 5.259174120428668,
+    "num_trades": 18.0,
+    "trades_per_day": 1.125,
+    "avg_holding_periods": 24.0
+  },
+  "chart_path": "charts/fibonacci_optimized/ETH_5m_3way_comparison.html"
+}

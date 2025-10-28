@@ -1,0 +1,29 @@
+{
+  "symbol": "ETH",
+  "initial_capital": 10000.0,
+  "max_position_size": 0.3,
+  "max_daily_loss": 0.05,
+  "max_drawdown": 0.15,
+  "max_concurrent_positions": 3,
+  "enable_telegram": true,
+  "live_trading": true,
+
+  "comment": "Production configuration for live trading",
+  "risk_notes": {
+    "max_position_size": "30% of capital per trade (conservative)",
+    "max_daily_loss": "5% daily loss limit (will stop trading for the day)",
+    "max_drawdown": "15% max drawdown from peak (will stop all trading)",
+    "max_concurrent_positions": "Maximum 3 open positions at once"
+  },
+
+  "signal_fusion": {
+    "min_confidence": 0.65,
+    "min_coherence": 0.6,
+    "enable_modulation": true
+  },
+
+  "execution": {
+    "commission_rate": 0.0003,
+    "slippage_bps": 2.0
+  }
+}

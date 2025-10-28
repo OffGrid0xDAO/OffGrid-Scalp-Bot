@@ -1,0 +1,64 @@
+{
+  "timestamp": "2025-10-28T04:45:27.913905",
+  "timeframes": [
+    "5m",
+    "15m",
+    "30m"
+  ],
+  "scalping_params": {
+    "timeframe": "5m",
+    "minutes_per_candle": 5,
+    "n_harmonics": 5,
+    "noise_threshold": 0.25,
+    "base_ema_period": 20,
+    "correlation_threshold": 0.55,
+    "min_signal_strength": 0.25,
+    "max_holding_periods": 24
+  },
+  "timeframe_signals": {
+    "5m": {
+      "fourier_signal": -0.19364288077616942,
+      "fourier_direction": "NEUTRAL",
+      "fib_alignment": -100.0,
+      "fib_direction": "SHORT",
+      "fib_confluence": 62.151430797007954,
+      "compression": 99.821730246042,
+      "confluence_score": 0.0
+    },
+    "15m": {
+      "fourier_signal": 0.0796119832530715,
+      "fourier_direction": "NEUTRAL",
+      "fib_alignment": -100.0,
+      "fib_direction": "SHORT",
+      "fib_confluence": 62.15471237895125,
+      "compression": 99.82707285424233,
+      "confluence_score": 0.0
+    },
+    "30m": {
+      "fourier_signal": 0.0361693761587815,
+      "fourier_direction": "NEUTRAL",
+      "fib_alignment": -100.0,
+      "fib_direction": "SHORT",
+      "fib_confluence": 62.123103942947836,
+      "compression": 99.73150408178549,
+      "confluence_score": 0.0
+    }
+  },
+  "final_signal": {
+    "signal": "NEUTRAL",
+    "confidence": 0.0,
+    "avg_confluence": 0.0,
+    "avg_compression": 0.0,
+    "all_agree": false
+  },
+  "backtest_metrics": {
+    "total_return_pct": 2.0423165861219603,
+    "sharpe_ratio": 5.495314806948226,
+    "max_drawdown_pct": -0.2520502432386213,
+    "win_rate_pct": 67.79661016949152,
+    "profit_factor": 2.8719798602063453,
+    "num_trades": 59.0,
+    "avg_holding_periods": 24.0
+  },
+  "chart_path": "charts/ultimate_scalping/ETH_5m_3way_comparison.html"
+}

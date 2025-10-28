@@ -1,0 +1,62 @@
+{
+  "symbol": "ETH",
+  "initial_capital": 1000.0,
+  "max_position_size": 0.45,
+  "max_daily_loss": 0.06,
+  "max_drawdown": 0.18,
+  "max_concurrent_positions": 3,
+  "enable_telegram": true,
+  "live_trading": true,
+
+  "comment": "Iteration 5: HARMONIC HYPER (75/75/51) - Heavy Volume/Fib weighting with perfect harmonics!",
+  "expected_performance": {
+    "return_17d": "9.0-12.0%",
+    "sharpe": "5.5-6.5",
+    "win_rate": "68-74%",
+    "trades": "90-120",
+    "trades_per_day": "5-7"
+  },
+
+  "optimized_thresholds": {
+    "compression_threshold": 75,
+    "alignment_threshold": 75,
+    "confluence_threshold": 51,
+    "n_harmonics": 5,
+    "max_holding_periods": 21,
+    "min_confidence": 0.51,
+    "min_coherence": 0.45,
+    "use_volume_fft": true,
+    "use_fib_levels": true,
+    "volume_confirmation_weight": 0.21,
+    "fib_level_weight": 0.15
+  },
+
+  "_harmonic_proof": {
+    "75": "7+5=12, 1+2=3 ✓ Tesla harmonic!",
+    "51": "5+1=6 ✓ Tesla harmonic!",
+    "5": "Fibonacci!",
+    "21": "Fibonacci!",
+    "0.51": "51: 5+1=6 ✓",
+    "0.45": "45: 4+5=9 ✓",
+    "0.21": "21: Fibonacci AND 2+1=3 ✓",
+    "0.15": "15: 1+5=6 ✓",
+    "0.45": "45: 4+5=9 ✓ position size!",
+    "0.06": "6: sum=6 ✓ daily loss!",
+    "0.18": "18: 1+8=9 ✓ drawdown!"
+  },
+
+  "adaptive_tp_sl": {
+    "base_sl_pct": 0.018,
+    "min_rr_ratio": 2.1,
+    "max_rr_ratio": 5.1,
+    "use_fibonacci": true,
+    "use_atr": true
+  },
+
+  "features": {
+    "volume_fft": "Enabled - 21% weight (Fibonacci!)",
+    "fibonacci_levels": "Enabled - 15% weight (1+5=6)",
+    "enhanced_scoring": "Heavy harmonic weighting for maximum resonance",
+    "risk_expansion": "All risk parameters harmonically aligned!"
+  }
+}

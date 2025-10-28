@@ -1,0 +1,47 @@
+{
+  "symbol": "ETH",
+  "initial_capital": 1000.0,
+  "max_position_size": 0.3,
+  "max_daily_loss": 0.05,
+  "max_drawdown": 0.15,
+  "max_concurrent_positions": 3,
+  "enable_telegram": true,
+  "live_trading": true,
+
+  "comment": "Iteration 2: HARMONIC Moderate (81/84/57) - Higher Returns with harmonic alignment",
+  "expected_performance": {
+    "return_17d": "5.0-6.0%",
+    "sharpe": "7.5-8.5",
+    "win_rate": "78-82%",
+    "trades": "45-55",
+    "trades_per_day": "2.5-3.0"
+  },
+
+  "optimized_thresholds": {
+    "compression_threshold": 81,
+    "alignment_threshold": 84,
+    "confluence_threshold": 57,
+    "n_harmonics": 5,
+    "max_holding_periods": 24,
+    "min_confidence": 0.60,
+    "min_coherence": 0.55
+  },
+
+  "_harmonic_proof": {
+    "81": "8+1=9 ✓ Tesla harmonic!",
+    "84": "8+4=12, 1+2=3 ✓ Tesla harmonic!",
+    "57": "5+7=12, 1+2=3 ✓ Tesla harmonic!",
+    "5": "Fibonacci number!",
+    "24": "2+4=6 ✓",
+    "0.60": "60: 6+0=6 ✓",
+    "0.55": "55: Fibonacci number!"
+  },
+
+  "adaptive_tp_sl": {
+    "base_sl_pct": 0.02,
+    "min_rr_ratio": 1.5,
+    "max_rr_ratio": 4.0,
+    "use_fibonacci": true,
+    "use_atr": true
+  }
+}

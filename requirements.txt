@@ -13,6 +13,9 @@ anthropic>=0.18.0
 # HTTP requests (for Hyperliquid API + Telegram)
 requests>=2.31.0
 
+# WebSocket streaming
+websockets>=11.0
+
 # Hyperliquid SDK
 hyperliquid-python-sdk>=0.19.0
 eth-account>=0.8.0
@@ -20,8 +23,8 @@ eth-account>=0.8.0
 # Environment variables
 python-dotenv>=1.0.0
 
-# Optional: Telegram notifications
-# python-telegram-bot>=20.0
+# Telegram notifications (for live trading alerts)
+python-telegram-bot>=20.0
 
 # Optional: Advanced backtesting
 # backtrader>=1.9.76
